@@ -13,8 +13,18 @@ CYAN=\033[0;36m
 WHITE=\033[0;37m
 RESET=\033[0m
 
+SRCS=src/main.c \
+
 OBJS=$(SRCS:.c=.o)
 all: $(NAME)
+
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_DIR)/$(LIBFT)
+	@echo "$(GREEN)Minishell compiled successfully.$(RESET)"
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(BLUE)Compiling $<...$(RESET)"
 
 $(LIBFT):
 	@make -C $(LIBFT_DIR) > /dev/null
