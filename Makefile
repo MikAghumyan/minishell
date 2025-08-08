@@ -3,6 +3,7 @@ CFLAGS=-Wall -Wextra -Werror
 NAME=minishell
 LIBFT=libft.a
 LIBFT_DIR=libft
+LIBS=-lreadline
 
 GREEN=\033[0;32m
 BLUE=\033[0;34m
@@ -14,12 +15,13 @@ WHITE=\033[0;37m
 RESET=\033[0m
 
 SRCS=src/main.c \
+	  src/initializer.c \
 
 OBJS=$(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_DIR)/$(LIBFT)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_DIR)/$(LIBFT) $(LIBS)
 	@echo "$(GREEN)Minishell compiled successfully.$(RESET)"
 
 %.o: %.c
