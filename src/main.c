@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **envp)
 		shell.input = readline("minishell> ");
 		if (!shell.input)
 			break ;
-		printf("You entered: %s\n", shell.input);
+		tokenize_input(&shell);
 		free(shell.input);
 	}
 	return (0);

@@ -16,16 +16,18 @@ RESET=\033[0m
 
 SRCS=src/main.c \
 	  src/initializer.c \
+	  src/tokenizer/tokenizer.c \
+	  src/tokenizer/token_utils.c \
 
 OBJS=$(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_DIR)/$(LIBFT) $(LIBS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_DIR)/$(LIBFT) $(LIBS)
 	@echo "$(GREEN)Minishell compiled successfully.$(RESET)"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(BLUE)Compiling $<...$(RESET)"
 
 $(LIBFT):

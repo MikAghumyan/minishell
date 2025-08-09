@@ -6,12 +6,12 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/08 17:25:56 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/08 18:55:57 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL
-# define MINISHELL
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "../libft/libft.h"
 # include <errno.h>
@@ -45,5 +45,7 @@ typedef struct s_shell
 }			t_shell;
 
 void		initialize_shell(t_shell *shell, char **envp);
+
+# include "tokenizer.h"
 
 #endif
