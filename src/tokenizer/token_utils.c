@@ -30,10 +30,27 @@ t_token	*add_token(t_token **tokens, const char *value, e_token_type type)
 
 void	print_tokens(t_token *tokens)
 {
-	t_token *current = tokens;
+	t_token	*current;
+
+	current = tokens;
 	while (current)
 	{
 		printf("Token: %s, Type: %d\n", current->value, current->type);
 		current = current->next;
+	}
+}
+
+void	free_tokens(t_token *tokens)
+{
+	t_token	*current;
+	t_token	*next;
+
+	current = tokens;
+	while (current)
+	{
+		next = current->next;
+		free(current->value);
+		free(current);
+		current = next;
 	}
 }

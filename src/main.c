@@ -2,11 +2,11 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_shell	shell;
+
 	(void)envp;
 	(void)argc;
 	(void)argv;
-
-	t_shell shell;
 	initialize_shell(&shell, envp);
 	while (*shell.envp)
 	{
@@ -19,8 +19,9 @@ int	main(int argc, char **argv, char **envp)
 		shell.input = readline("minishell> ");
 		if (!shell.input)
 			break ;
-		tokenize_input(&shell);
-		free(shell.input);
+		shell.tokens = tokenize_input(&shell);
+		handle_clear(&shell);
 	}
+	handle_exit(&shell);
 	return (0);
 }
