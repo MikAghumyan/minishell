@@ -5,7 +5,8 @@ bool	is_operator(char c)
 	return (c == '|' || c == '<' || c == '>' || c == '&');
 }
 
-t_token	*add_token(t_token **tokens, const char *value, e_token_type type)
+t_token	*add_token_slice(t_token **tokens, const char *start, size_t len,
+		e_token_type type)
 {
 	t_token	*new_token;
 	t_token	*last;
@@ -13,7 +14,12 @@ t_token	*add_token(t_token **tokens, const char *value, e_token_type type)
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	new_token->value = ft_strdup(value);
+	new_token->value = ft_substr(start, 0, len);
+	if (!new_token->value)
+	{
+		free(new_token);
+		return (NULL);
+	}
 	new_token->type = type;
 	new_token->next = NULL;
 	if (!*tokens)

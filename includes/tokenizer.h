@@ -28,11 +28,12 @@ typedef struct s_token
 
 t_token				*tokenize_input(t_shell *shell);
 void				free_tokens(t_token *tokens);
-t_token				*add_operator_token(t_token **tokens, const char *value,
+t_token				*add_operator_token(t_token **tokens, const char *input,
 						size_t *i);
-t_token				*add_token(t_token **tokens, const char *value,
-						e_token_type type);
+t_token				*add_token_slice(t_token **tokens, const char *start,
+						size_t len, e_token_type type);
 bool				is_operator(const char c);
+size_t				scan_word(const char *input, size_t start);
 void				print_tokens(t_token *tokens);
 
 #endif
