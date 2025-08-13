@@ -34,6 +34,8 @@ t_token				*add_token_slice(t_token **tokens, const char *start,
 						size_t len, e_token_type type);
 bool				is_operator(const char c);
 size_t				scan_word(const char *input, size_t start);
+int					process_single_char(t_shell *shell, size_t *i,
+						t_token **tokens);
 void				print_tokens(t_token *tokens);
 
 #endif

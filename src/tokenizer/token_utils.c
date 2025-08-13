@@ -11,14 +11,16 @@ t_token	*add_token_slice(t_token **tokens, const char *start, size_t len,
 	t_token	*new_token;
 	t_token	*last;
 
+	if (!tokens || !start || len == 0)
+		return (NULL);
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return (NULL);
+		return (ft_putstr_fd("minishell: memory allocation failed\n", 2), NULL);
 	new_token->value = ft_substr(start, 0, len);
 	if (!new_token->value)
 	{
 		free(new_token);
-		return (NULL);
+		return (ft_putstr_fd("minishell: memory allocation failed\n", 2), NULL);
 	}
 	new_token->type = type;
 	new_token->next = NULL;
