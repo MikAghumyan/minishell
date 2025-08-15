@@ -18,6 +18,7 @@ SRCS=src/main.c \
 	  src/initializer.c \
 	  src/tokenizer/tokenizer.c \
 	  src/tokenizer/token_utils.c \
+	  src/tokenizer/token_type_utils.c \
 	  src/handlers.c \
 
 OBJS=$(SRCS:.c=.o)
