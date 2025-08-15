@@ -29,10 +29,13 @@ typedef struct s_token
 t_token				*tokenize_input(t_shell *shell);
 int					process_single_char(t_shell *shell, size_t *i,
 						t_token **tokens);
-size_t				scan_word(const char *input, size_t start);
+size_t				scan_word(const char *input, size_t start,
+						const char end_char);
 int					add_operator_token(t_token **tokens, const char *input,
 						size_t *i);
 int					add_word_token(t_token **tokens, const char *input,
+						size_t *i);
+int					add_quote_token(t_token **tokens, const char *input,
 						size_t *i);
 int					add_token_slice(t_token **tokens, const char *start,
 						size_t len, e_token_type type);

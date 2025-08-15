@@ -4,21 +4,20 @@ int	process_single_char(t_shell *shell, size_t *i, t_token **tokens)
 {
 	if (shell->input[*i] == ' ' || shell->input[*i] == '\t')
 		(*i)++;
+	else if (shell->input[*i] == '\'' || shell->input[*i] == '\"')
+	{
+		if (add_quote_token(tokens, shell->input, i) == -1)
+			return (ft_putstr_fd("minishell: tokenization error\n", 2), -1);
+	}
 	else if (is_operator(shell->input[*i]))
 	{
 		if (add_operator_token(tokens, shell->input, i) == -1)
-		{
-			ft_putstr_fd("minishell: tokenization error\n", 2);
-			return (-1);
-		}
+			return (ft_putstr_fd("minishell: tokenization error\n", 2), -1);
 	}
 	else
 	{
 		if (add_word_token(tokens, shell->input, i) == -1)
-		{
-			ft_putstr_fd("minishell: tokenization error\n", 2);
-			return (-1);
-		}
+			return (ft_putstr_fd("minishell: tokenization error\n", 2), -1);
 	}
 	return (0);
 }
