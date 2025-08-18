@@ -11,12 +11,13 @@ typedef enum e_token_type
 	TOKEN_REDIRECT_OUT,
 	TOKEN_APPEND,
 	TOKEN_HEREDOC,
-	TOKEN_ENV_VAR,
 	TOKEN_QUOTE,
 	TOKEN_DQUOTE,
-	TOKEN_INVALID,
+	TOKEN_LPAREN,
+	TOKEN_RPAREN,
 	TOKEN_OR,
 	TOKEN_AND,
+	TOKEN_INVALID,
 }					e_token_type;
 
 typedef struct s_token
@@ -31,6 +32,8 @@ int					process_single_char(t_shell *shell, size_t *i,
 						t_token **tokens);
 size_t				scan_word(const char *input, size_t start,
 						const char end_char);
+int					add_redirect_token(t_token **tokens, const char *input,
+						size_t *i);
 int					add_operator_token(t_token **tokens, const char *input,
 						size_t *i);
 int					add_word_token(t_token **tokens, const char *input,

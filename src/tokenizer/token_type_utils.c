@@ -36,6 +36,25 @@ int	add_word_token(t_token **tokens, const char *input, size_t *i)
 			TOKEN_WORD));
 }
 
+int	add_redirect_token(t_token **tokens, const char *input, size_t *i)
+{
+	if (!input || !input[*i] || !tokens || !i)
+		return (-1);
+	if (ft_strncmp(&input[*i], ">>", 2) == 0)
+		return ((*i) += 2, add_token_slice(tokens, &input[*i - 2], 2,
+				TOKEN_APPEND));
+	if (ft_strncmp(&input[*i], "<<", 2) == 0)
+		return ((*i) += 2, add_token_slice(tokens, &input[*i - 2], 2,
+				TOKEN_HEREDOC));
+	if (input[*i] == '<')
+		return ((*i)++, add_token_slice(tokens, &input[*i - 1], 1,
+				TOKEN_REDIRECT_IN));
+	if (input[*i] == '>')
+		return ((*i)++, add_token_slice(tokens, &input[*i - 1], 1,
+				TOKEN_REDIRECT_OUT));
+	return (-1);
+}
+
 int	add_operator_token(t_token **tokens, const char *input, size_t *i)
 {
 	if (!input || !input[*i] || !tokens || !i)
@@ -46,20 +65,19 @@ int	add_operator_token(t_token **tokens, const char *input, size_t *i)
 	if (ft_strncmp(&input[*i], "||", 2) == 0)
 		return ((*i) += 2, add_token_slice(tokens, &input[*i - 2], 2,
 				TOKEN_OR));
-	if (ft_strncmp(&input[*i], ">>", 2) == 0)
-		return ((*i) += 2, add_token_slice(tokens, &input[*i - 2], 2,
-				TOKEN_APPEND));
-	if (ft_strncmp(&input[*i], "<<", 2) == 0)
-		return ((*i) += 2, add_token_slice(tokens, &input[*i - 2], 2,
-				TOKEN_HEREDOC));
+	if (input[*i] == '&')
+		return ((*i)++, add_token_slice(tokens, &input[*i - 1], 1,
+				TOKEN_INVALID));
 	if (input[*i] == '|')
 		return ((*i)++, add_token_slice(tokens, &input[*i - 1], 1, TOKEN_PIPE));
-	if (input[*i] == '<')
+	if (input[*i] == '<' || input[*i] == '>')
+		return (add_redirect_token(tokens, input, i));
+	if (input[*i] == '(')
 		return ((*i)++, add_token_slice(tokens, &input[*i - 1], 1,
-				TOKEN_REDIRECT_IN));
-	if (input[*i] == '>')
+				TOKEN_LPAREN));
+	if (input[*i] == ')')
 		return ((*i)++, add_token_slice(tokens, &input[*i - 1], 1,
-				TOKEN_REDIRECT_OUT));
+				TOKEN_RPAREN));
 	return (-1);
 }
 

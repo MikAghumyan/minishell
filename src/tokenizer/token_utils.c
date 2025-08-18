@@ -2,7 +2,8 @@
 
 bool	is_operator(char c)
 {
-	return (c == '|' || c == '<' || c == '>' || c == '&');
+	return (c == '|' || c == '<' || c == '>' || c == '&' || c == '('
+		|| c == ')');
 }
 
 int	add_token_slice(t_token **tokens, const char *start, size_t len,
