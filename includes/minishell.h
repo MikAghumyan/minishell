@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/09 17:56:49 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:46:01 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_shell
 
 void					initialize_shell(t_shell *shell, char **envp);
 
+# include "env.h"
 # include "handlers.h"
 # include "tokenizer.h"
 
