@@ -6,6 +6,6 @@
 typedef struct s_shell	t_shell;
 
 void					handle_exit(t_shell *shell);
-void					handle_clear(t_shell *shell);
+void					handle_clear_input(t_shell *shell);
 
 #endif

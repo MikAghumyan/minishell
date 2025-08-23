@@ -26,6 +26,21 @@ char	*env_generate_var(const char *key, const char *value)
 	return (env_var);
 }
 
+char	*env_get_value(const char *key, t_env *env)
+{
+	size_t	i;
+
+	if (!key || !env)
+		return (NULL);
+	i = -1;
+	while (++i < env->size)
+	{
+		if (env_keycmp(key, env->data[i]))
+			return (env->data[i] + strlen(key) + 1);
+	}
+	return (NULL);
+}
+
 void	env_free(t_env **env)
 {
 	size_t	i;

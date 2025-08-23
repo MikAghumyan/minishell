@@ -21,6 +21,8 @@ SRCS=src/main.c \
 	  src/tokenizer/tokenizer.c \
 	  src/tokenizer/token_utils.c \
 	  src/handlers.c \
+	  src/env/env.c \
+	  src/env/env_utils.c \
 
 OBJS=$(SRCS:.c=.o)
 DEBUG_OBJS=$(SRCS:.c=.debug.o)

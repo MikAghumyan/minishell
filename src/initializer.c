@@ -2,6 +2,7 @@
 
 void	initialize_shell(t_shell *shell, char **envp)
 {
-	shell->envp = envp;
+	shell->env = env_init(envp);
+	// TODO handle error
 	shell->exit_status = 0;
 }

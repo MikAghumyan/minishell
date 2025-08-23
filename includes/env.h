@@ -13,5 +13,6 @@ void		env_free(t_env **env);
 bool		env_set(t_env *env, const char *key, const char *value);
 bool		env_keycmp(const char *key, const char *env_var);
 char		*env_generate_var(const char *key, const char *value);
+char		*env_get_value(const char *key, t_env *env);
 
 #endif
