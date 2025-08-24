@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/23 11:38:17 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/24 14:12:00 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@
 # define BOLD "\033[1m"
 # define UNDERLINE "\033[4m"
 
-# include "env.h"
-# include "handlers.h"
-# include "tokenizer.h"
 typedef struct s_shell
 {
 	t_env	*env;
@@ -46,6 +43,10 @@ typedef struct s_shell
 	char	*input;
 	t_token	*tokens;
 }			t_shell;
+
+# include "env.h"
+# include "handlers.h"
+# include "tokenizer.h"
 
 void		initialize_shell(t_shell *shell, char **envp);
 
