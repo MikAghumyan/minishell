@@ -31,4 +31,8 @@ t_ast_node  *create_node(e_node_type type);
 void        free_ast(t_ast_node *node);
 void        print_ast(t_ast_node *node, int depth);
 
+t_ast_node  *parse_logical(t_token **tokens); //&& ||
+t_ast_node  *parse_pipeline(t_token **tokens); // |
+t_ast_node  *parse_command(t_token **tokens); // commands and redirects
+
 #endif
