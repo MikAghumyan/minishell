@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initializer.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/23 15:38:55 by maghumya          #+#    #+#             */
+/*   Updated: 2025/08/23 15:38:56 by maghumya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	initialize_shell(t_shell *shell, char **envp)
 {
-	shell->envp = envp;
+	shell->env = env_init(envp);
+	// TODO handle error
 	shell->exit_status = 0;
 }

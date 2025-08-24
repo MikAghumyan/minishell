@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
+/*   Updated: 2025/08/23 15:39:18 by maghumya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	main(int argc, char **argv, char **envp)
@@ -17,7 +29,7 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.input[0] != '\0')
 			add_history(shell.input);
 		shell.tokens = tokenize_input(&shell);
-		handle_clear(&shell);
+		handle_clear_input(&shell);
 	}
 	handle_exit(&shell);
 	return (0);
