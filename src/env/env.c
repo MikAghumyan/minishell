@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:57:53 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/23 01:33:19 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:42:15 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,39 +111,3 @@ bool	env_unset(t_env *env, const char *key)
 	}
 	return (false);
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_env *env_arr = env_init(envp);
-
-// 	printf("%sarr_size: %ld\tarr_capacity: %ld\narr_data:\n%s", GREEN,
-// 		env_arr->size, env_arr->capacity, RESET);
-// 	for (int i = 0; env_arr->data[i]; i++)
-// 		printf("%s\n", env_arr->data[i]);
-// 	env_set(env_arr, "NEW_VAR", "new_value");
-// 	env_set(env_arr, "NEW_VAR1", "new_value");
-// 	env_set(env_arr, "NEW_VAR2", "new_value");
-// 	env_set(env_arr, "NEW_VAR3", "new_value");
-// 	env_set(env_arr, "NEW_VAR4", "new_value");
-// 	env_set(env_arr, "NEW_VAR5", "new_value");
-// 	env_set(env_arr, "NEW_VAR6", "new_value");
-// 	env_set(env_arr, "NEW_VAR7", "new_value");
-// 	env_set(env_arr, "NEW_VAR8", "new_value");
-// 	env_set(env_arr, "NEW_VAR9", "new_value");
-// 	env_set(env_arr, "NEW_VAR10", "new_value");
-// 	env_set(env_arr, "NEW_VAR11", "new_value");
-// 	env_set(env_arr, "NEW_VAR12", "new_value");
-// 	env_set(env_arr, "NEW_VAR13", "new_value");
-// 	env_set(env_arr, "NEW_VAR14", "new_value");
-// 	env_set(env_arr, "NEW_VAR15", "new_value");
-// 	env_set(env_arr, "NEW_VAR16", "new_value");
-// 	env_unset(env_arr, "NEW_VAR");
-// 	env_set(env_arr, "NEW_VAR1", "new_value_changed");
-// 	printf("%sAfter adding NEW_VAR:\n%s", RED, RESET);
-// 	printf("%sarr_size: %ld\tarr_capacity: %ld\narr_data:\n%s", GREEN,
-// 		env_arr->size, env_arr->capacity, RESET);
-// 	for (int i = 0; env_arr->data[i]; i++)
-// 		printf("%s\n", env_arr->data[i]);
-// 	env_free(&env_arr);
-// 	return (0);
-// }

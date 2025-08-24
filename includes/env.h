@@ -6,25 +6,27 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:07 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/23 15:39:08 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/24 16:44:44 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
 
+typedef struct s_shell	t_shell;
+
 typedef struct s_env
 {
-	char	**data;
-	size_t	size;
-	size_t	capacity;
-}			t_env;
+	char				**data;
+	size_t				size;
+	size_t				capacity;
+}						t_env;
 
-t_env		*env_init(char **envp);
-void		env_free(t_env **env);
-bool		env_set(t_env *env, const char *key, const char *value);
-bool		env_keycmp(const char *key, const char *env_var);
-char		*env_generate_var(const char *key, const char *value);
-char		*env_get_value(const char *key, t_env *env);
+t_env					*env_init(char **envp);
+void					env_free(t_env **env);
+bool					env_set(t_env *env, const char *key, const char *value);
+bool					env_keycmp(const char *key, const char *env_var);
+char					*env_generate_var(const char *key, const char *value);
+char					*env_get_value(const char *key, t_env *env);
 
 #endif
