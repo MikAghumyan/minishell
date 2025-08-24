@@ -3,6 +3,8 @@
 
 # include "../libft/libft.h"
 
+typedef struct t_shell;
+
 typedef enum e_token_type
 {
 	TOKEN_WORD,
