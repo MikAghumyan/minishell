@@ -14,7 +14,7 @@ size_t	scan_word(const char *input, size_t start, const char end_char)
 	{
 		while (input[end] && input[end] != ' ' && input[end] != '\t'
 			&& input[end] != '\'' && input[end] != '\"'
-			&& !is_operator(input[end]))
+			&& !token_is_operator(input[end]))
 			end++;
 	}
 	return (end);
@@ -65,7 +65,7 @@ int	add_operator_token(t_token **tokens, const char *input, size_t *i)
 	if (ft_strncmp(&input[*i], "||", 2) == 0)
 		return ((*i) += 2, add_token_slice(tokens, &input[*i - 2], 2,
 				TOKEN_OR));
-	if (input[*i] == '&')
+	if (input[*i] == '&' || input[*i] == ';')
 		return ((*i)++, add_token_slice(tokens, &input[*i - 1], 1,
 				TOKEN_INVALID));
 	if (input[*i] == '|')
