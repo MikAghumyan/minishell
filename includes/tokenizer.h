@@ -49,5 +49,6 @@ void					add_tokens_back(t_token **tokens, t_token *new_token);
 void					print_tokens(t_token *tokens);
 void					free_tokens(t_token *tokens);
 bool					analyze_tokens(t_token *token);
+char					*expand_token(t_shell *shell, t_token *token);
 
 #endif

@@ -8,6 +8,9 @@ int	process_single_char(t_shell *shell, size_t *i, t_token **tokens)
 	{
 		if (add_quote_token(tokens, shell->input, i) == -1)
 			return (ft_putstr_fd("minishell: tokenization error\n", 2), -1);
+		if (!expand_token(shell, *tokens))
+			return (ft_putstr_fd("minishell: tokenization error\n", 2), -1);
+		// TODO THIS SHOULD EXIT PROGRAM
 	}
 	else if (token_is_operator(shell->input[*i]))
 	{
@@ -18,6 +21,9 @@ int	process_single_char(t_shell *shell, size_t *i, t_token **tokens)
 	{
 		if (add_word_token(tokens, shell->input, i) == -1)
 			return (ft_putstr_fd("minishell: tokenization error\n", 2), -1);
+		if (!expand_token(shell, *tokens))
+			return (ft_putstr_fd("minishell: tokenization error\n", 2), -1);
+		// TODO THIS SHOULD EXIT PROGRAM
 	}
 	return (0);
 }
