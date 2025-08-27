@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:25:26 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/27 01:03:50 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/27 14:05:06 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ static inline bool	analyze_parentheses(t_token *token,
 		count_parentheses[1]++;
 	if (!token->next)
 		return (true);
-	if (token->type == TOKEN_LPAREN && token->next->type != TOKEN_WORD
-		&& token->next->type != TOKEN_LPAREN)
+	if (token->type == TOKEN_LPAREN && token->next->type == TOKEN_RPAREN)
+		return (false);
+	else if (token->type == TOKEN_LPAREN && is_operator_type(token->next))
 		return (false);
 	else if (is_operator_type(token) && token->next->type == TOKEN_RPAREN)
 		return (false);
@@ -45,7 +46,8 @@ static inline bool	analyze_parentheses(t_token *token,
 	return (true);
 }
 
-static bool	analyze_tokens_order(t_token *token, size_t *count_parentheses)
+static inline bool	analyze_tokens_order(t_token *token,
+		size_t *count_parentheses)
 {
 	if (!token)
 		return (false);
