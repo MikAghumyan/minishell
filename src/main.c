@@ -1,4 +1,5 @@
 #include "../includes/minishell.h"
+#include "../includes/ast.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -17,6 +18,19 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.input[0] != '\0')
 			add_history(shell.input);
 		shell.tokens = tokenize_input(&shell);
+		
+		if (shell.tokens)
+		{
+			t_ast_node *ast = build_ast(shell.tokens);
+			if (ast)
+			{
+				printf("\n=== AST TREE ===\n");
+				print_ast(ast, 0);
+				printf("================\n\n");
+				free_ast(ast);
+			}
+		}
+		
 		handle_clear(&shell);
 	}
 	handle_exit(&shell);
