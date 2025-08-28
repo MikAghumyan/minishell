@@ -35,4 +35,14 @@ t_ast_node  *parse_logical(t_token **tokens); //&& ||
 t_ast_node  *parse_pipeline(t_token **tokens); // |
 t_ast_node  *parse_command(t_token **tokens); // commands and redirects
 
+//utils
+int  is_subshell_token(t_token *token);
+int  is_redirect_token(t_token *token);
+int  is_logical_token(t_token *token);
+char  **collect_arguments(t_token **tokens, int *arg_count);
+t_ast_node  *parse_simple_command(t_token **tokens);
+t_ast_node  *create_redirect_node(t_token *token);
+t_ast_node  *parse_redirections(t_token **tokens, t_ast_node *cmd_node);
+
+
 #endif
