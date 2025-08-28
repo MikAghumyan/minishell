@@ -15,11 +15,15 @@ WHITE=\033[0;37m
 RESET=\033[0m
 
 SRCS=src/main.c \
-	  src/initializer.c \
-	  src/tokenizer/tokenizer.c \
-	  src/tokenizer/token_utils.c \
-	  src/tokenizer/token_type_utils.c \
-	  src/handlers.c \
+      src/initializer.c \
+      src/tokenizer/tokenizer.c \
+      src/tokenizer/token_utils.c \
+      src/tokenizer/token_type_utils.c \
+      src/handlers.c \
+      src/ast/ast.c \
+      src/ast/ast_build.c \
+      src/ast/ast_build_utils.c \
+	  src/ast/parse_command_utils.c
 
 OBJS=$(SRCS:.c=.o)
 all: $(NAME)
