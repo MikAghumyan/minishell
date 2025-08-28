@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/09 17:56:49 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/28 09:19:21 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <wait.h>
+# include "handlers.h"
+# include "tokenizer.h"
 
 # define RESET "\033[0m"
 # define RED "\033[31m"
@@ -47,8 +49,5 @@ typedef struct s_shell
 }						t_shell;
 
 void					initialize_shell(t_shell *shell, char **envp);
-
-# include "handlers.h"
-# include "tokenizer.h"
 
 #endif
