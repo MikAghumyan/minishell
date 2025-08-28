@@ -1,4 +1,6 @@
 #include "../../includes/ast.h"
+#include <stdlib.h>
+#include <string.h>
 
 t_ast_node  *build_ast(t_token *tokens)
 {
@@ -42,4 +44,33 @@ t_ast_node  *parse_pipeline(t_token **tokens) // |
         left = pipe_node;
     }
     return (left);
+}
+
+static t_ast_node  *parse_subshell(t_token **tokens)
+{
+    t_ast_node  *subshell_node;
+    
+    *tokens = (*tokens)->next; // skip '('
+    subshell_node = create_node(NODE_SUBSHELL);
+    subshell_node->left = parse_logical(tokens);
+    
+    if (*tokens && (*tokens)->type == TOKEN_RPAREN)
+        *tokens = (*tokens)->next; // skip ')'
+    
+    return (subshell_node);
+}
+
+
+
+t_ast_node  *parse_command(t_token **tokens)
+{
+    t_ast_node  *cmd_node;
+    
+    if (is_subshell_token(*tokens))
+        return (parse_subshell(tokens));
+    
+    cmd_node = parse_simple_command(tokens);
+    cmd_node = parse_redirections(tokens, cmd_node);
+    
+    return (cmd_node);
 }
