@@ -23,7 +23,7 @@ SRCS=src/main.c \
       src/ast/ast.c \
       src/ast/ast_build.c \
       src/ast/ast_build_utils.c \
-	  src/ast/parse_command_utils.c
+      src/ast/parse_command_utils.c
 
 OBJS=$(SRCS:.c=.o)
 all: $(NAME)
