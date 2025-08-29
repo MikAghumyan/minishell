@@ -1,7 +1,8 @@
 #ifndef MINISHELL_TOKENIZER_H
 # define MINISHELL_TOKENIZER_H
 
-# include "../libft/libft.h"
+# include "./minishell.h"
+# include <stdbool.h>
 
 typedef struct s_shell	t_shell;
 

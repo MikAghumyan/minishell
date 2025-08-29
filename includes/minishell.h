@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/25 16:02:43 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/29 21:40:55 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "handlers.h"
+# include "tokenizer.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/history.h>

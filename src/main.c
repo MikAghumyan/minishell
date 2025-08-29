@@ -6,15 +6,17 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/29 15:50:34 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/29 21:41:53 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/ast.h"
 #include "../includes/minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
+	t_shell		shell;
+	t_ast_node	*ast;
 
 	(void)envp;
 	(void)argc;
@@ -30,6 +32,17 @@ int	main(int argc, char **argv, char **envp)
 			add_history(shell.input);
 		// TODO HANDLE ADD_HISTORY'S CLEAN AT THE END
 		shell.tokens = tokenize_input(&shell);
+		if (shell.tokens)
+		{
+			ast = build_ast(shell.tokens);
+			if (ast)
+			{
+				printf("\n=== AST TREE ===\n");
+				print_ast(ast, 0);
+				printf("================\n\n");
+				free_ast(ast);
+			}
+		}
 		handle_clear_input(&shell);
 	}
 	handle_exit(&shell);
