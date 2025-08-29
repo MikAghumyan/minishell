@@ -1,6 +1,6 @@
 #include "../../includes/ast.h"
 
-t_ast_node  *create_node(e_node_type type)
+t_ast_node  *create_ast_node(e_node_type type)
 {
     t_ast_node *node;
 
