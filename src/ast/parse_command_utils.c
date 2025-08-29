@@ -10,10 +10,10 @@ char  **collect_ast_arguments(t_token **tokens, int *arg_count)
     
     while (*tokens && (*tokens)->type == TOKEN_WORD)
     {
-        args = realloc(args, sizeof(char*) * (count + 2));
+        args = ft_realloc(args, sizeof(char*) * (count + 1), sizeof(char*) * (count + 2));
         if (!args)
             return (NULL);
-        args[count] = strdup((*tokens)->value);
+        args[count] = ft_strdup((*tokens)->value);
         if (!args[count])
             return (NULL);
         count++;
@@ -66,7 +66,7 @@ t_ast_node  *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node)
         
         if (*tokens && (*tokens)->type == TOKEN_WORD)
         {
-            redirect_node->redirect_file = strdup((*tokens)->value);
+            redirect_node->redirect_file = ft_strdup((*tokens)->value);
             *tokens = (*tokens)->next;
             redirect_node->left = cmd_node;
             cmd_node = redirect_node;
