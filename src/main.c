@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/23 15:39:18 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:50:34 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		if (shell.input[0] != '\0')
 			add_history(shell.input);
+		// TODO HANDLE ADD_HISTORY'S CLEAN AT THE END
 		shell.tokens = tokenize_input(&shell);
 		handle_clear_input(&shell);
 	}
