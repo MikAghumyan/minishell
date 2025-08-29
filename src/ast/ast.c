@@ -24,7 +24,7 @@ void    free_ast(t_ast_node *node)
     if (node->args)
     {
         i = 0;
-        while (node->args[i])  //here we delete args of command if they exist
+        while (node->args[i])
         {
             free(node->args[i]);
             i++;
@@ -32,8 +32,8 @@ void    free_ast(t_ast_node *node)
         free(node->args);
     }
     if (node->redirect_file)
-        free(node->redirect_file);  //deleting file name if it exists
-    free_ast(node->right);  //recoursive deleting all nodes
+        free(node->redirect_file);
+    free_ast(node->right);
     free_ast(node->left);
     free(node);
 }
@@ -59,7 +59,7 @@ void	print_ast(t_ast_node *node, int depth)
             i = 0;
             while (node->args[i])
             {
-                printf("%s ", node->args[i]);   //printing ast tree recoursively 
+                printf("%s ", node->args[i]);
                 i++;
             }
         }

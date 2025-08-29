@@ -9,27 +9,27 @@ t_ast_node  *build_ast(t_token *tokens)
     return (ast_parse_logical(&tokens));
 }
 
-t_ast_node  *ast_parse_logical(t_token **tokens) //&& ||
+t_ast_node  *ast_parse_logical(t_token **tokens)
 {
-    t_ast_node  *left; //left command
+    t_ast_node  *left;
     t_ast_node  *operator_node;
 
     left = ast_parse_pipeline(tokens);
-    while (*tokens && ((*tokens)->type == TOKEN_AND || (*tokens)->type == TOKEN_OR)) //handilng tokens in cycle
+    while (*tokens && ((*tokens)->type == TOKEN_AND || (*tokens)->type == TOKEN_OR))
     {
-        if ((*tokens)->type == TOKEN_AND)  //creating operator node
+        if ((*tokens)->type == TOKEN_AND)
             operator_node = create_ast_node(NODE_AND);
         else
             operator_node = create_ast_node(NODE_OR);
-        *tokens = (*tokens)->next; //skip operator
-        operator_node->left = left;  
+        *tokens = (*tokens)->next;
+        operator_node->left = left;
         operator_node->right = ast_parse_pipeline(tokens);
         left = operator_node;
     } 
     return (left);
 }
 
-t_ast_node  *ast_parse_pipeline(t_token **tokens) // |
+t_ast_node  *ast_parse_pipeline(t_token **tokens)
 {
     t_ast_node  *left;
     t_ast_node  *pipe_node;

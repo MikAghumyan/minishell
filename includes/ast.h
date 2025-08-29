@@ -19,9 +19,9 @@ typedef enum e_node_type
 
 typedef struct s_ast_node
 {
-    e_node_type         type;    // token type
-    char                **args;  // command args
-    char                *redirect_file; // redirection file
+    e_node_type         type;
+    char                **args;
+    char                *redirect_file;
     struct s_ast_node   *left;
     struct s_ast_node   *right;
 }   t_ast_node;
@@ -31,8 +31,8 @@ t_ast_node  *create_ast_node(e_node_type type);
 void        free_ast(t_ast_node *node);
 void        print_ast(t_ast_node *node, int depth);
 
-t_ast_node  *ast_parse_logical(t_token **tokens); //&& ||
-t_ast_node  *ast_parse_pipeline(t_token **tokens); // |
+t_ast_node  *ast_parse_logical(t_token **tokens);
+t_ast_node  *ast_parse_pipeline(t_token **tokens);
 t_ast_node  *ast_parse_command(t_token **tokens); // commands and redirects
 
 //utils
