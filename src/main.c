@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/29 21:41:53 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:08:57 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	main(int argc, char **argv, char **envp)
 				printf("\n=== AST TREE ===\n");
 				print_ast(ast, 0);
 				printf("================\n\n");
+				execute_ast(ast, &shell);
+                printf("Exit status: %d\n", shell.exit_status);
 				free_ast(ast);
 			}
 		}
