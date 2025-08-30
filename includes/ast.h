@@ -19,30 +19,30 @@ typedef enum e_node_type
 
 typedef struct s_ast_node
 {
-    e_node_type         type;    // token type
-    char                **args;  // command args
-    char                *redirect_file; // redirection file
+    e_node_type         type;
+    char                **args;
+    char                *redirect_file;
     struct s_ast_node   *left;
     struct s_ast_node   *right;
 }   t_ast_node;
 
 t_ast_node  *build_ast(t_token *tokens);
-t_ast_node  *create_node(e_node_type type);
+t_ast_node  *create_ast_node(e_node_type type);
 void        free_ast(t_ast_node *node);
 void        print_ast(t_ast_node *node, int depth);
 
-t_ast_node  *parse_logical(t_token **tokens); //&& ||
-t_ast_node  *parse_pipeline(t_token **tokens); // |
-t_ast_node  *parse_command(t_token **tokens); // commands and redirects
+t_ast_node  *ast_parse_logical(t_token **tokens);
+t_ast_node  *ast_parse_pipeline(t_token **tokens);
+t_ast_node  *ast_parse_command(t_token **tokens); // commands and redirects
 
 //utils
-int  is_subshell_token(t_token *token);
-int  is_redirect_token(t_token *token);
-int  is_logical_token(t_token *token);
-char  **collect_arguments(t_token **tokens, int *arg_count);
-t_ast_node  *parse_simple_command(t_token **tokens);
-t_ast_node  *create_redirect_node(t_token *token);
-t_ast_node  *parse_redirections(t_token **tokens, t_ast_node *cmd_node);
+int  is_subshell_ast_token(t_token *token);
+int  is_redirect_ast_token(t_token *token);
+int  is_logical_ast_token(t_token *token);
+char  **collect_ast_arguments(t_token **tokens, int *arg_count);
+t_ast_node  *ast_parse_simple_command(t_token **tokens);
+t_ast_node  *create_redirect_ast_node(t_token *token);
+t_ast_node  *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node);
 
 
 #endif
