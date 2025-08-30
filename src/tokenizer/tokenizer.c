@@ -44,7 +44,6 @@ static int	process_single_char(t_shell *shell, size_t *i, t_token **tokens)
 		if (!add_operator_token(tokens, shell->input, i))
 			return (-1);
 	}
-	printf("hello\n");
 	return (0);
 }
 
