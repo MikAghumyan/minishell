@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/30 12:40:05 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/08/30 13:18:31 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <wait.h>
+# include <sys/wait.h>
 
 # define RESET "\033[0m"
 # define RED "\033[31m"
