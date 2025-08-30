@@ -9,7 +9,7 @@ int execute_ast(t_ast_node *node, t_shell *shell)
     else if (node->type == NODE_PIPE)
         return (execute_pipe(node, shell));
     else if (node->type == NODE_AND || node->type == NODE_OR)
-        return (execute_pipe(node, shell));
+        return (execute_logical(node, shell));
     else if (node->type >= NODE_REDIRECT_IN && node->type <= NODE_HEREDOC)
         return (execute_redirect(node, shell));
     else if (node->type == NODE_SUBSHELL)
