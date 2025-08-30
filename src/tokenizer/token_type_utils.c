@@ -20,26 +20,26 @@ size_t	scan_word(const char *input, size_t start, const char end_char)
 	return (end);
 }
 
-int	add_word_token(t_token **tokens, const char *input, size_t *i)
+t_token	*add_word_token(t_token **tokens, const char *input, size_t *i)
 {
 	size_t	word_end;
 	size_t	word_start;
 
 	if (!tokens || !input || !i)
-		return (-1);
+		return (NULL);
 	word_start = *i;
 	word_end = scan_word(input, *i, ' ');
 	if (word_end == *i)
-		return (-1);
+		return (NULL);
 	*i = word_end;
 	return (add_token_slice(tokens, &input[word_start], word_end - word_start,
 			TOKEN_WORD));
 }
 
-int	add_redirect_token(t_token **tokens, const char *input, size_t *i)
+t_token	*add_redirect_token(t_token **tokens, const char *input, size_t *i)
 {
 	if (!input || !input[*i] || !tokens || !i)
-		return (-1);
+		return (NULL);
 	if (ft_strncmp(&input[*i], ">>", 2) == 0)
 		return ((*i) += 2, add_token_slice(tokens, &input[*i - 2], 2,
 				TOKEN_APPEND));
@@ -52,13 +52,13 @@ int	add_redirect_token(t_token **tokens, const char *input, size_t *i)
 	if (input[*i] == '>')
 		return ((*i)++, add_token_slice(tokens, &input[*i - 1], 1,
 				TOKEN_REDIRECT_OUT));
-	return (-1);
+	return (NULL);
 }
 
-int	add_operator_token(t_token **tokens, const char *input, size_t *i)
+t_token	*add_operator_token(t_token **tokens, const char *input, size_t *i)
 {
 	if (!input || !input[*i] || !tokens || !i)
-		return (-1);
+		return (NULL);
 	if (ft_strncmp(&input[*i], "&&", 2) == 0)
 		return ((*i) += 2, add_token_slice(tokens, &input[*i - 2], 2,
 				TOKEN_AND));
@@ -78,31 +78,31 @@ int	add_operator_token(t_token **tokens, const char *input, size_t *i)
 	if (input[*i] == ')')
 		return ((*i)++, add_token_slice(tokens, &input[*i - 1], 1,
 				TOKEN_RPAREN));
-	return (-1);
+	return (NULL);
 }
 
-int	add_quote_token(t_token **tokens, const char *input, size_t *i)
+t_token	*add_quote_token(t_token **tokens, const char *input, size_t *i)
 {
 	size_t	start;
 
 	if (!tokens || !input || !i)
-		return (-1);
+		return (NULL);
 	start = ++(*i);
 	if (input[*i - 1] == '\'')
 	{
 		*i = scan_word(input, *i, '\'');
 		if (!input[*i])
-			return (-1);
+			return (NULL);
 		return ((*i)++, add_token_slice(tokens, &input[start], *i - start - 1,
-				TOKEN_QUOTE));
+				TOKEN_WORD));
 	}
 	if (input[*i - 1] == '\"')
 	{
 		*i = scan_word(input, *i, '\"');
 		if (!input[*i])
-			return (-1);
+			return (NULL);
 		return ((*i)++, add_token_slice(tokens, &input[start], *i - start - 1,
-				TOKEN_DQUOTE));
+				TOKEN_WORD));
 	}
-	return (-1);
+	return (NULL);
 }
