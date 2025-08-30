@@ -1,6 +1,4 @@
 #include "../../includes/ast.h"
-#include <stdlib.h>
-#include <string.h>
 
 t_ast_node  *build_ast(t_token *tokens)
 {
