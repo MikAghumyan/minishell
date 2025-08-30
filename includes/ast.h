@@ -44,5 +44,8 @@ t_ast_node  *ast_parse_simple_command(t_token **tokens);
 t_ast_node  *create_redirect_ast_node(t_token *token);
 t_ast_node  *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node);
 
+//execute functions
+int execute_ast(t_ast_node *node, t_shell *shell);
+
 
 #endif
