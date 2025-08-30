@@ -6,26 +6,26 @@ bool	token_is_operator(char c)
 		|| c == ';');
 }
 
-int	add_token_slice(t_token **tokens, const char *start, size_t len,
+t_token	*add_token_slice(t_token **tokens, const char *start, size_t len,
 		e_token_type type)
 {
 	t_token	*new_token;
 
 	if (!tokens || !start || len == 0)
-		return (-1);
+		return (NULL);
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return (ft_putstr_fd("minishell: memory allocation failed\n", 2), -1);
+		return (ft_putstr_fd("minishell: memory allocation failed\n", 2), NULL);
 	new_token->value = ft_substr(start, 0, len);
 	if (!new_token->value)
 	{
 		free(new_token);
-		return (ft_putstr_fd("minishell: memory allocation failed\n", 2), -1);
+		return (ft_putstr_fd("minishell: memory allocation failed\n", 2), NULL);
 	}
 	new_token->type = type;
 	new_token->next = NULL;
 	add_tokens_back(tokens, new_token);
-	return (0);
+	return (new_token);
 }
 
 void	add_tokens_back(t_token **tokens, t_token *new_token)
