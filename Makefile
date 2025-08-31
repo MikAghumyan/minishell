@@ -31,6 +31,7 @@ SRCS=src/main.c \
       src/ast/ast_build_utils.c \
       src/ast/parse_command_utils.c \
 	  src/ast/ast_executor.c \
+	  src/ast/find_command_path.c \
 
 OBJS=$(SRCS:.c=.o)
 DEBUG_OBJS=$(SRCS:.c=.debug.o)
