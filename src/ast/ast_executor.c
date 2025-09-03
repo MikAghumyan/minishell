@@ -61,3 +61,8 @@ int execute_command(t_ast_node *node, t_shell *shell)
         return (1);
     }
 }
+
+int execute_pipe(t_ast_node *node, t_shell *shell)
+{
+    
+}
