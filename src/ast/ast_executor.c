@@ -6,9 +6,9 @@ int execute_ast(t_ast_node *node, t_shell *shell)
         return (0);
     if (node->type == NODE_COMMAND)
         return (execute_command(node, shell));
-   /* else if (node->type == NODE_PIPE)
+    else if (node->type == NODE_PIPE)
         return (execute_pipe(node, shell));
-    else if (node->type == NODE_AND || node->type == NODE_OR)
+    /*else if (node->type == NODE_AND || node->type == NODE_OR)
         return (execute_logical(node, shell));
     else if (node->type >= NODE_REDIRECT_IN && node->type <= NODE_HEREDOC)
         return (execute_redirect(node, shell));
@@ -64,5 +64,30 @@ int execute_command(t_ast_node *node, t_shell *shell)
 
 int execute_pipe(t_ast_node *node, t_shell *shell)
 {
-    
+    int     pipefds[2];
+    pid_t   left_pid;
+    pid_t   right_pid;
+
+    if (!node || !node->left || !node->right) //if there is no right or left child pipe is incorrect
+        return (1);
+    if (pipe(pipefds) == -1)
+        return (type_error_and_return());
+    left_pid = fork();
+    if (left_pid == 0)
+    {
+        handle_left_pid(pipefds);
+        exit(execute_ast(node->left, shell)); //execute left command and exit with return code
+    }
+    else if (left_pid < 0)
+        return (close_fds_return_error(pipefds));
+    right_pid = fork();
+    if (right_pid == 0)
+    {
+        handle_right_pid(pipefds);
+        exit(execute_ast(node->right, shell));
+    }
+    else if (right_pid < 0)
+        return (close_fds_return_error(pipefds));
+    close_fds(pipefds);
+    return (wait_for_children(left_pid, right_pid, shell));
 }

@@ -49,9 +49,17 @@ int execute_ast(t_ast_node *node, t_shell *shell);
 int execute_command(t_ast_node *node, t_shell *shell);
 int execute_pipe(t_ast_node *node, t_shell *shell);
 
-//utils
+//path utils
 void    free_paths(char **paths);
 char    **parse_path(char **envp);
 char    *find_command_path(char *cmd, char **envp);
+
+//pipe utils
+void    close_fds(int *pipefds);
+int     close_fds_return_error(int *pipefds);
+void    handle_left_pid(int *pipefds);
+void    handle_right_pid(int *pipefds);
+int     wait_for_children(pid_t left_pid, pid_t right_pid, t_shell *shell);
+int     type_error_and_return(void);
 
 #endif
