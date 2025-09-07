@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:57:53 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/24 16:42:15 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/09/07 16:52:21 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static bool	env_check_capacity(t_env *env)
 
 	if (env->size < env->capacity)
 		return (true);
-	printf("%sCHECK ENV WORKED\n", RED);
 	env->capacity *= 2;
 	new_data = (char **)malloc(sizeof(char *) * (env->capacity + 1));
 	if (!new_data)

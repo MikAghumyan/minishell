@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:02 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/23 15:39:03 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/09/07 16:51:51 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	env_keycmp(const char *key, const char *env_var)
 {
 	size_t	keylen;
 
-	keylen = strlen(key);
+	keylen = ft_strlen(key);
 	return (!ft_strncmp(env_var, key, keylen) && env_var[keylen] == '=');
 }
 
@@ -26,14 +26,14 @@ char	*env_generate_var(const char *key, const char *value)
 	size_t	valuelen;
 	char	*env_var;
 
-	keylen = strlen(key);
-	valuelen = strlen(value);
+	keylen = ft_strlen(key);
+	valuelen = ft_strlen(value);
 	env_var = malloc(keylen + valuelen + 2);
 	if (!env_var)
 		return (NULL);
-	memcpy(env_var, key, keylen);
+	ft_memcpy(env_var, key, keylen);
 	env_var[keylen] = '=';
-	memcpy(env_var + keylen + 1, value, valuelen);
+	ft_memcpy(env_var + keylen + 1, value, valuelen);
 	env_var[keylen + 1 + valuelen] = '\0';
 	return (env_var);
 }
@@ -48,7 +48,7 @@ char	*env_get_value(const char *key, t_env *env)
 	while (++i < env->size)
 	{
 		if (env_keycmp(key, env->data[i]))
-			return (env->data[i] + strlen(key) + 1);
+			return (env->data[i] + ft_strlen(key) + 1);
 	}
 	return (NULL);
 }
