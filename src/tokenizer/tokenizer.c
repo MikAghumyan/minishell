@@ -7,7 +7,7 @@ static int	process_quote_or_word(t_shell *shell, size_t *i, t_token **tokens)
 	token = NULL;
 	if (shell->input[*i] == '\"')
 	{
-		token = add_quote_token(tokens, shell->input, i);
+		token = add_quote_token(tokens, shell, i);
 		if (!token)
 			return (-1);
 		if (!expand_token(shell, token))
@@ -15,12 +15,12 @@ static int	process_quote_or_word(t_shell *shell, size_t *i, t_token **tokens)
 	}
 	else if (shell->input[*i] == '\'')
 	{
-		if (!add_quote_token(tokens, shell->input, i))
+		if (!add_quote_token(tokens, shell, i))
 			return (-1);
 	}
 	else
 	{
-		token = add_word_token(tokens, shell->input, i);
+		token = add_word_token(tokens, shell, i);
 		if (!token)
 			return (-1);
 		if (!expand_token(shell, token))
@@ -41,7 +41,7 @@ static int	process_single_char(t_shell *shell, size_t *i, t_token **tokens)
 	}
 	else if (token_is_operator(shell->input[*i]))
 	{
-		if (!add_operator_token(tokens, shell->input, i))
+		if (!add_operator_token(tokens, shell, i))
 			return (-1);
 	}
 	return (0);

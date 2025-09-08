@@ -31,13 +31,13 @@ typedef struct s_token
 t_token					*tokenize_input(t_shell *shell);
 size_t					scan_word(const char *input, size_t start,
 							const char end_char);
-t_token					*add_word_token(t_token **tokens, const char *input,
+t_token					*add_word_token(t_token **tokens, t_shell *shell,
 							size_t *i);
-t_token					*add_redirect_token(t_token **tokens, const char *input,
+t_token					*add_redirect_token(t_token **tokens, t_shell *shell,
 							size_t *i);
-t_token					*add_operator_token(t_token **tokens, const char *input,
+t_token					*add_operator_token(t_token **tokens, t_shell *shell,
 							size_t *i);
-t_token					*add_quote_token(t_token **tokens, const char *input,
+t_token					*add_quote_token(t_token **tokens, t_shell *shell,
 							size_t *i);
 bool					token_is_operator(char c);
 t_token					*add_token_slice(t_token **tokens, const char *start,
