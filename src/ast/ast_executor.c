@@ -8,9 +8,9 @@ int execute_ast(t_ast_node *node, t_shell *shell)
         return (execute_command(node, shell));
     else if (node->type == NODE_PIPE)
         return (execute_pipe(node, shell));
-    /*else if (node->type == NODE_AND || node->type == NODE_OR)
+    else if (node->type == NODE_AND || node->type == NODE_OR)
         return (execute_logical(node, shell));
-    else if (node->type >= NODE_REDIRECT_IN && node->type <= NODE_HEREDOC)
+    /*else if (node->type >= NODE_REDIRECT_IN && node->type <= NODE_HEREDOC)
         return (execute_redirect(node, shell));
     else if (node->type == NODE_SUBSHELL)
         return (execute_subshell(node, shell)); */
@@ -90,4 +90,16 @@ int execute_pipe(t_ast_node *node, t_shell *shell)
         return (close_fds_return_error(pipefds));
     close_fds(pipefds);
     return (wait_for_children(left_pid, right_pid, shell));
+}
+
+int execute_logical(t_ast_node *node, t_shell *shell)
+{
+    if (!node || !node->left)
+        return (1);
+
+    if (node->type == NODE_AND)
+        return execute_and(node, shell);
+    else if (node->type == NODE_OR)
+        return execute_or(node, shell);
+    return 1;
 }

@@ -48,6 +48,7 @@ t_ast_node  *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node);
 int execute_ast(t_ast_node *node, t_shell *shell);
 int execute_command(t_ast_node *node, t_shell *shell);
 int execute_pipe(t_ast_node *node, t_shell *shell);
+int execute_logical(t_ast_node *node, t_shell *shell);
 
 //path utils
 void    free_paths(char **paths);
@@ -61,5 +62,9 @@ void    handle_left_pid(int *pipefds);
 void    handle_right_pid(int *pipefds);
 int     wait_for_children(pid_t left_pid, pid_t right_pid, t_shell *shell);
 int     type_error_and_return(void);
+
+//logical utils
+int execute_and(t_ast_node *node, t_shell *shell);
+int execute_or(t_ast_node *node, t_shell *shell);
 
 #endif
