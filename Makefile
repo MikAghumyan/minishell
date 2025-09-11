@@ -21,6 +21,7 @@ SRCS=src/main.c \
 	  src/tokenizer/tokenizer.c \
 	  src/tokenizer/token_utils.c \
 	  src/tokenizer/token_type_utils.c \
+	  src/tokenizer/token_word_utils.c \
 	  src/tokenizer/syntax_analyzer.c \
 	  src/tokenizer/expander.c \
 	  src/handlers.c \

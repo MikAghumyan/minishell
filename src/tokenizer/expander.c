@@ -6,13 +6,13 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:12:22 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/27 23:04:43 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/09/11 12:01:30 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static size_t	get_varlen(char *var)
+static size_t	get_varlen(const char *var)
 {
 	size_t	i;
 
@@ -26,70 +26,85 @@ static size_t	get_varlen(char *var)
 	return (i);
 }
 
-static char	*expand_make_new_token(t_token *token, char *value, size_t *i,
-		size_t keylen)
+static char	*make_new_value(const char *value, const char *replacement,
+		size_t pos, size_t keylen)
 {
-	char	*new_token_value;
 	size_t	value_len;
-	size_t	new_token_len;
-	size_t	token_len;
+	size_t	replacement_len;
+	size_t	new_len;
+	char	*new_value;
 
 	if (!value)
-		value = "";
-	token_len = ft_strlen(token->value);
-	value_len = ft_strlen(value);
-	new_token_len = token_len - keylen - 1 + value_len;
-	new_token_value = malloc(sizeof(char) * (new_token_len + 1));
-	if (!new_token_value)
 		return (NULL);
-	ft_memmove(new_token_value, token->value, *i);
-	ft_memmove(new_token_value + *i, value, value_len);
-	ft_memmove(new_token_value + *i + value_len, token->value + *i + 1 + keylen,
-		ft_strlen(token->value + *i + keylen));
-	new_token_value[new_token_len] = 0;
-	free(token->value);
-	token->value = new_token_value;
-	*i += value_len - 1;
-	return (new_token_value);
+	if (!replacement)
+		replacement = "";
+	value_len = ft_strlen(value);
+	replacement_len = ft_strlen(replacement);
+	new_len = value_len - keylen - 1 + replacement_len;
+	new_value = malloc(new_len + 1);
+	if (!new_value)
+		return (NULL);
+	ft_memmove(new_value, value, pos);
+	ft_memmove(new_value + pos, replacement, replacement_len);
+	ft_memmove(new_value + pos + replacement_len, value + pos + 1 + keylen,
+		value_len - pos - keylen - 1);
+	new_value[new_len] = '\0';
+	return (new_value);
 }
 
-static char	*expand_variable(t_shell *shell, t_token *token, size_t *i,
+static char	*expand_variable(t_shell *shell, const char *value, size_t pos,
 		size_t keylen)
 {
-	char	*new_token_value;
-	char	*value;
 	char	*key;
+	char	*env_value;
+	char	*new_value;
 
-	key = ft_substr(token->value, *i + 1, keylen);
+	key = ft_substr(value, pos + 1, keylen);
 	if (!key)
 		return (NULL);
-	value = env_get_value(key, shell->env);
+	env_value = env_get_value(key, shell->env);
+	new_value = make_new_value(value, env_value, pos, keylen);
 	free(key);
-	key = NULL;
-	if (!value)
-		value = "";
-	new_token_value = expand_make_new_token(token, value, i, keylen);
-	if (!new_token_value)
-		return (NULL);
-	return (new_token_value);
+	return (new_value);
 }
 
-char	*expand_token(t_shell *shell, t_token *token)
+static char	*process_expansion(t_shell *shell, char *expanded, size_t *i)
+{
+	size_t	varlen;
+	char	*tmp;
+
+	varlen = get_varlen(expanded + *i);
+	if (varlen == 0)
+		return (expanded);
+	tmp = expand_variable(shell, expanded, *i, varlen);
+	free(expanded);
+	if (!tmp)
+		return (NULL);
+	return (tmp);
+}
+
+char	*expand_token_value(t_shell *shell, const char *value)
 {
 	size_t	i;
-	size_t	varlen;
+	char	*expanded;
+	char	*tmp;
 
+	if (!value)
+		return (NULL);
+	expanded = ft_strdup(value);
+	if (!expanded)
+		return (NULL);
 	i = 0;
-	while (token->value[i])
+	while (expanded && expanded[i])
 	{
-		if (token->value[i] == '$')
+		if (expanded[i] == '$')
 		{
-			varlen = get_varlen(token->value + i);
-			if (varlen)
-				if (!expand_variable(shell, token, &i, varlen))
-					return (NULL);
+			tmp = process_expansion(shell, expanded, &i);
+			if (!tmp)
+				return (NULL);
+			expanded = tmp;
 		}
 		i++;
 	}
-	return (token->value);
+	return (expanded);
 }
