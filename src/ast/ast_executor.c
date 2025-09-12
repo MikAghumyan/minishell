@@ -94,12 +94,12 @@ int execute_pipe(t_ast_node *node, t_shell *shell)
 
 int execute_logical(t_ast_node *node, t_shell *shell)
 {
-    if (!node || !node->left)
+    if (!node || !node->left || !node->right)
         return (1);
 
     if (node->type == NODE_AND)
-        return execute_and(node, shell);
+        return (execute_and(node, shell));
     else if (node->type == NODE_OR)
-        return execute_or(node, shell);
-    return 1;
+        return (execute_or(node, shell));
+    return (1);
 }
