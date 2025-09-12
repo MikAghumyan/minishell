@@ -66,9 +66,12 @@ t_ast_node  *ast_parse_command(t_token **tokens)
     
     if (is_subshell_ast_token(*tokens))
         return (ast_parse_subshell(tokens));
-    
     cmd_node = ast_parse_simple_command(tokens);
-    cmd_node = ast_parse_redirections(tokens, cmd_node);
-    
+    while (*tokens && is_redirect_ast_token(*tokens))
+    {
+        t_redirect  *redirect = parse_simple_redirect(tokens); //need to realize
+        if (redirect)
+            add_redirect(cmd_node, redirect); //need to realize
+    }
     return (cmd_node);
 }
