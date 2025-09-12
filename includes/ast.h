@@ -17,20 +17,29 @@ typedef enum e_node_type
     NODE_SUBSHELL,
 }	e_node_type;
 
+typedef struct s_redirect
+{
+    e_node_type         type;
+    char                **filename;
+    struct s_redirect   *next;
+}   t_redirect;
+
 typedef struct s_ast_node
 {
     e_node_type         type;
     char                **args;
-    char                *redirect_file;
+    char                **redirect_files;
     struct s_ast_node   *left;
     struct s_ast_node   *right;
 }   t_ast_node;
 
+//base ast functions
 t_ast_node  *build_ast(t_token *tokens);
 t_ast_node  *create_ast_node(e_node_type type);
 void        free_ast(t_ast_node *node);
 void        print_ast(t_ast_node *node, int depth);
 
+//parsing functions
 t_ast_node  *ast_parse_logical(t_token **tokens);
 t_ast_node  *ast_parse_pipeline(t_token **tokens);
 t_ast_node  *ast_parse_command(t_token **tokens); // commands and redirects
@@ -63,7 +72,7 @@ void    handle_right_pid(int *pipefds);
 int     wait_for_children(pid_t left_pid, pid_t right_pid, t_shell *shell);
 int     type_error_and_return(void);
 
-//logical utils
+//logical operator utils
 int execute_and(t_ast_node *node, t_shell *shell);
 int execute_or(t_ast_node *node, t_shell *shell);
 
