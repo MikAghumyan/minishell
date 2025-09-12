@@ -39,24 +39,27 @@ void    free_ast(t_ast_node *node)
 
 static void    free_redirects(t_ast_node *node)
 {
-    int i;
+    t_redirect  *current;
+    t_redirect  *next;
 
-    if (node->redirect_files)
+    if (!node->redirect_files)
+        return ;
+    current = node->redirect_files;
+    while (current)
     {
-        i = 0;
-        while (node->redirect_files[i])
-        {
-            free(node->redirect_files[i]);
-            i++;
-        }
-        free(node->redirect_files);
+        next = current->next;
+        if (current->filename)
+            free(current->filename);
+        free(current);
+        current = next;
     }
-    
+    node->redirect_files = NULL;
 }
 
 void print_ast(t_ast_node *node, int depth)
 {
     int i;
+    t_redirect *redirect;
 
     if (!node)
         return ;
@@ -80,11 +83,11 @@ void print_ast(t_ast_node *node, int depth)
             if (node->redirect_files)
             {
                 printf("(redirects: ");
-                i = 0;
-                while (node->redirect_files[i])
+                redirect = node->redirect_files;
+                while (redirect)
                 {
-                    printf("%s ", node->redirect_files[i]);
-                    i++;
+                    printf("[%d:%s] ", redirect->type, redirect->filename);
+                    redirect = redirect->next;
                 }
                 printf(")");
             }

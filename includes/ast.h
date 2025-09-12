@@ -28,7 +28,7 @@ typedef struct s_ast_node
 {
     e_node_type         type;
     char                **args;
-    char                **redirect_files;
+    t_redirect          *redirect_files;
     struct s_ast_node   *left;
     struct s_ast_node   *right;
 }   t_ast_node;
@@ -50,7 +50,7 @@ int  is_redirect_ast_token(t_token *token);
 int  is_logical_ast_token(t_token *token);
 char  **collect_ast_arguments(t_token **tokens, int *arg_count);
 t_ast_node  *ast_parse_simple_command(t_token **tokens);
-t_ast_node  *create_redirect_ast_node(t_token *token);
+//t_ast_node  *create_redirect_ast_node(t_token *token);
 t_ast_node  *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node);
 
 //execute functions

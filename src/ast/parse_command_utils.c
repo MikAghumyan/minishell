@@ -42,18 +42,18 @@ t_ast_node  *ast_parse_simple_command(t_token **tokens)
     return (NULL);
 }
 
-t_ast_node  *create_redirect_ast_node(t_token *token)
+/*t_ast_node  *create_redirect_ast_node(t_token *token)
 {
     if (token->type == TOKEN_REDIRECT_IN)
         return (create_ast_node(NODE_REDIRECT_IN));
     else if (token->type == TOKEN_REDIRECT_OUT)
-        return (create_ast_node(NODE_REDIRECT_OUT));
+        return (create_ast_node(NODE_REDIRECT_OUT));      no need anymore maybe
     else if (token->type == TOKEN_APPEND)
         return (create_ast_node(NODE_APPEND));
     else if (token->type == TOKEN_HEREDOC)
         return (create_ast_node(NODE_HEREDOC));
     return (NULL);
-}
+}*/
 
 t_ast_node  *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node)
 {
@@ -61,15 +61,20 @@ t_ast_node  *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node)
     
     while (*tokens && is_redirect_ast_token(*tokens))
     {
-        redirect_node = create_redirect_ast_node(*tokens);
         *tokens = (*tokens)->next;
-        
         if (*tokens && (*tokens)->type == TOKEN_WORD)
         {
-            redirect_node->redirect_file = ft_strdup((*tokens)->value);
+            if (add_redirect_file(cmd_node, (*tokens)->value) == -1)
+            {
+                ft_putstr_fd("minishell: memory allocation error\n", 2);
+                return (cmd_node);
+            }
             *tokens = (*tokens)->next;
-            redirect_node->left = cmd_node;
-            cmd_node = redirect_node;
+        }
+        else
+        {
+            ft_putstr_fd("minishell: syntax error\n", 2);
+            break;
         }
     }
     return (cmd_node);
