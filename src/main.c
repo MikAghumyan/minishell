@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/29 21:41:53 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/09/14 01:30:43 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	main(int argc, char **argv, char **envp)
 				free_ast(ast);
 			}
 		}
+		else
+			shell.exit_status = 1;
 		handle_clear_input(&shell);
 	}
 	handle_exit(&shell);

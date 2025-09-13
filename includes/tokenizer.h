@@ -21,6 +21,15 @@ typedef enum e_token_type
 	TOKEN_INVALID
 }						e_token_type;
 
+typedef enum e_tokres
+{
+	TOKEN_RES_SUCCESS = 0,
+	TOKEN_RES_INVALID = 1,
+	TOKEN_RES_SYNTAX_ERROR = 2,
+	TOKEN_RES_ERROR = -1,
+	TOKEN_RES_MEMORY_ERROR = -2
+}						t_tokres;
+
 typedef struct s_token
 {
 	char				*value;
@@ -29,7 +38,7 @@ typedef struct s_token
 }						t_token;
 
 t_token					*tokenize_input(t_shell *shell);
-int						process_quote_or_word(t_shell *shell, size_t *i,
+t_tokres				process_quote_or_word(t_shell *shell, size_t *i,
 							t_token **tokens);
 size_t					scan_word(const char *input, size_t start,
 							const char end_char);

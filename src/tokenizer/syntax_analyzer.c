@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:25:26 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/27 14:05:06 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/09/14 01:10:16 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ bool	analyze_tokens(t_token *token)
 		token = token->next;
 	}
 	if (count_parentheses[0] != count_parentheses[1])
+	{
+		printf("minishell: syntax error: unmatched parentheses\n");
 		return (false);
+	}
 	return (true);
 }
