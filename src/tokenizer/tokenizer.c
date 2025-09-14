@@ -9,7 +9,7 @@ t_tokres	process_single_char(t_shell *shell, size_t *i, t_token **tokens)
 	else if (!token_is_operator(shell->input[*i]))
 	{
 		result = process_quote_or_word(shell, i, tokens);
-		if (result < TOKEN_RES_SUCCESS)
+		if (result != TOKEN_RES_SUCCESS)
 			return (result);
 	}
 	else if (token_is_operator(shell->input[*i]))
@@ -22,8 +22,9 @@ t_tokres	process_single_char(t_shell *shell, size_t *i, t_token **tokens)
 
 t_token	*tokenize_input(t_shell *shell)
 {
-	size_t	i;
-	t_token	*tokens;
+	size_t		i;
+	t_token		*tokens;
+	t_tokres	res_;
 
 	if (!shell || !shell->input)
 		return (NULL);
@@ -31,18 +32,17 @@ t_token	*tokenize_input(t_shell *shell)
 	tokens = NULL;
 	while (shell->input[i])
 	{
-		if (process_single_char(shell, &i, &tokens) == -1)
+		res_ = process_single_char(shell, &i, &tokens);
+		if (res_ != TOKEN_RES_SUCCESS)
 		{
-			// TODO HANDLE ERROR CODES
+			if (res_ < 0)
+				handle_exit(shell);
 			free_tokens(tokens);
 			return (NULL);
 		}
 	}
 	if (!analyze_tokens(tokens))
-	{
-		free_tokens(tokens);
-		return (NULL);
-	}
+		return (free_tokens(tokens), NULL);
 	print_tokens(tokens);
 	return (tokens);
 }

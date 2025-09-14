@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:25:26 by maghumya          #+#    #+#             */
-/*   Updated: 2025/09/14 01:10:16 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/09/15 00:22:23 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ bool	analyze_tokens(t_token *token)
 	{
 		if (token->type == TOKEN_INVALID || !analyze_tokens_order(token,
 				count_parentheses))
+		{
+			printf("minishell: syntax error near unexpected token `%s'\n",
+				token->value);
 			return (false);
+		}
 		token = token->next;
 	}
 	if (count_parentheses[0] != count_parentheses[1])
