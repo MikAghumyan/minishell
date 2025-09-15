@@ -69,7 +69,7 @@ t_tokres	process_token_part(t_shell *shell, size_t *i, t_token **tokens,
 	else
 		value_slice = add_word_slice(tokens, shell, i, &result_code);
 	if (result_code == TOKEN_RES_SYNTAX_ERROR)
-		printf("minishell: syntax error: unmatched quote\n");
+		ft_putstr_fd("minishell: syntax error: unmatched quote\n", 2);
 	if (!value_slice)
 		return (result_code);
 	if (!*value)

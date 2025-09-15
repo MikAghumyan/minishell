@@ -52,7 +52,7 @@ $(NAME): $(OBJS) $(LIBFT)
 	@echo "$(MAGENTA)Compiling $< (debug)...$(RESET)"
 
 $(LIBFT):
-	@make -C $(LIBFT_DIR) > /dev/null
+	@make -C $(LIBFT_DIR) complete > /dev/null
 	@echo "$(GREEN)Libft compiled successfully.$(RESET)"
 
 debug: $(DEBUG_OBJS) $(LIBFT)
