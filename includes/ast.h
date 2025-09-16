@@ -20,7 +20,7 @@ typedef enum e_node_type
 typedef struct s_redirect
 {
     e_node_type         type;
-    char                **filename;
+    char                *filename;
     struct s_redirect   *next;
 }   t_redirect;
 
@@ -50,8 +50,11 @@ int  is_redirect_ast_token(t_token *token);
 int  is_logical_ast_token(t_token *token);
 char  **collect_ast_arguments(t_token **tokens, int *arg_count);
 t_ast_node  *ast_parse_simple_command(t_token **tokens);
-//t_ast_node  *create_redirect_ast_node(t_token *token);
+//t_ast_node  *create_redirect_ast_node(t_token *token); no need 
 t_ast_node  *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node);
+
+//redirect handling functions
+int handle_redirects(t_redirect *redirect_list);
 
 //execute functions
 int execute_ast(t_ast_node *node, t_shell *shell);
@@ -70,7 +73,7 @@ int     close_fds_return_error(int *pipefds);
 void    handle_left_pid(int *pipefds);
 void    handle_right_pid(int *pipefds);
 int     wait_for_children(pid_t left_pid, pid_t right_pid, t_shell *shell);
-int     type_error_and_return(void);
+int     type_pipe_error_and_return(void);
 
 //logical operator utils
 int execute_and(t_ast_node *node, t_shell *shell);

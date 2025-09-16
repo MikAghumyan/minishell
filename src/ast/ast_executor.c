@@ -10,7 +10,7 @@ int execute_ast(t_ast_node *node, t_shell *shell)
         return (execute_pipe(node, shell));
     else if (node->type == NODE_AND || node->type == NODE_OR)
         return (execute_logical(node, shell));
-    /*else if (node->type >= NODE_REDIRECT_IN && node->type <= NODE_HEREDOC)
+    /*else if (node->type >= NODE_REDIRECT_IN && node->type <= NODE_HEREDOC)  no need anymore!!!
         return (execute_redirect(node, shell));
     else if (node->type == NODE_SUBSHELL)
         return (execute_subshell(node, shell)); */
@@ -18,7 +18,8 @@ int execute_ast(t_ast_node *node, t_shell *shell)
         return (1);
 }
 
-int execute_command(t_ast_node *node, t_shell *shell)
+
+int execute_command(t_ast_node *node, t_shell *shell)  //now command works with redirects
 {
     pid_t   pid;
     int     status;
@@ -27,8 +28,6 @@ int execute_command(t_ast_node *node, t_shell *shell)
     if (!node || !node->args || !node->args[0])
         return (1);
     
-    //TODO : checking commands
-
     command_path = find_command_path(node->args[0], shell->env->data);
     if (!command_path)
     {
@@ -41,9 +40,11 @@ int execute_command(t_ast_node *node, t_shell *shell)
     pid = fork();
     if (pid == 0)
     {
+        if (node->redirect_files && handle_redirects(node->redirect_files) == -1)  // Handle redirects in child process
+            exit(1);
         execve(command_path, node->args, shell->env->data);
         perror("execve failed");
-        exit(127); //means that command was not found
+        exit(127);
     }
     else if (pid > 0)
     {
@@ -71,7 +72,7 @@ int execute_pipe(t_ast_node *node, t_shell *shell)
     if (!node || !node->left || !node->right) //if there is no right or left child pipe is incorrect
         return (1);
     if (pipe(pipefds) == -1)
-        return (type_error_and_return());
+        return (type_pipe_error_and_return());
     left_pid = fork();
     if (left_pid == 0)
     {
@@ -96,7 +97,6 @@ int execute_logical(t_ast_node *node, t_shell *shell)
 {
     if (!node || !node->left || !node->right)
         return (1);
-
     if (node->type == NODE_AND)
         return (execute_and(node, shell));
     else if (node->type == NODE_OR)
