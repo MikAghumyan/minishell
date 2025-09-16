@@ -38,7 +38,7 @@ typedef struct s_token
 }						t_token;
 
 t_token					*tokenize_input(t_shell *shell);
-t_tokres				process_quote_or_word(t_shell *shell, size_t *i,
+t_tokres				add_word_token(t_shell *shell, size_t *i,
 							t_token **tokens);
 size_t					scan_word(const char *input, size_t start,
 							const char end_char);

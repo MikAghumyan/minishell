@@ -4,20 +4,21 @@ t_tokres	process_single_char(t_shell *shell, size_t *i, t_token **tokens)
 {
 	t_tokres	result;
 
+	result = TOKEN_RES_SUCCESS;
 	if (shell->input[*i] == ' ' || shell->input[*i] == '\t')
 		(*i)++;
 	else if (!token_is_operator(shell->input[*i]))
 	{
-		result = process_quote_or_word(shell, i, tokens);
-		if (result != TOKEN_RES_SUCCESS)
-			return (result);
+		result = add_word_token(shell, i, tokens);
 	}
 	else if (token_is_operator(shell->input[*i]))
 	{
 		if (!add_operator_token(tokens, shell, i))
-			return (TOKEN_RES_MEMORY_ERROR);
+			result = TOKEN_RES_MEMORY_ERROR;
 	}
-	return (TOKEN_RES_SUCCESS);
+	if (result == TOKEN_RES_MEMORY_ERROR)
+		ft_putstr_fd("minishell: memory allocation failed\n", 2);
+	return (result);
 }
 
 t_token	*tokenize_input(t_shell *shell)

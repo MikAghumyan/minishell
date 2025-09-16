@@ -11,16 +11,16 @@ t_token	*add_token_slice(t_token **tokens, const char *start, size_t len,
 {
 	t_token	*new_token;
 
-	if (!tokens || !start || len == 0)
+	if (!tokens || !start)
 		return (NULL);
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return (ft_putstr_fd("minishell: memory allocation failed\n", 2), NULL);
+		return (NULL);
 	new_token->value = ft_substr(start, 0, len);
 	if (!new_token->value)
 	{
 		free(new_token);
-		return (ft_putstr_fd("minishell: memory allocation failed\n", 2), NULL);
+		return (NULL);
 	}
 	new_token->type = type;
 	new_token->next = NULL;
@@ -48,13 +48,24 @@ void	add_tokens_back(t_token **tokens, t_token *new_token)
 void	print_tokens(t_token *tokens)
 {
 	t_token	*current;
+	int		count;
 
 	current = tokens;
+	count = 0;
+	if (!tokens)
+	{
+		printf("DEBUG: No tokens found\n");
+		return ;
+	}
 	while (current)
 	{
-		printf("Token: %s, Type: %d\n", current->value, current->type);
+		printf("Token: '%s', Type: %d, Length: %zu\n",
+			current->value ? current->value : "(null)", current->type,
+			current->value ? ft_strlen(current->value) : 0);
 		current = current->next;
+		count++;
 	}
+	printf("DEBUG: Total tokens: %d\n", count);
 }
 
 void	free_tokens(t_token *tokens)

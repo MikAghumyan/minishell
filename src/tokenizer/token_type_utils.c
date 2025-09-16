@@ -1,24 +1,5 @@
 #include "../../includes/minishell.h"
 
-size_t	scan_word(const char *input, size_t start, const char end_char)
-{
-	size_t	end;
-
-	end = start;
-	if (end_char != ' ')
-	{
-		while (input[end] && input[end] != end_char)
-			end++;
-	}
-	else
-	{
-		while (input[end] && input[end] != ' ' && input[end] != '\t'
-			&& input[end] != '\'' && input[end] != '\"'
-			&& !token_is_operator(input[end]))
-			end++;
-	}
-	return (end);
-}
 
 t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 {

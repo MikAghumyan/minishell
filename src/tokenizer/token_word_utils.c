@@ -1,6 +1,28 @@
 
 #include "../../includes/minishell.h"
 
+size_t	scan_word(const char *input, size_t start, const char end_char)
+{
+	size_t	end;
+
+	if (!input || !input[start])
+		return (start);
+	end = start;
+	if (end_char != ' ')
+	{
+		while (input[end] && input[end] != end_char)
+			end++;
+	}
+	else
+	{
+		while (input[end] && input[end] != ' ' && input[end] != '\t'
+			&& input[end] != '\'' && input[end] != '\"'
+			&& !token_is_operator(input[end]))
+			end++;
+	}
+	return (end);
+}
+
 static char	*add_word_slice(t_token **tokens, t_shell *shell, size_t *i,
 		t_tokres *result_code)
 {
@@ -26,7 +48,7 @@ static char	*add_word_slice(t_token **tokens, t_shell *shell, size_t *i,
 	return (expanded);
 }
 
-char	*add_quote_slice(t_token **tokens, t_shell *shell, size_t *i,
+static char	*add_quote_slice(t_token **tokens, t_shell *shell, size_t *i,
 		t_tokres *result_code)
 {
 	size_t	start;
@@ -83,7 +105,7 @@ t_tokres	process_token_part(t_shell *shell, size_t *i, t_token **tokens,
 	return (TOKEN_RES_SUCCESS);
 }
 
-t_tokres	process_quote_or_word(t_shell *shell, size_t *i, t_token **tokens)
+t_tokres	add_word_token(t_shell *shell, size_t *i, t_token **tokens)
 {
 	t_token		*token;
 	char		*value;
