@@ -1,5 +1,5 @@
-#ifndef MINISHELL_AST_H
-# define MINISHELL_AST_H
+#ifndef AST_H
+# define AST_H
 
 # include "minishell.h"
 # include "tokenizer.h"
@@ -15,7 +15,7 @@ typedef enum e_node_type
     NODE_APPEND,
     NODE_HEREDOC,
     NODE_SUBSHELL,
-}	e_node_type;
+}   e_node_type;
 
 typedef struct s_redirect
 {
