@@ -36,7 +36,7 @@ t_token	*tokenize_input(t_shell *shell)
 		res_ = process_single_char(shell, &i, &tokens);
 		if (res_ != TOKEN_RES_SUCCESS)
 		{
-			if (res_ < 0)
+			if (res_ < TOKEN_RES_SUCCESS)
 				handle_exit(shell);
 			free_tokens(tokens);
 			return (NULL);
