@@ -21,6 +21,7 @@ SRCS=src/main.c \
 	  src/tokenizer/tokenizer.c \
 	  src/tokenizer/token_utils.c \
 	  src/tokenizer/token_type_utils.c \
+	  src/tokenizer/token_word_utils.c \
 	  src/tokenizer/syntax_analyzer.c \
 	  src/tokenizer/expander.c \
 	  src/handlers.c \
@@ -51,7 +52,7 @@ $(NAME): $(OBJS) $(LIBFT)
 	@echo "$(MAGENTA)Compiling $< (debug)...$(RESET)"
 
 $(LIBFT):
-	@make -C $(LIBFT_DIR) > /dev/null
+	@make -C $(LIBFT_DIR) complete > /dev/null
 	@echo "$(GREEN)Libft compiled successfully.$(RESET)"
 
 debug: $(DEBUG_OBJS) $(LIBFT)

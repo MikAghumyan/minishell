@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:25:26 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/27 14:05:06 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/09/15 20:07:46 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,17 @@ bool	analyze_tokens(t_token *token)
 	{
 		if (token->type == TOKEN_INVALID || !analyze_tokens_order(token,
 				count_parentheses))
+		{
+			ft_fprintf(2, "minishell: %s `%s'\n",
+				"syntax error near unexpected token", token->value);
 			return (false);
+		}
 		token = token->next;
 	}
 	if (count_parentheses[0] != count_parentheses[1])
+	{
+		ft_fprintf(2, "minishell: syntax error: unmatched parentheses\n");
 		return (false);
+	}
 	return (true);
 }

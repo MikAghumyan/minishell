@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/30 12:40:05 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/09/14 00:15:07 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 
 typedef struct s_env	t_env;
 typedef struct s_token	t_token;
+
 typedef struct s_shell
 {
 	t_env				*env;
