@@ -50,7 +50,6 @@ int  is_redirect_ast_token(t_token *token);
 int  is_logical_ast_token(t_token *token);
 char  **collect_ast_arguments(t_token **tokens, int *arg_count);
 t_ast_node  *ast_parse_simple_command(t_token **tokens);
-//t_ast_node  *create_redirect_ast_node(t_token *token); no need 
 t_ast_node  *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node);
 
 //redirect handling functions

@@ -10,14 +10,11 @@ int execute_ast(t_ast_node *node, t_shell *shell)
         return (execute_pipe(node, shell));
     else if (node->type == NODE_AND || node->type == NODE_OR)
         return (execute_logical(node, shell));
-    /*else if (node->type >= NODE_REDIRECT_IN && node->type <= NODE_HEREDOC)  no need anymore!!!
-        return (execute_redirect(node, shell)); */
     else if (node->type == NODE_SUBSHELL)
         return (execute_subshell(node, shell));
     else
         return (1);
 }
-
 
 int execute_command(t_ast_node *node, t_shell *shell)  //now command works with redirects
 {
