@@ -6,7 +6,7 @@
 /*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/09/16 17:25:52 by narek            ###   ########.fr       */
+/*   Updated: 2025/09/17 22:33:24 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	main(int argc, char **argv, char **envp)
 			ast = build_ast(shell.tokens);
 			if (ast)
 			{
-				// printf("\n=== AST TREE ===\n");
-				// print_ast(ast, 0);
-				// printf("================\n\n");
+				//printf("\n=== AST TREE ===\n");
+				//print_ast(ast, 0);
+				//printf("================\n\n");
 				execute_ast(ast, &shell);
-                // printf("Exit status: %d\n", shell.exit_status);
+                printf("Exit status: %d\n", shell.exit_status);
 				free_ast(ast);
 			}
 		}

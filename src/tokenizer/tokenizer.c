@@ -53,6 +53,6 @@ t_token	*tokenize_input(t_shell *shell)
 		free_tokens(tokens);
 		return (NULL);
 	}
-	print_tokens(tokens);
+	//print_tokens(tokens);
 	return (tokens);
 }
