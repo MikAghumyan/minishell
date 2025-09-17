@@ -11,9 +11,9 @@ int execute_ast(t_ast_node *node, t_shell *shell)
     else if (node->type == NODE_AND || node->type == NODE_OR)
         return (execute_logical(node, shell));
     /*else if (node->type >= NODE_REDIRECT_IN && node->type <= NODE_HEREDOC)  no need anymore!!!
-        return (execute_redirect(node, shell));
+        return (execute_redirect(node, shell)); */
     else if (node->type == NODE_SUBSHELL)
-        return (execute_subshell(node, shell)); */
+        return (execute_subshell(node, shell));
     else
         return (1);
 }
@@ -102,4 +102,35 @@ int execute_logical(t_ast_node *node, t_shell *shell)
     else if (node->type == NODE_OR)
         return (execute_or(node, shell));
     return (1);
+}
+
+int execute_subshell(t_ast_node *node, t_shell *shell)
+{
+    pid_t   pid;
+    int     status;
+
+    if (!node || !node->left)
+        return (1);
+    pid = fork();
+    if (pid == 0)
+    {
+        if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
+            exit(1);
+        exit(execute_ast(node->left, shell)); //executing subshell content and then exiting child process
+    }
+    else if (pid > 0)
+    {
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status))
+            shell->exit_status = WEXITSTATUS(status);
+        else if (WIFSIGNALED(status))
+            shell->exit_status = 128 + WTERMSIG(status);
+        return (shell->exit_status);
+    }
+    else
+    {
+        perror("fork failed");
+        shell->exit_status = 1;
+        return (1);
+    }
 }

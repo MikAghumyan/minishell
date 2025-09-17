@@ -54,7 +54,7 @@ static t_ast_node  *ast_parse_subshell(t_token **tokens)
     
     if (*tokens && (*tokens)->type == TOKEN_RPAREN)
         *tokens = (*tokens)->next; // skip ')'
-    
+    subshell_node = ast_parse_redirections(tokens, subshell_node); //add redirectins handling after subshell
     return (subshell_node);
 }
 

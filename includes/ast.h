@@ -61,6 +61,7 @@ int execute_ast(t_ast_node *node, t_shell *shell);
 int execute_command(t_ast_node *node, t_shell *shell);
 int execute_pipe(t_ast_node *node, t_shell *shell);
 int execute_logical(t_ast_node *node, t_shell *shell);
+int execute_subshell(t_ast_node *node, t_shell *shell);
 
 //path utils
 void    free_paths(char **paths);
