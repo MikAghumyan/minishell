@@ -87,4 +87,8 @@ pid_t       fork_right_pid(t_ast_node *node, int *pipefds, t_shell *shell);
 int			execute_and(t_ast_node *node, t_shell *shell);
 int			execute_or(t_ast_node *node, t_shell *shell);
 
+/*subshell utils*/
+void        execute_subshell_in_child(t_ast_node *node, t_shell *shell);
+int         wait_for_child(pid_t pid, t_shell *shell);
+int         handle_subshell_fork_error(t_shell *shell);
 #endif
