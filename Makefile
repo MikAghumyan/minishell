@@ -36,6 +36,7 @@ SRCS=src/main.c \
 	  src/ast/ast_pipe_utils.c \
 	  src/ast/ast_pipe_utils2.c \
 	  src/ast/ast_logical_utils.c \
+	  src/ast/ast_command_execute_utils.c \
 
 OBJS=$(SRCS:.c=.o)
 DEBUG_OBJS=$(SRCS:.c=.debug.o)

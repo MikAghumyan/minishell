@@ -67,6 +67,12 @@ void		free_paths(char **paths);
 char		**parse_path(char **envp);
 char		*find_command_path(char *cmd, char **envp);
 
+/*command execute utils*/
+int			handle_command_not_found(t_ast_node *node, t_shell *shell);
+void		handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell);
+int			handle_cmd_parent(pid_t pid, char *command_path, t_shell *shell);
+int			handle_command_exec_fork_error(char *command_path, t_shell *shell);
+
 /* pipe utils */
 void		close_fds(int *pipefds);
 int			close_fds_return_error(int *pipefds);
