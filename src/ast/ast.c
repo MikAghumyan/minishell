@@ -1,8 +1,25 @@
 #include "../../includes/ast.h"
 
-static void free_redirects(t_ast_node *node);
+static void free_redirects(t_ast_node *node)
+{
+    t_redirect  *current;
+    t_redirect  *next;
 
-t_ast_node  *create_ast_node(e_node_type type)
+    if (!node->redirect_files)
+        return ;
+    current = node->redirect_files;
+    while (current)
+    {
+        next = current->next;
+        if (current->filename)
+            free(current->filename);
+        free(current);
+        current = next;
+    }
+    node->redirect_files = NULL;
+}
+
+t_ast_node  *create_ast_node(t_node_type type)
 {
     t_ast_node *node;
 
@@ -37,25 +54,6 @@ void    free_ast(t_ast_node *node)
     free_ast(node->right);
     free_ast(node->left);
     free(node);
-}
-
-static void free_redirects(t_ast_node *node)
-{
-    t_redirect  *current;
-    t_redirect  *next;
-
-    if (!node->redirect_files)
-        return ;
-    current = node->redirect_files;
-    while (current)
-    {
-        next = current->next;
-        if (current->filename)
-            free(current->filename);
-        free(current);
-        current = next;
-    }
-    node->redirect_files = NULL;
 }
 
 void    print_ast(t_ast_node *node, int depth)
