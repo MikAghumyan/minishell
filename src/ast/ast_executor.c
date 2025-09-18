@@ -44,25 +44,13 @@ int	execute_pipe(t_ast_node *node, t_shell *shell)
 	pid_t	left_pid;
 	pid_t	right_pid;
 
-	if (!node || !node->left || !node->right)
+	if (!node || !node->left || !node->right || pipe(pipefds) == -1)
 		return (1);
-	if (pipe(pipefds) == -1)
-		return (type_pipe_error_and_return());
-	left_pid = fork();
-	if (left_pid == 0)
-	{
-		handle_left_pid(pipefds);
-		exit(execute_ast(node->left, shell));
-	}
-	else if (left_pid < 0)
+	left_pid = fork_left_child(node, pipefds, shell);
+	if (left_pid < 0)
 		return (close_fds_return_error(pipefds));
-	right_pid = fork();
-	if (right_pid == 0)
-	{
-		handle_right_pid(pipefds);
-		exit(execute_ast(node->right, shell));
-	}
-	else if (right_pid < 0)
+	right_pid = fork_right_pid(node, pipefds, shell);
+	if (right_pid < 0)
 		return (close_fds_return_error(pipefds));
 	close_fds(pipefds);
 	return (wait_for_children(left_pid, right_pid, shell));

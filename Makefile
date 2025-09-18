@@ -29,10 +29,10 @@ SRCS=src/main.c \
 	  src/ast/ast.c \
       src/ast/ast_build.c \
       src/ast/ast_build_utils.c \
-      src/ast/parse_command_utils.c \
+      src/ast/ast_parse_command_utils.c \
       src/ast/ast_redirect_utils.c \
 	  src/ast/ast_executor.c \
-	  src/ast/find_command_path.c \
+	  src/ast/ast_find_command_path.c \
 	  src/ast/ast_pipe_utils.c \
 	  src/ast/ast_pipe_utils2.c \
 	  src/ast/ast_logical_utils.c \
