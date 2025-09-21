@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:12:22 by maghumya          #+#    #+#             */
-/*   Updated: 2025/09/11 12:01:30 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/09/21 16:42:04 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,23 @@ static char	*process_expansion(t_shell *shell, char *expanded, size_t *i)
 {
 	size_t	varlen;
 	char	*tmp;
+	char	*exit_status;
 
-	varlen = get_varlen(expanded + *i);
-	if (varlen == 0)
-		return (expanded);
-	tmp = expand_variable(shell, expanded, *i, varlen);
-	free(expanded);
+	if (expanded[*i + 1] == '?')
+	{
+		exit_status = ft_itoa(shell->exit_status);
+		if (!exit_status)
+			return (NULL);
+		tmp = make_new_value(expanded, exit_status, *i, 1);
+		free(exit_status);
+	}
+	else
+	{
+		varlen = get_varlen(expanded + *i);
+		if (varlen == 0)
+			return (expanded);
+		tmp = expand_variable(shell, expanded, *i, varlen);
+	}
 	if (!tmp)
 		return (NULL);
 	return (tmp);
@@ -100,6 +111,7 @@ char	*expand_token_value(t_shell *shell, const char *value)
 		if (expanded[i] == '$')
 		{
 			tmp = process_expansion(shell, expanded, &i);
+			free(expanded);
 			if (!tmp)
 				return (NULL);
 			expanded = tmp;
