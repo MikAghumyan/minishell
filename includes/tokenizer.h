@@ -8,6 +8,7 @@ typedef struct s_shell	t_shell;
 
 typedef enum e_token_type
 {
+	TOKEN_INVALID,
 	TOKEN_WORD,
 	TOKEN_PIPE,
 	TOKEN_OR,
@@ -18,7 +19,6 @@ typedef enum e_token_type
 	TOKEN_HEREDOC,
 	TOKEN_LPAREN,
 	TOKEN_RPAREN,
-	TOKEN_INVALID
 }						e_token_type;
 
 typedef enum e_tokres

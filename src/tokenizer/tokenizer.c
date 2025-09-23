@@ -15,6 +15,8 @@ t_tokres	process_single_char(t_shell *shell, size_t *i, t_token **tokens)
 	{
 		if (!add_operator_token(tokens, shell, i))
 			result = TOKEN_RES_MEMORY_ERROR;
+		else if ((*tokens)->type == TOKEN_INVALID)
+			result = TOKEN_RES_INVALID;
 	}
 	if (result == TOKEN_RES_MEMORY_ERROR)
 		ft_putstr_fd("minishell: memory allocation failed\n", 2);
