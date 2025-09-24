@@ -10,9 +10,14 @@ t_ast_node	*build_ast(t_token *tokens)
 t_ast_node	*ast_parse_logical(t_token **tokens)
 {
 	t_ast_node	*left;
+	t_ast_node	*right;
 	t_ast_node	*operator_node;
 
+	if (!tokens || !*tokens)
+		return (NULL);
 	left = ast_parse_pipeline(tokens);
+	if (!left)
+		return (NULL);
 	while (*tokens && ((*tokens)->type == TOKEN_AND
 			|| (*tokens)->type == TOKEN_OR))
 	{
@@ -20,9 +25,21 @@ t_ast_node	*ast_parse_logical(t_token **tokens)
 			operator_node = create_ast_node(NODE_AND);
 		else
 			operator_node = create_ast_node(NODE_OR);
+		if (!operator_node)
+		{
+			free_ast(left);
+			return (NULL);
+		}
 		*tokens = (*tokens)->next;
+		right = ast_parse_pipeline(tokens);
+		if (!right)
+		{
+			free_ast(left);
+			free_ast(operator_node);
+			return (NULL);
+		}
 		operator_node->left = left;
-		operator_node->right = ast_parse_pipeline(tokens);
+		operator_node->right = right;
 		left = operator_node;
 	}
 	return (left);
@@ -31,15 +48,32 @@ t_ast_node	*ast_parse_logical(t_token **tokens)
 t_ast_node	*ast_parse_pipeline(t_token **tokens)
 {
 	t_ast_node	*left;
+	t_ast_node	*right;
 	t_ast_node	*pipe_node;
 
+	if (!tokens || !*tokens)
+		return (NULL);
 	left = ast_parse_command(tokens);
+	if (!left)
+		return (NULL);
 	while (*tokens && (*tokens)->type == TOKEN_PIPE)
 	{
 		pipe_node = create_ast_node(NODE_PIPE);
+		if (!pipe_node)
+		{
+			free_ast(left);
+			return (NULL);
+		}
 		*tokens = (*tokens)->next;
+		right = ast_parse_command(tokens);
+		if (!right)
+		{
+			free_ast(left);
+			free_ast(pipe_node);
+			return (NULL);
+		}
 		pipe_node->left = left;
-		pipe_node->right = ast_parse_command(tokens);
+		pipe_node->right = right;
 		left = pipe_node;
 	}
 	return (left);
@@ -48,25 +82,49 @@ t_ast_node	*ast_parse_pipeline(t_token **tokens)
 static t_ast_node	*ast_parse_subshell(t_token **tokens)
 {
 	t_ast_node	*subshell_node;
+	t_ast_node	*result;
 
+	if (!tokens || !*tokens)
+		return (NULL);
 	*tokens = (*tokens)->next; // skip '('
 	subshell_node = create_ast_node(NODE_SUBSHELL);
+	if (!subshell_node)
+		return (NULL);
 	subshell_node->left = ast_parse_logical(tokens);
+	if (!subshell_node->left)
+	{
+		free_ast(subshell_node);
+		return (NULL);
+	}
 	if (*tokens && (*tokens)->type == TOKEN_RPAREN)
 		*tokens = (*tokens)->next; // skip ')'
-	subshell_node = ast_parse_redirections(tokens, subshell_node); //add redirectins handling after subshell
-	return (subshell_node);
+	result = ast_parse_redirections(tokens, subshell_node); //add redirectins handling after subshell
+	if (!result)
+	{
+		free_ast(subshell_node);
+		return (NULL);
+	}
+	return (result);
 }
 
 t_ast_node	*ast_parse_command(t_token **tokens)
 {
 	t_ast_node	*cmd_node;
+	t_ast_node	*result;
 
+	if (!tokens || !*tokens)
+		return (NULL);
 	if (is_subshell_ast_token(*tokens))
 		return (ast_parse_subshell(tokens));
 	cmd_node = ast_parse_simple_command(tokens);
 	if (!cmd_node)
 		return (NULL);
-	cmd_node = ast_parse_redirections(tokens, cmd_node);
-	return (cmd_node);
+	result = ast_parse_redirections(tokens, cmd_node);
+	if (!result)
+	{
+		free_ast(cmd_node);
+		ft_putstr_fd("minishell: redirect parsing failed\n", 2);
+		return (NULL);
+	}
+	return (result);
 }
