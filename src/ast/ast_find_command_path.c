@@ -20,6 +20,8 @@ char    **parse_path(char **envp)
     char    *path;
     char    **paths;
 
+    if (!envp || !*envp)
+        return (NULL);
     path = NULL;
     while (*envp)
     {
@@ -45,6 +47,8 @@ char    *find_command_path(char *cmd, char **envp)
     int     i;
     size_t  path_len;
 
+    if (!cmd || !envp || !*envp)
+        return (NULL);
     if (ft_strchr(cmd, '/'))
         return (ft_strdup(cmd));
     paths = parse_path(envp);
@@ -63,7 +67,6 @@ char    *find_command_path(char *cmd, char **envp)
         ft_strlcpy(full_path, paths[i], path_len);
         ft_strlcat(full_path, "/", path_len);
         ft_strlcat(full_path, cmd, path_len);
-        
         if (access(full_path, X_OK) == 0)
         {
             free_paths(paths);

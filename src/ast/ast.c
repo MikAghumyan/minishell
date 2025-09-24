@@ -56,7 +56,7 @@ void	free_ast(t_ast_node *node)
 	free(node);
 }
 
-void	print_ast(t_ast_node *node, int depth) //no need here to fix nore errors its just debug function
+void	print_ast(t_ast_node *node, int depth) //no need here to fix norme errors, it's just a debug function
 {
 	int	i;
 	t_redirect	*redirect;

@@ -5,6 +5,8 @@ int execute_and(t_ast_node *node, t_shell *shell)
     int left_res;
     int right_res;
 
+    if (!node || !node->left || !node->right || !shell)
+        return (1);
     left_res = execute_ast(node->left, shell);
     if (left_res == 0)
     {
@@ -20,6 +22,8 @@ int execute_or(t_ast_node *node, t_shell *shell)
     int left_res;
     int right_res;
 
+    if (!node || !node->left || !node->right || !shell)
+        return (1);
     left_res = execute_ast(node->left, shell);
     if (left_res == 0)
         return (left_res);

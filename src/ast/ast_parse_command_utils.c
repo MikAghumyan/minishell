@@ -2,10 +2,12 @@
 
 static void add_redirect_to_end(t_redirect **head, t_redirect *new_redirect)
 {
+    if (!head || !new_redirect)
+        return ;
     if (*head == NULL)
     {
         *head = new_redirect;
-        return;
+        return ;
     }
     t_redirect *current = *head;
     while (current->next != NULL)
@@ -15,19 +17,39 @@ static void add_redirect_to_end(t_redirect **head, t_redirect *new_redirect)
 
 char  **collect_ast_arguments(t_token **tokens, int *arg_count)
 {
-    char  **args;
-    int   count;
+    char    **args;
+    char    **temp;
+    int     count;
     
+    if (!tokens || !*tokens || !arg_count)
+        return (NULL);
     args = NULL;
     count = 0;
     while (*tokens && (*tokens)->type == TOKEN_WORD)
     {
-        args = ft_realloc(args, sizeof(char*) * (count + 1), sizeof(char*) * (count + 2));
-        if (!args)
-            return (NULL);
+        temp = ft_realloc(args, sizeof(char *) * (count), sizeof(char *) * (count + 2));
+        if (!temp)
+        {
+            while (count > 0)
+            {
+                count--;
+                free(args[count]);
+            }
+            free(args);
+            return NULL;
+        }
+        args = temp;
         args[count] = ft_strdup((*tokens)->value);
         if (!args[count])
+        {
+            while (count > 0)
+            {
+                count--;
+                free(args[count]);
+            }
+            free(args);
             return (NULL);
+        }
         count++;
         *tokens = (*tokens)->next;
     }
@@ -42,14 +64,30 @@ t_ast_node  *ast_parse_simple_command(t_token **tokens)
     t_ast_node  *cmd_node;
     char        **args;
     int         arg_count;
+    int         i;
     
+    if (!tokens || !*tokens)
+        return (NULL);
     args = collect_ast_arguments(tokens, &arg_count);
     if (arg_count > 0)
     {
         cmd_node = create_ast_node(NODE_COMMAND);
+        if (!cmd_node)
+        {
+            i = 0;
+            while (args[i])
+            {
+                free(args[i]);
+                i++;
+            }
+            free(args);
+            return (NULL);
+        }
         cmd_node->args = args;
         return (cmd_node);
     }
+    if (args)
+        free(args);
     return (NULL);
 }
 
@@ -63,6 +101,8 @@ t_ast_node *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node)
     char        **additional_args_array;
     int         i;
 
+    if (!tokens || !*tokens || !cmd_node)
+        return (cmd_node);
     current_arg_count = 0;
     if (cmd_node->args)
     {
