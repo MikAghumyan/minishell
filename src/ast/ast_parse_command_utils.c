@@ -153,7 +153,7 @@ t_ast_node *ast_parse_redirections(t_token **tokens, t_ast_node *cmd_node)
             additional_args_array = collect_ast_arguments(tokens, &additional_args);
             if (additional_args > 0)
             {
-                new_args = malloc(sizeof(char*) * (current_arg_count + additional_args + 1));
+                new_args = malloc(sizeof(char *) * (current_arg_count + additional_args + 1));
                 if (!new_args)
                 {
                     i = 0;

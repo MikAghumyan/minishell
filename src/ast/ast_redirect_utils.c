@@ -21,15 +21,25 @@ static int handle_heredoc(t_redirect *redirect)
         if (!line) // EOF
         {
             ft_putstr_fd("minishell: warning: here-document delimited by end-of-file\n", 2);
+            close(pipefd[1]);
             break;
         }
-        if (strcmp(line, delimiter) == 0) //change to ft_strcmp in libft is only ft_strncmp
+        if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0 && 
+            ft_strlen(line) == ft_strlen(delimiter))
         {
             free(line);
+            close(pipefd[1]);
             break;
         }
-        write(pipefd[1], line, ft_strlen(line)); // Write line to pipe
-        write(pipefd[1], "\n", 1);
+        if (write(pipefd[1], line, ft_strlen(line)) == -1 ||
+            write(pipefd[1], "\n", 1) == -1)
+        {
+            perror("write");
+            free(line);
+            close(pipefd[1]);
+            close(pipefd[0]);
+            return (-1);
+        }
         free(line);
     }
     close(pipefd[1]); // Close write end
@@ -100,32 +110,25 @@ static int  handle_append(t_redirect *current, int *fd)
 int handle_redirects(t_redirect *redirect_list)  //MAIN REDIRECT FUNC
 {
     t_redirect *current;
-    int fd;
+    int         fd;
+    int         result;
 
+    if (!redirect_list)
+        return (0);
+        
     current = redirect_list;
-    while (current)
+    result = 0;
+    while (current && result == 0)
     {
         if (current->type == NODE_REDIRECT_IN)
-        {
-            if (handle_redirect_in(current, &fd) == -1)
-                return (-1);
-        }
+            result = handle_redirect_in(current, &fd);
         else if (current->type == NODE_REDIRECT_OUT)
-        {
-            if (handle_redirect_out(current, &fd) == -1)
-                return (-1);
-        }
+            result = handle_redirect_out(current, &fd);
         else if (current->type == NODE_APPEND)
-        {
-            if (handle_append(current, &fd) == -1)
-                return (-1);
-        }
+            result = handle_append(current, &fd);
         else if (current->type == NODE_HEREDOC)
-        {
-            if (handle_heredoc(current) == -1)
-                return (-1);
-        }
+            result = handle_heredoc(current);
         current = current->next;
     }
-    return (0);
+    return (result);
 }
