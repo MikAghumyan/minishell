@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:25:26 by maghumya          #+#    #+#             */
-/*   Updated: 2025/09/23 18:52:01 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/09/26 22:11:09 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 static inline bool	is_operator_type(t_token *token)
 {
 	return (token->type >= TOKEN_PIPE && token->type <= TOKEN_AND);
-}
-
-static inline bool	is_redir_type(t_token *token)
-{
-	return (token->type >= TOKEN_REDIRECT_IN && token->type <= TOKEN_HEREDOC);
 }
 
 static inline bool	analyze_parentheses(t_token *token,
