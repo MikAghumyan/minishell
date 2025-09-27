@@ -10,7 +10,6 @@ t_ast_node	*build_ast(t_token *tokens)
 t_ast_node	*ast_parse_logical(t_token **tokens)
 {
 	t_ast_node	*left;
-	t_ast_node	*right;
 	t_ast_node	*operator_node;
 
 	if (!tokens || !*tokens)
@@ -26,21 +25,13 @@ t_ast_node	*ast_parse_logical(t_token **tokens)
 		else
 			operator_node = create_ast_node(NODE_OR);
 		if (!operator_node)
-		{
-			free_ast(left);
-			return (NULL);
-		}
+			return (free_ast(left), NULL);
 		*tokens = (*tokens)->next;
-		right = ast_parse_pipeline(tokens);
-		if (!right)
-		{
-			free_ast(left);
-			free_ast(operator_node);
-			return (NULL);
-		}
 		operator_node->left = left;
-		operator_node->right = right;
+		operator_node->right = ast_parse_pipeline(tokens);
 		left = operator_node;
+		if (!operator_node->right)
+			return (free_ast(left), NULL);
 	}
 	return (left);
 }
@@ -48,7 +39,6 @@ t_ast_node	*ast_parse_logical(t_token **tokens)
 t_ast_node	*ast_parse_pipeline(t_token **tokens)
 {
 	t_ast_node	*left;
-	t_ast_node	*right;
 	t_ast_node	*pipe_node;
 
 	if (!tokens || !*tokens)
@@ -60,21 +50,13 @@ t_ast_node	*ast_parse_pipeline(t_token **tokens)
 	{
 		pipe_node = create_ast_node(NODE_PIPE);
 		if (!pipe_node)
-		{
-			free_ast(left);
-			return (NULL);
-		}
+			return (free_ast(left), NULL);
 		*tokens = (*tokens)->next;
-		right = ast_parse_command(tokens);
-		if (!right)
-		{
-			free_ast(left);
-			free_ast(pipe_node);
-			return (NULL);
-		}
 		pipe_node->left = left;
-		pipe_node->right = right;
+		pipe_node->right = ast_parse_command(tokens);
 		left = pipe_node;
+		if (!pipe_node->right)
+			return (free_ast(left), NULL);
 	}
 	return (left);
 }
@@ -92,18 +74,13 @@ static t_ast_node	*ast_parse_subshell(t_token **tokens)
 		return (NULL);
 	subshell_node->left = ast_parse_logical(tokens);
 	if (!subshell_node->left)
-	{
-		free_ast(subshell_node);
-		return (NULL);
-	}
+		return (free_ast(subshell_node), NULL);
 	if (*tokens && (*tokens)->type == TOKEN_RPAREN)
 		*tokens = (*tokens)->next; // skip ')'
-	result = ast_parse_redirections(tokens, subshell_node); //add redirectins handling after subshell
+	result = ast_parse_redirections(tokens, subshell_node);
+	// add redirectins handling after subshell
 	if (!result)
-	{
-		free_ast(subshell_node);
-		return (NULL);
-	}
+		return (free_ast(subshell_node), NULL);
 	return (result);
 }
 
