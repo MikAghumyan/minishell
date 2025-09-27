@@ -31,14 +31,14 @@ SRCS=src/main.c \
       src/ast/ast_build.c \
       src/ast/ast_build_utils.c \
       src/ast/ast_parse_command_utils.c \
-      src/ast/ast_redirect_utils.c \
-	  src/ast/ast_executor.c \
-	  src/ast/ast_find_command_path.c \
-	  src/ast/ast_pipe_utils.c \
-	  src/ast/ast_pipe_utils2.c \
-	  src/ast/ast_logical_utils.c \
-	  src/ast/ast_command_execute_utils.c \
-	  src/ast/ast_subshell_execute_utils.c \
+      src/executor/ast_redirect_utils.c \
+	  src/executor/ast_executor.c \
+	  src/executor/ast_find_command_path.c \
+	  src/executor/ast_pipe_utils.c \
+	  src/executor/ast_pipe_utils2.c \
+	  src/executor/ast_logical_utils.c \
+	  src/executor/ast_command_execute_utils.c \
+	  src/executor/ast_subshell_execute_utils.c \
 
 OBJS=$(SRCS:.c=.o)
 DEBUG_OBJS=$(SRCS:.c=.debug.o)

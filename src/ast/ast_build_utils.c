@@ -12,8 +12,7 @@ int	is_redirect_ast_token(t_token *token)
 	if (!token)
 		return (0);
 	return (token && (token->type == TOKEN_REDIRECT_IN
-			||token->type == TOKEN_REDIRECT_OUT
-			||token->type == TOKEN_APPEND
+			|| token->type == TOKEN_REDIRECT_OUT || token->type == TOKEN_APPEND
 			|| token->type == TOKEN_HEREDOC));
 }
 
