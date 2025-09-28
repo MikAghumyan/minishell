@@ -41,7 +41,6 @@ SRCS_EXECUTOR = \
 SRCS_TOKENIZER = \
 	src/tokenizer/expander.c \
 	src/tokenizer/syntax_analyzer.c \
-	src/tokenizer/token_operator_utils.c \
 	src/tokenizer/token_type_utils.c \
 	src/tokenizer/token_utils.c \
 	src/tokenizer/token_word_utils.c \
