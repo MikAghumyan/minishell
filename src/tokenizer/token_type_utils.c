@@ -39,21 +39,23 @@ t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 	if (!shell || !shell->input || !tokens || !i)
 		return (NULL);
 	type = get_redir_type(shell->input, *i);
+	start = *i;
 	if (type == TOKEN_APPEND || type == TOKEN_HEREDOC)
 		*i += 2;
 	else
 		(*i)++;
-	while (shell->input[*i] && (shell->input[*i] == ' '
-			|| shell->input[*i] == '\t'))
-		(*i)++;
-	start = *i;
-	end = scan_word(shell->input, start, ' ');
-	if (end == start)
-	{
-		ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n",
-			shell->input[start]);
-		return (NULL);
-	}
+	end = *i;
+	// while (shell->input[*i] && (shell->input[*i] == ' '
+	// 		|| shell->input[*i] == '\t'))
+	// 	(*i)++;
+	// start = *i;
+	// end = scan_word(shell->input, start, ' ');
+	// if (end == start)
+	// {
+	// 	ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n",
+	// 		shell->input[start]);
+	// 	return (NULL);
+	// }
 	*i = end;
 	return (add_token_slice(tokens, &shell->input[start], end - start, type));
 }
