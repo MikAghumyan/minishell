@@ -65,8 +65,6 @@ int			execute_logical(t_ast_node *node, t_shell *shell);
 int			execute_subshell(t_ast_node *node, t_shell *shell);
 
 /* path utils */
-void		free_paths(char **paths);
-char		**parse_path(char **envp);
 char		*find_command_path(char *cmd, char **envp);
 
 /*command execute utils*/
