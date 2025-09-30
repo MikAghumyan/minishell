@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static e_token_type	get_redir_type(const char *input, size_t i)
+static t_token_type	get_redir_type(const char *input, size_t i)
 {
 	if (ft_strncmp(&input[i], ">>", 2) == 0)
 		return (TOKEN_APPEND);
@@ -13,7 +13,7 @@ static e_token_type	get_redir_type(const char *input, size_t i)
 	return (TOKEN_INVALID);
 }
 
-static e_token_type	get_operator_type(const char *input, size_t i)
+static t_token_type	get_operator_type(const char *input, size_t i)
 {
 	if (ft_strncmp(&input[i], "&&", 2) == 0)
 		return (TOKEN_AND);
@@ -32,7 +32,7 @@ static e_token_type	get_operator_type(const char *input, size_t i)
 
 t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 {
-	e_token_type	type;
+	t_token_type	type;
 	size_t			end;
 	size_t			start;
 
@@ -62,7 +62,7 @@ t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 
 t_token	*add_operator_token(t_token **tokens, t_shell *shell, size_t *i)
 {
-	e_token_type	type;
+	t_token_type	type;
 	size_t			end;
 
 	if (!shell || !shell->input || !tokens || !i)

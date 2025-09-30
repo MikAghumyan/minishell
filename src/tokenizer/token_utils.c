@@ -7,7 +7,7 @@ bool	token_is_operator(char c)
 }
 
 t_token	*add_token_slice(t_token **tokens, const char *start, size_t len,
-		e_token_type type)
+		t_token_type type)
 {
 	t_token	*new_token;
 
