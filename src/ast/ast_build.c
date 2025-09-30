@@ -68,7 +68,7 @@ static t_ast_node	*ast_parse_subshell(t_token **tokens)
 
 	if (!tokens || !*tokens)
 		return (NULL);
-	*tokens = (*tokens)->next; // skip '('
+	*tokens = (*tokens)->next;
 	subshell_node = create_ast_node(NODE_SUBSHELL);
 	if (!subshell_node)
 		return (NULL);
@@ -76,9 +76,8 @@ static t_ast_node	*ast_parse_subshell(t_token **tokens)
 	if (!subshell_node->left)
 		return (free_ast(subshell_node), NULL);
 	if (*tokens && (*tokens)->type == TOKEN_RPAREN)
-		*tokens = (*tokens)->next; // skip ')'
+		*tokens = (*tokens)->next;
 	result = ast_parse_redirections(tokens, subshell_node);
-	// add redirectins handling after subshell
 	if (!result)
 		return (free_ast(subshell_node), NULL);
 	return (result);

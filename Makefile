@@ -18,33 +18,39 @@ RESET=\033[0m
 
 # Source files per folder
 SRCS_MAIN = \
-	src/main.c \
-	src/initializer.c \
-	src/handlers.c
+    src/main.c \
+    src/initializer.c \
+    src/handlers.c
+
 SRCS_AST = \
-	src/ast/ast.c \
-	src/ast/ast_build.c \
-	src/ast/ast_build_utils.c \
-	src/ast/ast_parse_command_utils.c
+    src/ast/ast.c \
+    src/ast/ast_build.c \
+    src/ast/ast_build_utils.c \
+    src/ast/ast_parse_command.c \
+    src/ast/ast_parse_command_utils.c \
+	src/ast/ast_print.c \
+
 SRCS_ENV = \
-	src/env/env.c \
-	src/env/env_utils.c
+    src/env/env.c \
+    src/env/env_utils.c
+
 SRCS_EXECUTOR = \
-	src/executor/ast_command_execute_utils.c \
-	src/executor/ast_executor.c \
-	src/executor/ast_find_command_path.c \
-	src/executor/ast_logical_utils.c \
-	src/executor/ast_pipe_utils.c \
-	src/executor/ast_pipe_utils2.c \
-	src/executor/ast_redirect_utils.c \
-	src/executor/ast_subshell_execute_utils.c
+    src/executor/ast_command_execute_utils.c \
+    src/executor/ast_executor.c \
+    src/executor/ast_find_command_path.c \
+    src/executor/ast_logical_utils.c \
+    src/executor/ast_pipe_utils.c \
+    src/executor/ast_pipe_utils2.c \
+    src/executor/ast_redirect_utils.c \
+    src/executor/ast_subshell_execute_utils.c
+
 SRCS_TOKENIZER = \
-	src/tokenizer/expander.c \
-	src/tokenizer/syntax_analyzer.c \
-	src/tokenizer/token_type_utils.c \
-	src/tokenizer/token_utils.c \
-	src/tokenizer/token_word_utils.c \
-	src/tokenizer/tokenizer.c
+    src/tokenizer/expander.c \
+    src/tokenizer/syntax_analyzer.c \
+    src/tokenizer/token_type_utils.c \
+    src/tokenizer/token_utils.c \
+    src/tokenizer/token_word_utils.c \
+    src/tokenizer/tokenizer.c
 
 # Combine all sources
 SRCS = $(SRCS_MAIN) $(SRCS_AST) $(SRCS_ENV) $(SRCS_EXECUTOR) $(SRCS_TOKENIZER)
