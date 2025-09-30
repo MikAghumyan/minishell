@@ -80,15 +80,15 @@ void		handle_left_pid(int *pipefds);
 void		handle_right_pid(int *pipefds);
 int			wait_for_children(pid_t left_pid, pid_t right_pid, t_shell *shell);
 int			type_pipe_error_and_return(void);
-pid_t       fork_left_child(t_ast_node *node, int *pipefds, t_shell *shell);
-pid_t       fork_right_pid(t_ast_node *node, int *pipefds, t_shell *shell);
+pid_t		fork_left_child(t_ast_node *node, int *pipefds, t_shell *shell);
+pid_t		fork_right_pid(t_ast_node *node, int *pipefds, t_shell *shell);
 
 /* logical operator utils */
 int			execute_and(t_ast_node *node, t_shell *shell);
 int			execute_or(t_ast_node *node, t_shell *shell);
 
 /*subshell utils*/
-void        execute_subshell_in_child(t_ast_node *node, t_shell *shell);
-int         wait_for_child(pid_t pid, t_shell *shell);
-int         handle_subshell_fork_error(t_shell *shell);
+void		execute_subshell_in_child(t_ast_node *node, t_shell *shell);
+int			wait_for_child(pid_t pid, t_shell *shell);
+int			handle_subshell_fork_error(t_shell *shell);
 #endif

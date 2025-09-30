@@ -1,5 +1,5 @@
-#ifndef MINISHELL_TOKENIZER_H
-# define MINISHELL_TOKENIZER_H
+#ifndef TOKENIZER_H
+# define TOKENIZER_H
 
 # include "./minishell.h"
 # include <stdbool.h>
