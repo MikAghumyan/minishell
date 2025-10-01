@@ -91,4 +91,10 @@ int			execute_or(t_ast_node *node, t_shell *shell);
 void		execute_subshell_in_child(t_ast_node *node, t_shell *shell);
 int			wait_for_child(pid_t pid, t_shell *shell);
 int			handle_subshell_fork_error(t_shell *shell);
+
+/*redirect utils*/
+int	handle_heredoc(t_redirect *redirect);
+int	handle_redirect_in(t_redirect *current, int *fd);
+int	handle_redirect_out(t_redirect *current, int *fd);
+int	handle_append(t_redirect *current, int *fd);
 #endif
