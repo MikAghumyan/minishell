@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:25:26 by maghumya          #+#    #+#             */
-/*   Updated: 2025/09/28 20:18:50 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/02 19:22:39 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static inline bool	analyze_tokens_order(t_token *token,
 		return (false);
 	else if (!analyze_parentheses(token, count_parentheses))
 		return (false);
+	if (is_redir_type(token))
+		attach_redirect_target(token);
 	return (true);
 }
 
@@ -82,7 +84,7 @@ bool	analyze_tokens(t_token *token)
 			return (false);
 		}
 		token = token->next;
-	}	
+	}
 	if (count_parentheses[0] != count_parentheses[1])
 	{
 		ft_fprintf(2, "minishell: syntax error: unmatched parentheses\n");

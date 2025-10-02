@@ -54,5 +54,7 @@ void					print_tokens(t_token *tokens);
 void					free_tokens(t_token *tokens);
 bool					analyze_tokens(t_token *token);
 char					*expand_token_value(t_shell *shell, const char *value);
+t_token					*attach_redirect_target(t_token *redirect);
+char					*open_heredoc(t_token *redirect);
 
 #endif

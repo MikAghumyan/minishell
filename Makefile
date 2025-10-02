@@ -44,7 +44,8 @@ SRCS_TOKENIZER = \
 	src/tokenizer/token_type_utils.c \
 	src/tokenizer/token_utils.c \
 	src/tokenizer/token_word_utils.c \
-	src/tokenizer/tokenizer.c
+	src/tokenizer/tokenizer.c \
+	src/tokenizer/collect_redirects.c
 
 # Combine all sources
 SRCS = $(SRCS_MAIN) $(SRCS_AST) $(SRCS_ENV) $(SRCS_EXECUTOR) $(SRCS_TOKENIZER)
