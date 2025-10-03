@@ -23,15 +23,14 @@ size_t	scan_word(const char *input, size_t start, const char end_char)
 	return (end);
 }
 
-static char	*add_word_slice(t_token **tokens, t_shell *shell, size_t *i,
-		t_tokres *result_code)
+static char	*add_word_slice(t_shell *shell, size_t *i, t_tokres *result_code)
 {
 	size_t	word_end;
 	size_t	word_start;
 	char	*word_slice;
 	char	*expanded;
 
-	if (!tokens || !shell || !i)
+	if (!shell || !i)
 		return (*result_code = TOKEN_RES_ERROR, NULL);
 	word_start = *i;
 	word_end = scan_word(shell->input, *i, ' ');
@@ -48,14 +47,13 @@ static char	*add_word_slice(t_token **tokens, t_shell *shell, size_t *i,
 	return (expanded);
 }
 
-static char	*add_quote_slice(t_token **tokens, t_shell *shell, size_t *i,
-		t_tokres *result_code)
+static char	*add_quote_slice(t_shell *shell, size_t *i, t_tokres *result_code)
 {
 	size_t	start;
 	char	*word_slice;
 	char	*expanded;
 
-	if (!tokens || !shell || !i)
+	if (!shell || !i)
 		return (*result_code = TOKEN_RES_ERROR, NULL);
 	start = ++(*i);
 	if (shell->input[start - 1] == '\'')
@@ -77,8 +75,7 @@ static char	*add_quote_slice(t_token **tokens, t_shell *shell, size_t *i,
 	return (word_slice);
 }
 
-t_tokres	process_token_part(t_shell *shell, size_t *i, t_token **tokens,
-		char **value)
+t_tokres	process_token_part(t_shell *shell, size_t *i, char **value)
 {
 	char		*value_slice;
 	char		*tmp;
@@ -87,9 +84,9 @@ t_tokres	process_token_part(t_shell *shell, size_t *i, t_token **tokens,
 	result_code = TOKEN_RES_SUCCESS;
 	value_slice = NULL;
 	if (shell->input[*i] == '\"' || shell->input[*i] == '\'')
-		value_slice = add_quote_slice(tokens, shell, i, &result_code);
+		value_slice = add_quote_slice(shell, i, &result_code);
 	else
-		value_slice = add_word_slice(tokens, shell, i, &result_code);
+		value_slice = add_word_slice(shell, i, &result_code);
 	if (result_code == TOKEN_RES_SYNTAX_ERROR)
 		ft_putstr_fd("minishell: syntax error: unmatched quote\n", 2);
 	if (!value_slice)
@@ -105,6 +102,29 @@ t_tokres	process_token_part(t_shell *shell, size_t *i, t_token **tokens,
 	return (TOKEN_RES_SUCCESS);
 }
 
+char	*get_word_value(t_shell *shell, size_t *i, t_tokres *result_code)
+{
+	char		*value;
+	t_tokres	res;
+
+	value = NULL;
+	while (shell->input[*i] && shell->input[*i] != ' '
+		&& !token_is_operator(shell->input[*i]))
+	{
+		res = process_token_part(shell, i, &value);
+		if (res != TOKEN_RES_SUCCESS)
+		{
+			if (result_code)
+				*result_code = res;
+			free(value);
+			return (NULL);
+		}
+	}
+	if (result_code)
+		*result_code = TOKEN_RES_SUCCESS;
+	return (value);
+}
+
 t_tokres	add_word_token(t_shell *shell, size_t *i, t_token **tokens)
 {
 	t_token		*token;
@@ -112,17 +132,9 @@ t_tokres	add_word_token(t_shell *shell, size_t *i, t_token **tokens)
 	t_tokres	result_code;
 
 	token = NULL;
-	value = NULL;
-	while (shell->input[*i] && shell->input[*i] != ' '
-		&& !token_is_operator(shell->input[*i]))
-	{
-		result_code = process_token_part(shell, i, tokens, &value);
-		if (result_code != TOKEN_RES_SUCCESS)
-		{
-			free(value);
-			return (result_code);
-		}
-	}
+	value = get_word_value(shell, i, &result_code);
+	if (result_code != TOKEN_RES_SUCCESS)
+		return (result_code);
 	if (value)
 	{
 		token = add_token_slice(tokens, value, ft_strlen(value), TOKEN_WORD);

@@ -33,31 +33,29 @@ static e_token_type	get_operator_type(const char *input, size_t i)
 t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 {
 	e_token_type	type;
-	size_t			end;
-	size_t			start;
+	char			*value;
+	t_token			*res;
 
 	if (!shell || !shell->input || !tokens || !i)
 		return (NULL);
 	type = get_redir_type(shell->input, *i);
-	start = *i;
 	if (type == TOKEN_APPEND || type == TOKEN_HEREDOC)
 		*i += 2;
 	else
 		(*i)++;
-	end = *i;
-	// while (shell->input[*i] && (shell->input[*i] == ' '
-	// 		|| shell->input[*i] == '\t'))
-	// 	(*i)++;
-	// start = *i;
-	// end = scan_word(shell->input, start, ' ');
-	// if (end == start)
-	// {
-	// 	ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n",
-	// 		shell->input[start]);
-	// 	return (NULL);
-	// }
-	*i = end;
-	return (add_token_slice(tokens, &shell->input[start], end - start, type));
+	while (shell->input[*i] && (shell->input[*i] == ' '
+			|| shell->input[*i] == '\t'))
+		(*i)++;
+	if (!shell->input[*i] || token_is_operator(shell->input[*i]))
+		return (add_token_slice(tokens, "", 0, TOKEN_INVALID));
+	printf("DEBUG: Processing REDIRECT token\n");
+	value = get_word_value(shell, i, NULL);
+	if (!value)
+		return (NULL);
+	res = add_token_slice(tokens, value, ft_strlen(value), type);
+	free(value);
+	printf("DEBUG: Added REDIRECT token with value:'%s'\n", res->value);
+	return (res);
 }
 
 t_token	*add_operator_token(t_token **tokens, t_shell *shell, size_t *i)

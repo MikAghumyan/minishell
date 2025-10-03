@@ -49,6 +49,8 @@ t_token					*add_operator_token(t_token **tokens, t_shell *shell,
 bool					token_is_operator(char c);
 t_token					*add_token_slice(t_token **tokens, const char *start,
 							size_t len, e_token_type type);
+char					*get_word_value(t_shell *shell, size_t *i,
+							t_tokres *result_code);
 void					add_tokens_back(t_token **tokens, t_token *new_token);
 void					print_tokens(t_token *tokens);
 void					free_tokens(t_token *tokens);

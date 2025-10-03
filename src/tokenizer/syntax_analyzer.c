@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:25:26 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/02 19:22:39 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/03 20:14:00 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ static inline bool	analyze_tokens_order(t_token *token,
 		return (false);
 	else if (is_operator_type(token) && is_operator_type(token->next))
 		return (false);
-	else if (is_redir_type(token) && token->next->type != TOKEN_WORD)
-		return (false);
+	// else if (is_redir_type(token) && token->next->type != TOKEN_WORD)
+	// 	return (false);
 	else if (!analyze_parentheses(token, count_parentheses))
 		return (false);
-	if (is_redir_type(token))
-		attach_redirect_target(token);
+	// if (is_redir_type(token))
+	// 	attach_redirect_target(token);
 	return (true);
 }
 
