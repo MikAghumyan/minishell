@@ -51,7 +51,7 @@ t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 	if (!shell->input[*i] || token_is_operator(shell->input[*i]))
 		return (add_token_slice(tokens, &shell->input[start], 2,
 				TOKEN_INVALID));
-	value = get_word_value(shell, i, NULL);
+	value = get_word_value(shell, i, &type);
 	if (!value)
 		return (NULL);
 	res = add_token_slice(tokens, value, ft_strlen(value), type);
