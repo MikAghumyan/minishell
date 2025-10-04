@@ -35,27 +35,27 @@ t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 	e_token_type	type;
 	char			*value;
 	t_token			*res;
+	size_t			start;
 
 	if (!shell || !shell->input || !tokens || !i)
 		return (NULL);
 	type = get_redir_type(shell->input, *i);
+	start = *i;
 	if (type == TOKEN_APPEND || type == TOKEN_HEREDOC)
-		*i += 2;
+		(*i) += 2;
 	else
-		(*i)++;
+		(*i) += 1;
 	while (shell->input[*i] && (shell->input[*i] == ' '
 			|| shell->input[*i] == '\t'))
 		(*i)++;
 	if (!shell->input[*i] || token_is_operator(shell->input[*i]))
-		return (add_token_slice(tokens, "", 0, TOKEN_INVALID));
-	printf("DEBUG: Processing REDIRECT token\n");
+		return (add_token_slice(tokens, &shell->input[start], 2,
+				TOKEN_INVALID));
 	value = get_word_value(shell, i, NULL);
 	if (!value)
 		return (NULL);
 	res = add_token_slice(tokens, value, ft_strlen(value), type);
-	free(value);
-	printf("DEBUG: Added REDIRECT token with value:'%s'\n", res->value);
-	return (res);
+	return (free(value), res);
 }
 
 t_token	*add_operator_token(t_token **tokens, t_shell *shell, size_t *i)
