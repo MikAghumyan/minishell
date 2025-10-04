@@ -37,7 +37,7 @@ t_ast_node	*ast_init_command(t_parser *parser)
 {
 	t_ast_node	*result;
 
-	result = malloc(sizeof(t_ast_node));
+	result = create_ast_node(NODE_COMMAND);
 	if (!result)
 		return (NULL);
 	result->type = NODE_COMMAND;

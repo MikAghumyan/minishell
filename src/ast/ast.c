@@ -1,5 +1,20 @@
 #include "../../includes/ast.h"
 
+t_ast_node	*build_ast(t_token *tokens)
+{
+	t_parser	parser;
+	t_ast_node	*result;
+
+	if (!tokens)
+		return (NULL);
+	parser.tokens = tokens;
+	parser.subshell_depth = 0;
+	result = ast_parse_logical(&parser);
+	if (parser.tokens)
+		printf("minishell: syntax error FROM AST `%s'\n", parser.tokens->value);
+	return (result);
+}
+
 t_ast_node	*create_ast_node(t_node_type type)
 {
 	t_ast_node	*node;
@@ -27,6 +42,7 @@ void	free_ast(t_ast_node *node)
 		while (node->args[i])
 		{
 			free(node->args[i]);
+			node->args[i] = NULL;
 			i++;
 		}
 		free(node->args);

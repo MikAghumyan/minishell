@@ -22,7 +22,6 @@ t_token	*tokenize_input(t_shell *shell)
 {
 	size_t	i;
 	t_token	*tokens;
-	t_token	*res_;
 
 	if (!shell || !shell->input)
 		return (NULL);
@@ -30,7 +29,7 @@ t_token	*tokenize_input(t_shell *shell)
 	tokens = NULL;
 	while (shell->input[i])
 	{
-		res_ = process_single_char(shell, &i, &tokens);
+		process_single_char(shell, &i, &tokens);
 		if (!tokens)
 		{
 			handle_exit(shell);
@@ -39,7 +38,5 @@ t_token	*tokenize_input(t_shell *shell)
 		}
 	}
 	print_tokens(tokens);
-	// if (!analyze_tokens(tokens))
-	// 	return (printf("minishell: syntax error\n"), free_tokens(tokens), NULL);
 	return (tokens);
 }
