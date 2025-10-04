@@ -39,7 +39,7 @@ t_token	*tokenize_input(t_shell *shell)
 		}
 	}
 	print_tokens(tokens);
-	if (!analyze_tokens(tokens))
-		return (printf("minishell: syntax error\n"), free_tokens(tokens), NULL);
+	// if (!analyze_tokens(tokens))
+	// 	return (printf("minishell: syntax error\n"), free_tokens(tokens), NULL);
 	return (tokens);
 }

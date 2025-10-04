@@ -32,6 +32,12 @@ typedef struct s_ast_node
 	struct s_ast_node	*right;
 }						t_ast_node;
 
+typedef struct s_parser
+{
+	t_token				*tokens;
+	int					subshell_depth;
+}						t_parser;
+
 /* base ast functions */
 t_ast_node				*build_ast(t_token *tokens);
 t_ast_node				*create_ast_node(t_node_type type);
@@ -39,15 +45,15 @@ void					free_ast(t_ast_node *node);
 void					print_ast(t_ast_node *node, int depth);
 
 /* parsing functions */
-t_ast_node				*ast_parse_logical(t_token **tokens);
-t_ast_node				*ast_parse_pipeline(t_token **tokens);
-t_ast_node				*ast_parse_subshell(t_token **tokens);
-t_ast_node				*ast_parse_simple_command(t_token **tokens);
-t_ast_node				*ast_parse_redirections(t_token **tokens,
+t_ast_node				*ast_parse_logical(t_parser *parser);
+t_ast_node				*ast_parse_pipeline(t_parser *parser);
+t_ast_node				*ast_parse_subshell(t_parser *parser);
+t_ast_node				*ast_parse_simple_command(t_parser *parser);
+t_ast_node				*ast_parse_redirections(t_parser *parser,
 							t_ast_node *cmd_node);
 /* parsing command*/
-t_ast_node				*ast_parse_command(t_token **tokens);
-t_ast_node				*ast_init_command(t_token **tokens);
+t_ast_node				*ast_parse_command(t_parser *parser);
+t_ast_node				*ast_init_command(t_parser *parser);
 
 /* collect arguments*/
 char					**collect_ast_arguments(t_token *tokens);
@@ -63,7 +69,6 @@ int						is_redirect_ast_token(t_token *token);
 int						is_logical_ast_token(t_token *token);
 int						is_logicpipe_ast_token(t_token *token);
 int						is_sub_lr_ast_token(t_token *token);
-char					**collect_ast_arguments(t_token *tokens);
 
 /* execute functions */
 int						execute_ast(t_ast_node *node, t_shell *shell);
@@ -86,6 +91,8 @@ int						handle_cmd_parent(pid_t pid, char *command_path,
 							t_shell *shell);
 int						handle_command_exec_fork_error(char *command_path,
 							t_shell *shell);
+/* redirect handling */
+int						handle_redirects(t_list *redirect_list);
 
 /* pipe utils */
 void					close_fds(int *pipefds);

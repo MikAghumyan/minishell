@@ -2,38 +2,41 @@
 
 t_ast_node	*build_ast(t_token *tokens)
 {
+	t_parser	parser;
 	t_ast_node	*result;
 
 	if (!tokens)
 		return (NULL);
-	result = ast_parse_logical(&tokens);
-	if (tokens)
-		printf("minishell: syntax error FROM AST $%s\n", tokens->value);
+	parser.tokens = tokens;
+	parser.subshell_depth = 0;
+	result = ast_parse_logical(&parser);
+	if (parser.tokens)
+		printf("minishell: syntax error FROM AST $%s\n", parser.tokens->value);
 	return (result);
 }
 
-t_ast_node	*ast_parse_logical(t_token **tokens)
+t_ast_node	*ast_parse_logical(t_parser *parser)
 {
 	t_ast_node	*left;
 	t_ast_node	*operator_node;
 
-	if (!tokens || !*tokens)
+	if (!parser || !parser->tokens)
 		return (NULL);
-	left = ast_parse_pipeline(tokens);
+	left = ast_parse_pipeline(parser);
 	if (!left)
 		return (NULL);
-	while (*tokens && ((*tokens)->type == TOKEN_AND
-			|| (*tokens)->type == TOKEN_OR))
+	while (parser->tokens && (parser->tokens->type == TOKEN_AND
+			|| parser->tokens->type == TOKEN_OR))
 	{
-		if ((*tokens)->type == TOKEN_AND)
+		if (parser->tokens->type == TOKEN_AND)
 			operator_node = create_ast_node(NODE_AND);
 		else
 			operator_node = create_ast_node(NODE_OR);
 		if (!operator_node)
 			return (free_ast(left), NULL);
-		*tokens = (*tokens)->next;
+		parser->tokens = parser->tokens->next;
 		operator_node->left = left;
-		operator_node->right = ast_parse_pipeline(tokens);
+		operator_node->right = ast_parse_pipeline(parser);
 		left = operator_node;
 		if (!operator_node->right)
 			return (free_ast(left), NULL);
@@ -41,50 +44,30 @@ t_ast_node	*ast_parse_logical(t_token **tokens)
 	return (left);
 }
 
-t_ast_node	*ast_parse_pipeline(t_token **tokens)
+t_ast_node	*ast_parse_pipeline(t_parser *parser)
 {
 	t_ast_node	*left;
 	t_ast_node	*pipe_node;
 
-	if (!tokens || !*tokens)
+	if (!parser || !parser->tokens)
 		return (NULL);
-	left = ast_parse_command(tokens);
+	left = ast_parse_command(parser);
 	if (!left)
+	{
+		printf("RETURNING NULL FROM PIPELINE\n");
 		return (NULL);
-	while (*tokens && (*tokens)->type == TOKEN_PIPE)
+	}
+	while (parser->tokens && parser->tokens->type == TOKEN_PIPE)
 	{
 		pipe_node = create_ast_node(NODE_PIPE);
 		if (!pipe_node)
 			return (free_ast(left), NULL);
-		*tokens = (*tokens)->next;
+		parser->tokens = parser->tokens->next;
 		pipe_node->left = left;
-		pipe_node->right = ast_parse_command(tokens);
+		pipe_node->right = ast_parse_command(parser);
 		left = pipe_node;
 		if (!pipe_node->right)
 			return (free_ast(left), NULL);
 	}
 	return (left);
-}
-
-t_ast_node	*ast_parse_subshell(t_token **tokens)
-{
-	t_ast_node	*subshell_node;
-
-	// t_ast_node	*result;
-	if (!tokens || !*tokens)
-		return (NULL);
-	*tokens = (*tokens)->next; // skip '('
-	subshell_node = create_ast_node(NODE_SUBSHELL);
-	if (!subshell_node)
-		return (NULL);
-	subshell_node->left = ast_parse_logical(tokens);
-	if (!subshell_node->left)
-		return (free_ast(subshell_node), NULL);
-	if (*tokens && (*tokens)->type == TOKEN_RPAREN)
-		*tokens = (*tokens)->next; // skip ')'
-	// result = ast_parse_redirections(tokens, subshell_node);
-	// add redirectins handling after subshell
-	// if (!result)
-	// 	return (free_ast(subshell_node), NULL);
-	return (subshell_node);
 }

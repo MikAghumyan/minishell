@@ -88,6 +88,19 @@ void	print_ast(t_ast_node *node, int depth)
 		break ;
 	case NODE_SUBSHELL:
 		printf("SUBSHELL");
+		if (node->redirect_files)
+		{
+			t_list *current_list;
+			printf(" (redirects: ");
+			current_list = node->redirect_files;
+			while (current_list)
+			{
+				redirect = (t_redirect *)current_list->content;
+				printf("[%d:%s] ", redirect->type, redirect->filename);
+				current_list = current_list->next;
+			}
+			printf(")");
+		}
 		break ;
 	default:
 		printf("UNKNOWN");
