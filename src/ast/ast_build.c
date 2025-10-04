@@ -2,9 +2,14 @@
 
 t_ast_node	*build_ast(t_token *tokens)
 {
+	t_ast_node	*result;
+
 	if (!tokens)
 		return (NULL);
-	return (ast_parse_logical(&tokens));
+	result = ast_parse_logical(&tokens);
+	if (tokens)
+		printf("minishell: syntax error FROM AST $%s\n", tokens->value);
+	return (result);
 }
 
 t_ast_node	*ast_parse_logical(t_token **tokens)
@@ -61,11 +66,11 @@ t_ast_node	*ast_parse_pipeline(t_token **tokens)
 	return (left);
 }
 
-static t_ast_node	*ast_parse_subshell(t_token **tokens)
+t_ast_node	*ast_parse_subshell(t_token **tokens)
 {
 	t_ast_node	*subshell_node;
-	t_ast_node	*result;
 
+	// t_ast_node	*result;
 	if (!tokens || !*tokens)
 		return (NULL);
 	*tokens = (*tokens)->next; // skip '('
@@ -77,31 +82,9 @@ static t_ast_node	*ast_parse_subshell(t_token **tokens)
 		return (free_ast(subshell_node), NULL);
 	if (*tokens && (*tokens)->type == TOKEN_RPAREN)
 		*tokens = (*tokens)->next; // skip ')'
-	result = ast_parse_redirections(tokens, subshell_node);
+	// result = ast_parse_redirections(tokens, subshell_node);
 	// add redirectins handling after subshell
-	if (!result)
-		return (free_ast(subshell_node), NULL);
-	return (result);
-}
-
-t_ast_node	*ast_parse_command(t_token **tokens)
-{
-	t_ast_node	*cmd_node;
-	t_ast_node	*result;
-
-	if (!tokens || !*tokens)
-		return (NULL);
-	if (is_subshell_ast_token(*tokens))
-		return (ast_parse_subshell(tokens));
-	cmd_node = ast_parse_simple_command(tokens);
-	if (!cmd_node)
-		return (NULL);
-	result = ast_parse_redirections(tokens, cmd_node);
-	if (!result)
-	{
-		free_ast(cmd_node);
-		ft_putstr_fd("minishell: redirect parsing failed\n", 2);
-		return (NULL);
-	}
-	return (result);
+	// if (!result)
+	// 	return (free_ast(subshell_node), NULL);
+	return (subshell_node);
 }

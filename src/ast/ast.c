@@ -1,24 +1,5 @@
 #include "../../includes/ast.h"
 
-static void	free_redirects(t_ast_node *node)
-{
-	t_redirect	*current;
-	t_redirect	*next;
-
-	if (!node->redirect_files)
-		return ;
-	current = node->redirect_files;
-	while (current)
-	{
-		next = current->next;
-		if (current->filename)
-			free(current->filename);
-		free(current);
-		current = next;
-	}
-	node->redirect_files = NULL;
-}
-
 t_ast_node	*create_ast_node(t_node_type type)
 {
 	t_ast_node	*node;
@@ -50,67 +31,71 @@ void	free_ast(t_ast_node *node)
 		}
 		free(node->args);
 	}
-	free_redirects(node);
+	if (node->redirect_files)
+		ft_lstclear(&node->redirect_files, free_redirect);
 	free_ast(node->right);
 	free_ast(node->left);
 	free(node);
 }
 
-void	print_ast(t_ast_node *node, int depth) //no need here to fix norme errors, it's just a debug function
+void	print_ast(t_ast_node *node, int depth)
+// no need here to fix norme errors, it's just a debug function
 {
-	int	i;
-	t_redirect	*redirect;
+	int i;
+	t_redirect *redirect;
 
 	if (!node)
 		return ;
-    
-    for (i = 0; i < depth; i++)
-        printf("  ");
-    
-    switch (node->type)
-    {
-        case NODE_COMMAND:
-            printf("COMMAND: ");
-            if (node->args)
-            {
-                i = 0;
-                while (node->args[i])
-                {
-                    printf("%s ", node->args[i]);
-                    i++;
-                }
-            }
-            if (node->redirect_files)
-            {
-                printf("(redirects: ");
-                redirect = node->redirect_files;
-                while (redirect)
-                {
-                    printf("[%d:%s] ", redirect->type, redirect->filename);
-                    redirect = redirect->next;
-                }
-                printf(")");
-            }
-            break;
-        case NODE_PIPE:
-            printf("PIPE");
-            break;
-        case NODE_AND:
-            printf("AND");
-            break;
-        case NODE_OR:
-            printf("OR");
-            break;
-        case NODE_SUBSHELL:
-            printf("SUBSHELL");
-            break;
-        default:
-            printf("UNKNOWN");
-    }
-    printf("\n");
-    
-    if (node->left)
-        print_ast(node->left, depth + 1);
-    if (node->right)
-        print_ast(node->right, depth + 1);
+
+	for (i = 0; i < depth; i++)
+		printf("  ");
+
+	switch (node->type)
+	{
+	case NODE_COMMAND:
+		printf("COMMAND: ");
+		if (node->args)
+		{
+			i = 0;
+			while (node->args[i])
+			{
+				printf("%s ", node->args[i]);
+				i++;
+			}
+		}
+		if (node->redirect_files)
+		{
+			t_list *current_list;
+			printf("(redirects: ");
+			current_list = node->redirect_files;
+			while (current_list)
+			{
+				redirect = (t_redirect *)current_list->content;
+				printf("[%d:%s] ", redirect->type, redirect->filename);
+				current_list = current_list->next;
+			}
+			printf(")");
+		}
+		break ;
+	case NODE_PIPE:
+		printf("PIPE");
+		break ;
+	case NODE_AND:
+		printf("AND");
+		break ;
+	case NODE_OR:
+		printf("OR");
+		break ;
+	case NODE_SUBSHELL:
+		printf("SUBSHELL");
+		break ;
+	default:
+		printf("UNKNOWN");
+	}
+	printf("\n");
+
+	if (node->left)
+		print_ast(node->left, depth + 1);
+	if (node->right)
+		print_ast(node->right, depth + 1);
 }

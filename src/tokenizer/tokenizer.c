@@ -38,8 +38,8 @@ t_token	*tokenize_input(t_shell *shell)
 			return (NULL);
 		}
 	}
-	if (!analyze_tokens(tokens))
-		return (free_tokens(tokens), NULL);
 	print_tokens(tokens);
+	if (!analyze_tokens(tokens))
+		return (printf("minishell: syntax error\n"), free_tokens(tokens), NULL);
 	return (tokens);
 }

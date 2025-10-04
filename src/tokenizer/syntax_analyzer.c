@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 17:25:26 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/03 20:14:00 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/04 18:14:33 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static inline bool	is_operator_type(t_token *token)
 	return (token->type >= TOKEN_PIPE && token->type <= TOKEN_AND);
 }
 
-static inline bool	is_redir_type(t_token *token)
-{
-	return (token->type >= TOKEN_REDIRECT_IN && token->type <= TOKEN_HEREDOC);
-}
+// static inline bool	is_redir_type(t_token *token)
+// {
+// 	return (token->type >= TOKEN_REDIRECT_IN && token->type <= TOKEN_HEREDOC);
+// }
 
 static inline bool	analyze_parentheses(t_token *token,
 		size_t *count_parentheses)
@@ -39,8 +39,8 @@ static inline bool	analyze_parentheses(t_token *token,
 		return (false);
 	else if (token->type == TOKEN_RPAREN && token->next->type == TOKEN_LPAREN)
 		return (false);
-	else if (token->type == TOKEN_WORD && token->next->type == TOKEN_LPAREN)
-		return (false);
+	// else if (token->type == TOKEN_WORD && token->next->type == TOKEN_LPAREN)
+	// 	return (false);
 	else if (token->type == TOKEN_RPAREN && token->next->type == TOKEN_WORD)
 		return (false);
 	return (true);
@@ -51,7 +51,7 @@ static inline bool	analyze_tokens_order(t_token *token,
 {
 	if (!token)
 		return (false);
-	if ((is_operator_type(token) || is_redir_type(token)) && !token->next)
+	if (is_operator_type(token) && !token->next)
 		return (false);
 	else if (is_operator_type(token) && is_operator_type(token->next))
 		return (false);
@@ -68,6 +68,7 @@ bool	analyze_tokens(t_token *token)
 {
 	size_t	count_parentheses[2];
 
+	printf("Analyzing tokens...\n");
 	count_parentheses[0] = 0;
 	count_parentheses[1] = 0;
 	if (!token)
@@ -76,8 +77,7 @@ bool	analyze_tokens(t_token *token)
 		return (false);
 	while (token)
 	{
-		if (token->type == TOKEN_INVALID || !analyze_tokens_order(token,
-				count_parentheses))
+		if (!analyze_tokens_order(token, count_parentheses))
 		{
 			ft_fprintf(2, "minishell: %s `%s'\n",
 				"syntax error near unexpected token", token->value);
@@ -85,10 +85,10 @@ bool	analyze_tokens(t_token *token)
 		}
 		token = token->next;
 	}
-	if (count_parentheses[0] != count_parentheses[1])
-	{
-		ft_fprintf(2, "minishell: syntax error: unmatched parentheses\n");
-		return (false);
-	}
+	// if (count_parentheses[0] != count_parentheses[1])
+	// {
+	// 	ft_fprintf(2, "minishell: syntax error: unmatched parentheses\n");
+	// 	return (false);
+	// }
 	return (true);
 }

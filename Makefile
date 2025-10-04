@@ -25,7 +25,9 @@ SRCS_AST = \
 	src/ast/ast.c \
 	src/ast/ast_build.c \
 	src/ast/ast_build_utils.c \
-	src/ast/ast_parse_command_utils.c
+	src/ast/ast_parse_command.c \
+	src/ast/ast_collect_args.c \
+	src/ast/ast_parse_redirects.c
 SRCS_ENV = \
 	src/env/env.c \
 	src/env/env_utils.c
