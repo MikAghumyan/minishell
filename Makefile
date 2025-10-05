@@ -23,9 +23,12 @@ SRCS_MAIN = \
 	src/handlers.c
 SRCS_AST = \
 	src/ast/ast.c \
-	src/ast/ast_build.c \
-	src/ast/ast_build_utils.c \
-	src/ast/ast_parse_command_utils.c
+	src/ast/ast_parse_logical.c \
+	src/ast/ast_parse_command.c \
+	src/ast/ast_parse_subshell.c \
+	src/ast/ast_collect_args.c \
+	src/ast/ast_parse_redirects.c \
+	src/ast/ast_build_utils.c 
 SRCS_ENV = \
 	src/env/env.c \
 	src/env/env_utils.c
@@ -40,11 +43,11 @@ SRCS_EXECUTOR = \
 	src/executor/ast_subshell_execute_utils.c
 SRCS_TOKENIZER = \
 	src/tokenizer/expander.c \
-	src/tokenizer/syntax_analyzer.c \
 	src/tokenizer/token_type_utils.c \
 	src/tokenizer/token_utils.c \
 	src/tokenizer/token_word_utils.c \
-	src/tokenizer/tokenizer.c
+	src/tokenizer/tokenizer.c \
+	src/tokenizer/collect_redirects.c
 
 # Combine all sources
 SRCS = $(SRCS_MAIN) $(SRCS_AST) $(SRCS_ENV) $(SRCS_EXECUTOR) $(SRCS_TOKENIZER)
