@@ -18,6 +18,9 @@ t_ast_node	*build_ast(t_token *tokens)
 		else
 			printf("minishell: syntax error: unexpected end of line\n");
 	}
+	// printf("\n=== AST TREE ===\n");
+	// print_ast(result, 0);
+	// printf("================\n\n");
 	return (result);
 }
 

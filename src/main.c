@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/02 20:28:47 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/05 11:52:12 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,6 @@ int	main(int argc, char **argv, char **envp)
 			ast = build_ast(shell.tokens);
 			if (ast)
 			{
-				printf("\n=== AST TREE ===\n");
-				print_ast(ast, 0);
-				printf("================\n\n");
 				execute_ast(ast, &shell);
 				printf("Exit status: %d\n", shell.exit_status);
 				free_ast(ast);

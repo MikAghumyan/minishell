@@ -37,6 +37,8 @@ t_token	*tokenize_input(t_shell *shell)
 			return (NULL);
 		}
 	}
-	print_tokens(tokens);
+	// printf("\n=== TOKENS ===\n");
+	// print_tokens(tokens);
+	// printf("==============\n");
 	return (tokens);
 }
