@@ -34,28 +34,28 @@ t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 {
 	e_token_type	type;
 	char			*value;
-	t_token			*res;
 	size_t			start;
+	size_t			len;
+	const char		*input = shell->input;
 
 	if (!shell || !shell->input || !tokens || !i)
 		return (NULL);
-	type = get_redir_type(shell->input, *i);
+	type = get_redir_type(input, *i);
 	start = *i;
 	if (type == TOKEN_APPEND || type == TOKEN_HEREDOC)
-		(*i) += 2;
+		len = 2;
 	else
-		(*i) += 1;
-	while (shell->input[*i] && (shell->input[*i] == ' '
-			|| shell->input[*i] == '\t'))
+		len = 1;
+	*i += len;
+	while (input[*i] && (input[*i] == ' ' || input[*i] == '\t'))
 		(*i)++;
-	if (!shell->input[*i] || token_is_operator(shell->input[*i]))
-		return (add_token_slice(tokens, &shell->input[start], 2,
-				TOKEN_INVALID));
+	if (!input[*i] || token_is_operator(input[*i]))
+		return (add_token_slice(tokens, &input[start], len, TOKEN_INVALID));
 	value = get_word_value(shell, i, &type);
 	if (!value)
 		return (NULL);
-	res = add_token_slice(tokens, value, ft_strlen(value), type);
-	return (free(value), res);
+	len = ft_strlen(value);
+	return (free(value), add_token_slice(tokens, value, len, type));
 }
 
 t_token	*add_operator_token(t_token **tokens, t_shell *shell, size_t *i)
