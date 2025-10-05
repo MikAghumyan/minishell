@@ -10,8 +10,14 @@ t_ast_node	*build_ast(t_token *tokens)
 	parser.tokens = tokens;
 	parser.subshell_depth = 0;
 	result = ast_parse_logical(&parser);
-	if (parser.tokens)
-		printf("minishell: syntax error FROM AST `%s'\n", parser.tokens->value);
+	if (!result)
+	{
+		if (parser.tokens)
+			printf("minishell: syntax error near unexpected token `%s'\n",
+				parser.tokens->value);
+		else
+			printf("minishell: syntax error: unexpected end of line\n");
+	}
 	return (result);
 }
 

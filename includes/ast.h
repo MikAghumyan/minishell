@@ -47,13 +47,16 @@ void					print_ast(t_ast_node *node, int depth);
 /* parsing functions */
 t_ast_node				*ast_parse_logical(t_parser *parser);
 t_ast_node				*ast_parse_pipeline(t_parser *parser);
-t_ast_node				*ast_parse_subshell(t_parser *parser);
 t_ast_node				*ast_parse_simple_command(t_parser *parser);
 t_ast_node				*ast_parse_redirections(t_parser *parser,
 							t_ast_node *cmd_node);
 /* parsing command*/
 t_ast_node				*ast_parse_command(t_parser *parser);
 t_ast_node				*ast_init_command(t_parser *parser);
+
+/* parsing subshell*/
+t_ast_node				*ast_parse_subshell(t_parser *parser);
+t_ast_node				*ast_init_subshell(t_parser *parser);
 
 /* collect arguments*/
 char					**collect_ast_arguments(t_token *tokens);

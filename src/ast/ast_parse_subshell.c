@@ -11,8 +11,25 @@ t_ast_node	*ast_parse_subshell(t_parser *parser)
 {
 	t_ast_node	*subshell_node;
 
-	// t_ast_node	*result;
-	printf("Parsing subshell...\n");
+	subshell_node = ast_init_subshell(parser);
+	if (!subshell_node)
+		return (NULL);
+	while (parser->tokens && !is_logicpipe_ast_token(parser->tokens))
+	{
+		if (is_unexpected_token(parser->tokens))
+		{
+			free_ast(subshell_node);
+			return (NULL);
+		}
+		parser->tokens = parser->tokens->next;
+	}
+	return (subshell_node);
+}
+
+t_ast_node	*ast_init_subshell(t_parser *parser)
+{
+	t_ast_node	*subshell_node;
+
 	if (!parser || !parser->tokens)
 		return (NULL);
 	parser->tokens = parser->tokens->next; // skip '('
@@ -27,19 +44,9 @@ t_ast_node	*ast_parse_subshell(t_parser *parser)
 	{
 		parser->tokens = parser->tokens->next; // skip ')'
 		parser->subshell_depth--;
-		printf("Parsed subshell\n");
 	}
 	else // No closing parenthesis
 		return (free_ast(subshell_node), NULL);
 	subshell_node->redirect_files = collect_ast_redirects(parser->tokens);
-	while (parser->tokens && !is_logicpipe_ast_token(parser->tokens))
-	{
-		if (is_unexpected_token(parser->tokens))
-		{
-			free_ast(subshell_node);
-			return (NULL);
-		}
-		parser->tokens = parser->tokens->next;
-	}
 	return (subshell_node);
 }
