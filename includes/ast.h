@@ -39,7 +39,7 @@ typedef struct s_parser
 }						t_parser;
 
 /* base ast functions */
-t_ast_node				*build_ast(t_token *tokens);
+t_ast_node				*build_ast(t_shell *shell);
 t_ast_node				*create_ast_node(t_node_type type);
 void					free_ast(t_ast_node *node);
 void					print_ast(t_ast_node *node, int depth);

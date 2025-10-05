@@ -1,22 +1,25 @@
 #include "../../includes/ast.h"
 
-t_ast_node	*build_ast(t_token *tokens)
+t_ast_node	*build_ast(t_shell *shell)
 {
 	t_parser	parser;
 	t_ast_node	*result;
 
-	if (!tokens)
+	if (!shell->tokens)
 		return (NULL);
-	parser.tokens = tokens;
+	parser.tokens = shell->tokens;
 	parser.subshell_depth = 0;
 	result = ast_parse_logical(&parser);
 	if (!result)
 	{
 		if (parser.tokens)
-			printf("minishell: syntax error near unexpected token `%s'\n",
+			ft_fprintf(stderr,
+				"minishell: syntax error near unexpected token `%s'\n",
 				parser.tokens->value);
 		else
-			printf("minishell: syntax error: unexpected end of line\n");
+			ft_fprintf(stderr,
+				"minishell: syntax error: unexpected end of line\n");
+		shell->exit_status = 2;
 	}
 	// printf("\n=== AST TREE ===\n");
 	// print_ast(result, 0);
