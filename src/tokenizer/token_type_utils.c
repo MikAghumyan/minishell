@@ -37,6 +37,7 @@ t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 	size_t			start;
 	size_t			len;
 	const char		*input = shell->input;
+	t_token			*new_token;
 
 	if (!shell || !shell->input || !tokens || !i)
 		return (NULL);
@@ -55,7 +56,10 @@ t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 	if (!value)
 		return (NULL);
 	len = ft_strlen(value);
-	return (free(value), add_token_slice(tokens, value, len, type));
+	new_token = add_token_slice(tokens, value, len, type);
+	if (!new_token)
+		return (NULL);
+	return (new_token);
 }
 
 t_token	*add_operator_token(t_token **tokens, t_shell *shell, size_t *i)
