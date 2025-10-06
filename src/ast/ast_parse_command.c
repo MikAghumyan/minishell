@@ -39,10 +39,10 @@ t_ast_node	*ast_init_command(t_parser *parser)
 
 	result = create_ast_node(NODE_COMMAND);
 	if (!result)
-		return (NULL);
+		return (parser->syserror = true, NULL);
 	result->type = NODE_COMMAND;
-	result->args = collect_ast_arguments(parser->tokens);
-	result->redirect_files = collect_ast_redirects(parser->tokens);
+	result->args = collect_ast_arguments(parser->tokens, parser);
+	result->redirect_files = collect_ast_redirects(parser->tokens, parser);
 	if (!result->args && !result->redirect_files)
 	{
 		free_ast(result);

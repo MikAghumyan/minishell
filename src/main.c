@@ -6,19 +6,16 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/05 18:40:06 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/06 15:32:12 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ast.h"
 #include "../includes/minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell		shell;
-	t_ast_node	*ast;
+	t_shell	shell;
 
-	(void)envp;
 	(void)argc;
 	(void)argv;
 	initialize_shell(&shell, envp);
@@ -34,11 +31,14 @@ int	main(int argc, char **argv, char **envp)
 		shell.tokens = tokenize_input(&shell);
 		if (shell.tokens)
 		{
-			ast = build_ast(&shell);
-			if (ast)
+			shell.ast = build_ast(&shell);
+			if (shell.ast)
 			{
-				execute_ast(ast, &shell);
-				free_ast(ast);
+				free_tokens(shell.tokens);
+				shell.tokens = NULL;
+				execute_ast(shell.ast, &shell);
+				free_ast(shell.ast);
+				shell.ast = NULL;
 			}
 			printf("Exit status: %d\n", shell.exit_status);
 		}

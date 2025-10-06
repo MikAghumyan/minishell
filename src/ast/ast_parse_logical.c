@@ -10,7 +10,7 @@ static t_ast_node	*handle_logical_node(t_parser *parser, t_ast_node *left)
 	else
 		operator_node = create_ast_node(NODE_OR);
 	if (!operator_node)
-		return (free_ast(left), NULL);
+		return (free_ast(left), parser->syserror = true, NULL);
 	current_token = parser->tokens;
 	parser->tokens = parser->tokens->next;
 	operator_node->left = left;
@@ -51,7 +51,7 @@ static t_ast_node	*handle_pipe_node(t_parser *parser, t_ast_node *left)
 
 	pipe_node = create_ast_node(NODE_PIPE);
 	if (!pipe_node)
-		return (free_ast(left), NULL);
+		return (free_ast(left), parser->syserror = true, NULL);
 	current_token = parser->tokens;
 	parser->tokens = parser->tokens->next;
 	pipe_node->left = left;

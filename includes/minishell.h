@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/09/26 22:09:41 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/06 15:32:30 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,24 @@
 # define BOLD "\033[1m"
 # define UNDERLINE "\033[4m"
 
-typedef struct s_env	t_env;
-typedef struct s_token	t_token;
+typedef struct s_env		t_env;
+typedef struct s_token		t_token;
+typedef struct s_ast_node	t_ast_node;
 
 typedef struct s_shell
 {
-	t_env				*env;
-	int					exit_status;
-	char				*input;
-	t_token				*tokens;
-}						t_shell;
+	t_env					*env;
+	int						exit_status;
+	char					*input;
+	t_token					*tokens;
+	t_ast_node				*ast;
+}							t_shell;
 
+# include "ast.h"
 # include "env.h"
 # include "handlers.h"
 # include "tokenizer.h"
 
-void					initialize_shell(t_shell *shell, char **envp);
+void						initialize_shell(t_shell *shell, char **envp);
 
 #endif

@@ -21,7 +21,7 @@ static void	heredoc_write(char *delimiter, int fd)
 	}
 }
 
-char	*collect_heredoc(char *delimiter)
+char	*collect_heredoc(char *delimiter, t_parser *parser)
 {
 	char	*heredoc;
 	int		fd;
@@ -30,7 +30,7 @@ char	*collect_heredoc(char *delimiter)
 	if (fd == -1)
 	{
 		ft_putstr_fd("minishell: failed to create heredoc temp file\n", 2);
-		return (NULL);
+		return (parser->syserror = true, NULL);
 	}
 	heredoc_write(delimiter, fd);
 	close(fd);

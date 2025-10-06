@@ -36,6 +36,7 @@ typedef struct s_parser
 {
 	t_token				*tokens;
 	int					subshell_depth;
+	bool				syserror;
 }						t_parser;
 
 /* base ast functions */
@@ -59,12 +60,14 @@ t_ast_node				*ast_parse_subshell(t_parser *parser);
 t_ast_node				*ast_init_subshell(t_parser *parser);
 
 /* collect arguments*/
-char					**collect_ast_arguments(t_token *tokens);
+char					**collect_ast_arguments(t_token *tokens,
+							t_parser *parser);
 
 /* redirect functions*/
-t_list					*collect_ast_redirects(t_token *tokens);
-t_list					*ast_init_redirect(t_token *token);
-char					*collect_heredoc(char *delimiter);
+t_list					*collect_ast_redirects(t_token *tokens,
+							t_parser *parser);
+t_list					*ast_init_redirect(t_token *token, t_parser *parser);
+char					*collect_heredoc(char *delimiter, t_parser *parser);
 void					free_redirect(void *redirect_ptr);
 
 /* utils */

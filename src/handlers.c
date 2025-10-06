@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:20 by maghumya          #+#    #+#             */
-/*   Updated: 2025/08/23 15:39:20 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/06 15:30:40 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void	handle_clear_input(t_shell *shell)
 	{
 		free_tokens(shell->tokens);
 		shell->tokens = NULL;
+	}
+	if (shell->ast)
+	{
+		free_ast(shell->ast);
+		shell->ast = NULL;
 	}
 }
 
