@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:12:22 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/07 01:16:01 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/07 01:47:42 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,11 @@ static char	*process_expansion(t_shell *shell, char *expanded, size_t *i)
 	else
 	{
 		varlen = get_varlen(expanded + *i);
+		printf("varlen: %zu\n", varlen);
 		if (varlen == 0)
-			return (expanded);
-		tmp = expand_variable(shell, expanded, *i, varlen);
+			tmp = ft_strdup(expanded);
+		else
+			tmp = expand_variable(shell, expanded, *i, varlen);
 	}
 	if (!tmp)
 		return (NULL);
