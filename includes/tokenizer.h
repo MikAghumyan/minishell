@@ -25,6 +25,7 @@ typedef struct s_token
 {
 	char				*value;
 	t_token_type		type;
+	bool				quoted;
 	struct s_token		*next;
 }						t_token;
 
@@ -50,7 +51,7 @@ t_token					*add_token_slice(t_token **tokens, t_token_type type);
 size_t					scan_word(const char *input, size_t start,
 							const char end_char);
 char					*get_word_value(t_shell *shell, size_t *i,
-							t_token_type *type);
+							t_token *new_token);
 
 /* CHAR UTILS*/
 bool					is_chrop(char c);

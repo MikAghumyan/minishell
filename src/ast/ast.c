@@ -26,9 +26,9 @@ t_ast_node	*build_ast(t_shell *shell)
 			ft_fprintf(2, "minishell: syntax error: unexpected end of line\n");
 		shell->exit_status = 2;
 	}
-	printf("\n=== AST TREE ===\n");
-	print_ast(result, 0);
-	printf("================\n\n");
+	// printf("\n=== AST TREE ===\n");
+	// print_ast(result, 0);
+	// printf("================\n\n");
 	return (result);
 }
 

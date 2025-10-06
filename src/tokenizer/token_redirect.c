@@ -46,7 +46,7 @@ t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 	if (new_token->type == TOKEN_INVALID)
 		new_token->value = ft_substr(shell->input, start, len);
 	else
-		new_token->value = get_word_value(shell, i, &type);
+		new_token->value = get_word_value(shell, i, new_token);
 	if (!new_token->value)
 		return (NULL);
 	add_tokens_back(tokens, new_token);

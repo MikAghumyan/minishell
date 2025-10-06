@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 19:53:40 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/06 20:45:12 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/06 22:37:52 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_token	*add_token_slice(t_token **tokens, t_token_type type)
 		return (NULL);
 	new_token->value = NULL;
 	new_token->type = type;
+	new_token->quoted = false;
 	new_token->next = NULL;
 	return (new_token);
 }
@@ -57,9 +58,9 @@ void	print_tokens(t_token *tokens)
 	}
 	while (current)
 	{
-		printf("Token: '%s', Type: %d, Length: %zu\n",
+		printf("Token: '%s', Type: %d, Length: %zu, Quoted: %d\n",
 			current->value ? current->value : "(null)", current->type,
-			current->value ? ft_strlen(current->value) : 0);
+			current->value ? ft_strlen(current->value) : 0, current->quoted);
 		current = current->next;
 		count++;
 	}

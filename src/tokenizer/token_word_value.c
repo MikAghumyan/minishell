@@ -74,14 +74,17 @@ static char	*add_quote_slice(t_shell *shell, size_t *i, t_token_type *type)
 }
 
 static char	*process_token_part(t_shell *shell, size_t *i, char **value,
-		t_token_type *type)
+		t_token *token)
 {
 	char	*value_slice;
 	char	*tmp;
 
 	value_slice = NULL;
 	if (shell->input[*i] == '\"' || shell->input[*i] == '\'')
-		value_slice = add_quote_slice(shell, i, type);
+	{
+		token->quoted = true;
+		value_slice = add_quote_slice(shell, i, &token->type);
+	}
 	else
 		value_slice = add_word_slice(shell, i);
 	if (!value_slice)
@@ -95,7 +98,7 @@ static char	*process_token_part(t_shell *shell, size_t *i, char **value,
 	return (*value);
 }
 
-char	*get_word_value(t_shell *shell, size_t *i, t_token_type *type)
+char	*get_word_value(t_shell *shell, size_t *i, t_token *token)
 {
 	char	*value;
 
@@ -103,7 +106,7 @@ char	*get_word_value(t_shell *shell, size_t *i, t_token_type *type)
 	while (shell->input[*i] && shell->input[*i] != ' '
 		&& !is_special_char(shell->input[*i]))
 	{
-		value = process_token_part(shell, i, &value, type);
+		value = process_token_part(shell, i, &value, token);
 		if (!value)
 			return (NULL);
 	}
