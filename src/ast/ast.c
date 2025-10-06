@@ -71,77 +71,77 @@ void	free_ast(t_ast_node *node)
 	free(node);
 }
 
-void	print_ast(t_ast_node *node, int depth)
-// no need here to fix norme errors, it's just a debug function
-{
-	int i;
-	t_redirect *redirect;
+// void	print_ast(t_ast_node *node, int depth)
+// // no need here to fix norme errors, it's just a debug function
+// {
+// 	int i;
+// 	t_redirect *redirect;
 
-	if (!node)
-		return ;
+// 	if (!node)
+// 		return ;
 
-	for (i = 0; i < depth; i++)
-		printf("  ");
+// 	for (i = 0; i < depth; i++)
+// 		printf("  ");
 
-	switch (node->type)
-	{
-	case NODE_COMMAND:
-		printf("COMMAND: ");
-		if (node->args)
-		{
-			i = 0;
-			while (node->args[i])
-			{
-				printf("%s ", node->args[i]);
-				i++;
-			}
-		}
-		if (node->redirect_files)
-		{
-			t_list *current_list;
-			printf("(redirects: ");
-			current_list = node->redirect_files;
-			while (current_list)
-			{
-				redirect = (t_redirect *)current_list->content;
-				printf("[%d:%s] ", redirect->type, redirect->filename);
-				current_list = current_list->next;
-			}
-			printf(")");
-		}
-		break ;
-	case NODE_PIPE:
-		printf("PIPE");
-		break ;
-	case NODE_AND:
-		printf("AND");
-		break ;
-	case NODE_OR:
-		printf("OR");
-		break ;
-	case NODE_SUBSHELL:
-		printf("SUBSHELL");
-		if (node->redirect_files)
-		{
-			t_list *current_list;
-			printf(" (redirects: ");
-			current_list = node->redirect_files;
-			while (current_list)
-			{
-				redirect = (t_redirect *)current_list->content;
-				printf("[%d:%s] ", redirect->type, redirect->filename);
-				current_list = current_list->next;
-			}
-			printf(")");
-		}
-		break ;
-	default:
-		printf("UNKNOWN");
-	}
-	printf("\n");
+// 	switch (node->type)
+// 	{
+// 	case NODE_COMMAND:
+// 		printf("COMMAND: ");
+// 		if (node->args)
+// 		{
+// 			i = 0;
+// 			while (node->args[i])
+// 			{
+// 				printf("%s ", node->args[i]);
+// 				i++;
+// 			}
+// 		}
+// 		if (node->redirect_files)
+// 		{
+// 			t_list *current_list;
+// 			printf("(redirects: ");
+// 			current_list = node->redirect_files;
+// 			while (current_list)
+// 			{
+// 				redirect = (t_redirect *)current_list->content;
+// 				printf("[%d:%s] ", redirect->type, redirect->filename);
+// 				current_list = current_list->next;
+// 			}
+// 			printf(")");
+// 		}
+// 		break ;
+// 	case NODE_PIPE:
+// 		printf("PIPE");
+// 		break ;
+// 	case NODE_AND:
+// 		printf("AND");
+// 		break ;
+// 	case NODE_OR:
+// 		printf("OR");
+// 		break ;
+// 	case NODE_SUBSHELL:
+// 		printf("SUBSHELL");
+// 		if (node->redirect_files)
+// 		{
+// 			t_list *current_list;
+// 			printf(" (redirects: ");
+// 			current_list = node->redirect_files;
+// 			while (current_list)
+// 			{
+// 				redirect = (t_redirect *)current_list->content;
+// 				printf("[%d:%s] ", redirect->type, redirect->filename);
+// 				current_list = current_list->next;
+// 			}
+// 			printf(")");
+// 		}
+// 		break ;
+// 	default:
+// 		printf("UNKNOWN");
+// 	}
+// 	printf("\n");
 
-	if (node->left)
-		print_ast(node->left, depth + 1);
-	if (node->right)
-		print_ast(node->right, depth + 1);
-}
+// 	if (node->left)
+// 		print_ast(node->left, depth + 1);
+// 	if (node->right)
+// 		print_ast(node->right, depth + 1);
+// }

@@ -12,13 +12,20 @@ static void	print_indent(int depth)
 	}
 }
 
-static void	print_redirects(t_redirect *redirect)
+static void	print_redirects(t_list *redirect_list)
 {
+	t_redirect	*redirect;
+	t_list		*current_list;
+
+	if (!redirect_list)
+		return ;
 	printf("(redirects: ");
-	while (redirect)
+	current_list = redirect_list;
+	while (current_list)
 	{
+		redirect = (t_redirect *)current_list->content;
 		printf("[%d:%s] ", redirect->type, redirect->filename);
-		redirect = redirect->next;
+		current_list = current_list->next;
 	}
 	printf(")");
 }
