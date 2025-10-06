@@ -85,8 +85,6 @@ int						execute_logical(t_ast_node *node, t_shell *shell);
 int						execute_subshell(t_ast_node *node, t_shell *shell);
 
 /* path utils */
-void					free_paths(char **paths);
-char					**parse_path(char **envp);
 char					*find_command_path(char *cmd, char **envp);
 
 /*command execute utils*/
@@ -123,4 +121,10 @@ void					execute_subshell_in_child(t_ast_node *node,
 							t_shell *shell);
 int						wait_for_child(pid_t pid, t_shell *shell);
 int						handle_subshell_fork_error(t_shell *shell);
+
+/*redirect utils*/
+int						handle_heredoc(t_list *redirect);
+int						handle_redirect_in(t_redirect *current, int *fd);
+int						handle_redirect_out(t_redirect *current, int *fd);
+int						handle_append(t_redirect *current, int *fd);
 #endif

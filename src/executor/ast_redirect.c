@@ -54,7 +54,7 @@
 // 	return (0);
 // }
 
-static int	handle_redirect_in(t_redirect *current, int *fd)
+int	handle_redirect_in(t_redirect *current, int *fd)
 {
 	*fd = open(current->filename, O_RDONLY);
 	if (*fd == -1)
@@ -72,7 +72,7 @@ static int	handle_redirect_in(t_redirect *current, int *fd)
 	return (0);
 }
 
-static int	handle_redirect_out(t_redirect *current, int *fd)
+int	handle_redirect_out(t_redirect *current, int *fd)
 {
 	*fd = open(current->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (*fd == -1)
@@ -91,7 +91,7 @@ static int	handle_redirect_out(t_redirect *current, int *fd)
 	return (0);
 }
 
-static int	handle_append(t_redirect *current, int *fd)
+int	handle_append(t_redirect *current, int *fd)
 {
 	*fd = open(current->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (*fd == -1)

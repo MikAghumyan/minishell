@@ -1,11 +1,11 @@
 #include "../../includes/ast.h"
 
-void	free_paths(char **paths)
+static char	*free_paths(char **paths)
 {
 	int	i;
 
 	if (!paths)
-		return ;
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
@@ -13,9 +13,10 @@ void	free_paths(char **paths)
 		i++;
 	}
 	free(paths);
+	return (NULL);
 }
 
-char	**parse_path(char **envp)
+static char	**parse_path(char **envp)
 {
 	char	*path;
 	char	**paths;
@@ -40,12 +41,36 @@ char	**parse_path(char **envp)
 	return (paths);
 }
 
+static char	*search_in_paths(const char *cmd, char **paths)
+{
+	int		i;
+	char	*full_path;
+	size_t	path_len;
+
+	if (!cmd || !paths)
+		return (NULL);
+	i = 0;
+	while (paths[i])
+	{
+		path_len = ft_strlen(paths[i]) + ft_strlen(cmd) + 2;
+		full_path = malloc(path_len);
+		if (!full_path)
+			return (NULL);
+		ft_strlcpy(full_path, paths[i], path_len);
+		ft_strlcat(full_path, "/", path_len);
+		ft_strlcat(full_path, cmd, path_len);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
+		free(full_path);
+		i++;
+	}
+	return (NULL);
+}
+
 char	*find_command_path(char *cmd, char **envp)
 {
-	char **paths;
-	char *full_path;
-	int i;
-	size_t path_len;
+	char	**paths;
+	char	*result;
 
 	if (!cmd || !envp || !*envp)
 		return (NULL);
@@ -54,27 +79,7 @@ char	*find_command_path(char *cmd, char **envp)
 	paths = parse_path(envp);
 	if (!paths)
 		return (NULL);
-	i = 0;
-	while (paths[i])
-	{
-		path_len = ft_strlen(paths[i]) + ft_strlen(cmd) + 2;
-		full_path = malloc(path_len);
-		if (!full_path)
-		{
-			free_paths(paths);
-			return (NULL);
-		}
-		ft_strlcpy(full_path, paths[i], path_len);
-		ft_strlcat(full_path, "/", path_len);
-		ft_strlcat(full_path, cmd, path_len);
-		if (access(full_path, X_OK) == 0)
-		{
-			free_paths(paths);
-			return (full_path);
-		}
-		free(full_path);
-		i++;
-	}
+	result = search_in_paths(cmd, paths);
 	free_paths(paths);
-	return (NULL);
+	return (result);
 }
