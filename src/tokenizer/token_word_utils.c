@@ -47,7 +47,7 @@ static char	*add_word_slice(t_shell *shell, size_t *i)
 	return (expanded);
 }
 
-static char	*add_quote_slice(t_shell *shell, size_t *i, e_token_type *type)
+static char	*add_quote_slice(t_shell *shell, size_t *i, t_token_type *type)
 {
 	size_t	start;
 	char	*word_slice;
@@ -76,7 +76,7 @@ static char	*add_quote_slice(t_shell *shell, size_t *i, e_token_type *type)
 }
 
 char	*process_token_part(t_shell *shell, size_t *i, char **value,
-		e_token_type *type)
+		t_token_type *type)
 {
 	char	*value_slice;
 	char	*tmp;
@@ -97,7 +97,7 @@ char	*process_token_part(t_shell *shell, size_t *i, char **value,
 	return (*value);
 }
 
-char	*get_word_value(t_shell *shell, size_t *i, e_token_type *type)
+char	*get_word_value(t_shell *shell, size_t *i, t_token_type *type)
 {
 	char	*value;
 
@@ -116,7 +116,7 @@ t_token	*add_word_token(t_shell *shell, size_t *i, t_token **tokens)
 {
 	t_token			*token;
 	char			*value;
-	e_token_type	type;
+	t_token_type	type;
 
 	token = NULL;
 	type = TOKEN_WORD;
