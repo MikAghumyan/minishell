@@ -1,30 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/06 19:53:40 by maghumya          #+#    #+#             */
+/*   Updated: 2025/10/06 20:45:12 by maghumya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
-bool	token_is_operator(char c)
-{
-	return (c == '|' || c == '<' || c == '>' || c == '&' || c == '(' || c == ')'
-		|| c == ';');
-}
-
-t_token	*add_token_slice(t_token **tokens, const char *start, size_t len,
-		t_token_type type)
+t_token	*add_token_slice(t_token **tokens, t_token_type type)
 {
 	t_token	*new_token;
 
-	if (!tokens || !start)
+	if (!tokens)
 		return (NULL);
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	new_token->value = ft_substr(start, 0, len);
-	if (!new_token->value)
-	{
-		free(new_token);
-		return (NULL);
-	}
+	new_token->value = NULL;
 	new_token->type = type;
 	new_token->next = NULL;
-	add_tokens_back(tokens, new_token);
 	return (new_token);
 }
 

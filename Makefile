@@ -30,7 +30,8 @@ SRCS_AST = \
 	src/ast/ast_collect_args.c \
 	src/ast/ast_parse_redirects.c \
 	src/ast/ast_parse_heredoc.c \
-	src/ast/ast_build_utils.c 
+	src/ast/ast_build_utils.c \
+	src/ast/ast_print.c
 SRCS_ENV = \
     src/env/env.c \
     src/env/env_utils.c
@@ -47,11 +48,13 @@ SRCS_EXECUTOR = \
 
 SRCS_TOKENIZER = \
 	src/tokenizer/expander.c \
-	src/tokenizer/token_type_utils.c \
+	src/tokenizer/token_operator.c \
+	src/tokenizer/token_redirect.c \
+	src/tokenizer/token_word.c \
+	src/tokenizer/token_word_value.c \
 	src/tokenizer/token_utils.c \
-	src/tokenizer/token_word_utils.c \
-	src/tokenizer/tokenizer.c \
-	src/tokenizer/collect_redirects.c
+	src/tokenizer/token_char_utils.c \
+	src/tokenizer/tokenizer.c 
 
 # Combine all sources
 SRCS = $(SRCS_MAIN) $(SRCS_AST) $(SRCS_ENV) $(SRCS_EXECUTOR) $(SRCS_TOKENIZER)

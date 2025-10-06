@@ -1,4 +1,3 @@
-
 #include "../../includes/minishell.h"
 
 size_t	scan_word(const char *input, size_t start, const char end_char)
@@ -15,9 +14,8 @@ size_t	scan_word(const char *input, size_t start, const char end_char)
 	}
 	else
 	{
-		while (input[end] && input[end] != ' ' && input[end] != '\t'
-			&& input[end] != '\'' && input[end] != '\"'
-			&& !token_is_operator(input[end]))
+		while (input[end] && !is_space(input[end]) && input[end] != '\''
+			&& input[end] != '\"' && !is_special_char(input[end]))
 			end++;
 	}
 	return (end);
@@ -47,7 +45,7 @@ static char	*add_word_slice(t_shell *shell, size_t *i)
 	return (expanded);
 }
 
-static char	*add_quote_slice(t_shell *shell, size_t *i, e_token_type *type)
+static char	*add_quote_slice(t_shell *shell, size_t *i, t_token_type *type)
 {
 	size_t	start;
 	char	*word_slice;
@@ -75,8 +73,8 @@ static char	*add_quote_slice(t_shell *shell, size_t *i, e_token_type *type)
 	return (word_slice);
 }
 
-char	*process_token_part(t_shell *shell, size_t *i, char **value,
-		e_token_type *type)
+static char	*process_token_part(t_shell *shell, size_t *i, char **value,
+		t_token_type *type)
 {
 	char	*value_slice;
 	char	*tmp;
@@ -97,36 +95,17 @@ char	*process_token_part(t_shell *shell, size_t *i, char **value,
 	return (*value);
 }
 
-char	*get_word_value(t_shell *shell, size_t *i, e_token_type *type)
+char	*get_word_value(t_shell *shell, size_t *i, t_token_type *type)
 {
 	char	*value;
 
 	value = NULL;
 	while (shell->input[*i] && shell->input[*i] != ' '
-		&& !token_is_operator(shell->input[*i]))
+		&& !is_special_char(shell->input[*i]))
 	{
 		value = process_token_part(shell, i, &value, type);
 		if (!value)
 			return (NULL);
 	}
 	return (value);
-}
-
-t_token	*add_word_token(t_shell *shell, size_t *i, t_token **tokens)
-{
-	t_token			*token;
-	char			*value;
-	e_token_type	type;
-
-	token = NULL;
-	type = TOKEN_WORD;
-	value = get_word_value(shell, i, &type);
-	if (value)
-	{
-		token = add_token_slice(tokens, value, ft_strlen(value), type);
-		free(value);
-		if (!token)
-			return (NULL);
-	}
-	return (token);
 }
