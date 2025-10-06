@@ -13,12 +13,11 @@ t_ast_node	*build_ast(t_shell *shell)
 	if (!result)
 	{
 		if (parser.tokens)
-			ft_fprintf(stderr,
+			ft_fprintf(2,
 				"minishell: syntax error near unexpected token `%s'\n",
 				parser.tokens->value);
 		else
-			ft_fprintf(stderr,
-				"minishell: syntax error: unexpected end of line\n");
+			ft_fprintf(2, "minishell: syntax error: unexpected end of line\n");
 		shell->exit_status = 2;
 	}
 	// printf("\n=== AST TREE ===\n");
