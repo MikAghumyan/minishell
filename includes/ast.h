@@ -64,6 +64,7 @@ char					**collect_ast_arguments(t_token *tokens);
 /* redirect functions*/
 t_list					*collect_ast_redirects(t_token *tokens);
 t_list					*ast_init_redirect(t_token *token);
+char					*collect_heredoc(char *delimiter);
 void					free_redirect(void *redirect_ptr);
 
 /* utils */

@@ -1,18 +1,10 @@
 #include "../../includes/ast.h"
 #include "../../includes/minishell.h"
 
-char	*collect_heredoc(char *delimiter)
+static void	heredoc_write(char *delimiter, int fd)
 {
 	char	*line;
-	char	*heredoc;
-	int		fd;
 
-	fd = open("/tmp/minishell_heredoc_tmp", O_CREAT | O_RDWR | O_TRUNC, 0600);
-	if (fd == -1)
-	{
-		ft_putstr_fd("minishell: failed to create heredoc temp file\n", 2);
-		return (NULL);
-	}
 	while (true)
 	{
 		line = readline("> ");
@@ -27,6 +19,20 @@ char	*collect_heredoc(char *delimiter)
 		write(fd, "\n", 1);
 		free(line);
 	}
+}
+
+char	*collect_heredoc(char *delimiter)
+{
+	char	*heredoc;
+	int		fd;
+
+	fd = open("/tmp/minishell_heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 0600);
+	if (fd == -1)
+	{
+		ft_putstr_fd("minishell: failed to create heredoc temp file\n", 2);
+		return (NULL);
+	}
+	heredoc_write(delimiter, fd);
 	close(fd);
 	heredoc = ft_strdup("/tmp/minishell_heredoc_tmp");
 	return (heredoc);

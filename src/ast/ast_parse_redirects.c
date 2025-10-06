@@ -40,18 +40,15 @@ t_list	*ast_init_redirect(t_token *token)
 		return (NULL);
 	redirect->type = (t_node_type)(token->type - TOKEN_REDIRECT_IN
 			+ NODE_REDIRECT_IN);
-	redirect->filename = ft_strdup(token->value);
+	if (redirect->type == NODE_HEREDOC)
+		redirect->filename = collect_heredoc(token->value);
+	else
+		redirect->filename = ft_strdup(token->value);
 	if (!redirect->filename)
-	{
-		free(redirect);
-		return (NULL);
-	}
+		return (free(redirect), NULL);
 	redirect_node = ft_lstnew(redirect);
 	if (!redirect_node)
-	{
-		free_redirect(redirect);
-		return (NULL);
-	}
+		return (free(redirect), NULL);
 	return (redirect_node);
 }
 
