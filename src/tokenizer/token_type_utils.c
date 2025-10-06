@@ -33,31 +33,33 @@ static t_token_type	get_operator_type(const char *input, size_t i)
 t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 {
 	t_token_type	type;
-	size_t			end;
+	char			*value;
 	size_t			start;
+	size_t			len;
+	const char		*input = shell->input;
+	t_token			*new_token;
 
 	if (!shell || !shell->input || !tokens || !i)
 		return (NULL);
-	type = get_redir_type(shell->input, *i);
+	type = get_redir_type(input, *i);
 	start = *i;
 	if (type == TOKEN_APPEND || type == TOKEN_HEREDOC)
-		*i += 2;
+		len = 2;
 	else
+		len = 1;
+	*i += len;
+	while (input[*i] && (input[*i] == ' ' || input[*i] == '\t'))
 		(*i)++;
-	end = *i;
-	// while (shell->input[*i] && (shell->input[*i] == ' '
-	// 		|| shell->input[*i] == '\t'))
-	// 	(*i)++;
-	// start = *i;
-	// end = scan_word(shell->input, start, ' ');
-	// if (end == start)
-	// {
-	// 	ft_fprintf(2, "minishell: syntax error near unexpected token `%c'\n",
-	// 		shell->input[start]);
-	// 	return (NULL);
-	// }
-	*i = end;
-	return (add_token_slice(tokens, &shell->input[start], end - start, type));
+	if (!input[*i] || token_is_operator(input[*i]))
+		return (add_token_slice(tokens, &input[start], len, TOKEN_INVALID));
+	value = get_word_value(shell, i, &type);
+	if (!value)
+		return (NULL);
+	len = ft_strlen(value);
+	new_token = add_token_slice(tokens, value, len, type);
+	if (!new_token)
+		return (NULL);
+	return (new_token);
 }
 
 t_token	*add_operator_token(t_token **tokens, t_shell *shell, size_t *i)

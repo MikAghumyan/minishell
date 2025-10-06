@@ -54,7 +54,6 @@ void	print_tokens(t_token *tokens)
 	count = 0;
 	if (!tokens)
 	{
-		printf("DEBUG: No tokens found\n");
 		return ;
 	}
 	while (current)
@@ -65,7 +64,6 @@ void	print_tokens(t_token *tokens)
 		current = current->next;
 		count++;
 	}
-	printf("DEBUG: Total tokens: %d\n", count);
 }
 
 void	free_tokens(t_token *tokens)
