@@ -19,7 +19,6 @@ static t_token_type	get_redir_type(const char *input, size_t *i, size_t *len)
 	else
 		*len = 1;
 	*i += *len;
-	printf("After processing redirection, new index is %zu\n", *i);
 	while (input[*i] && is_space(input[*i]))
 		(*i)++;
 	if (!input[*i] || is_special_char(input[*i]))
@@ -37,9 +36,7 @@ t_token	*add_redirect_token(t_token **tokens, t_shell *shell, size_t *i)
 	if (!shell || !shell->input || !tokens || !i)
 		return (NULL);
 	start = *i;
-	printf("Processing redirection at index %zu: '%c'\n", *i, shell->input[*i]);
 	type = get_redir_type(shell->input, i, &len);
-	printf("REDIR TYPE: %d\n", type);
 	new_token = add_token_slice(tokens, type);
 	if (!new_token)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:12:22 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/06 19:56:02 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/07 01:16:01 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static size_t	get_varlen(const char *var)
 	if (!var || !*var)
 		return (0);
 	var++;
-	while (var[i] && (is_space(var[i]) && var[i] != '\'' && var[i] != '$'
-			&& !is_special_char(var[i])))
+	while (var[i] && !is_space(var[i]) && !is_quote(var[i]) && var[i] != '$'
+		&& !is_special_char(var[i]))
 		i++;
 	return (i);
 }
@@ -112,9 +112,9 @@ char	*expand_token_value(t_shell *shell, const char *value)
 		{
 			tmp = process_expansion(shell, expanded, &i);
 			free(expanded);
+			expanded = tmp;
 			if (!tmp)
 				return (NULL);
-			expanded = tmp;
 		}
 		i++;
 	}

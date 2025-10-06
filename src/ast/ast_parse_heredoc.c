@@ -1,7 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_parse_heredoc.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/07 01:33:46 by maghumya          #+#    #+#             */
+/*   Updated: 2025/10/07 01:38:15 by maghumya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/ast.h"
 #include "../../includes/minishell.h"
 
-static void	heredoc_write(char *delimiter, int fd)
+static char	*expand_heredoc_line(t_parser *parser, char *line)
+{
+	char	*expanded;
+
+	expanded = expand_token_value(parser->shell, line);
+	if (!expanded)
+	{
+		free(line);
+		parser->syserror = true;
+		return (NULL);
+	}
+	free(line);
+	return (expanded);
+}
+static void	heredoc_write(t_token *token, t_parser *parser, int fd)
 {
 	char	*line;
 
@@ -10,10 +36,16 @@ static void	heredoc_write(char *delimiter, int fd)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (ft_strcmp(line, delimiter) == 0)
+		if (ft_strcmp(line, token->value) == 0)
 		{
 			free(line);
 			break ;
+		}
+		if (!token->quoted)
+		{
+			line = expand_heredoc_line(parser, line);
+			if (!line)
+				break ;
 		}
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -21,7 +53,7 @@ static void	heredoc_write(char *delimiter, int fd)
 	}
 }
 
-char	*collect_heredoc(char *delimiter, t_parser *parser)
+char	*collect_heredoc(t_token *token, t_parser *parser)
 {
 	char	*heredoc;
 	int		fd;
@@ -32,7 +64,7 @@ char	*collect_heredoc(char *delimiter, t_parser *parser)
 		ft_putstr_fd("minishell: failed to create heredoc temp file\n", 2);
 		return (parser->syserror = true, NULL);
 	}
-	heredoc_write(delimiter, fd);
+	heredoc_write(token, parser, fd);
 	close(fd);
 	heredoc = ft_strdup("/tmp/minishell_heredoc_tmp");
 	return (heredoc);

@@ -58,5 +58,6 @@ bool					is_chrop(char c);
 bool					is_chrredir(char c);
 bool					is_special_char(char c);
 bool					is_space(char c);
+bool					is_quote(char c);
 
 #endif

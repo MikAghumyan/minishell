@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 19:53:21 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/06 19:53:22 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/07 01:15:09 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,9 @@ bool	is_special_char(char c)
 bool	is_space(char c)
 {
 	return (c == ' ' || c == '\t');
+}
+
+bool	is_quote(char c)
+{
+	return (c == '\'' || c == '\"');
 }

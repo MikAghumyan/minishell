@@ -10,6 +10,7 @@ t_ast_node	*build_ast(t_shell *shell)
 	parser.tokens = shell->tokens;
 	parser.subshell_depth = 0;
 	parser.syserror = false;
+	parser.shell = shell;
 	result = ast_parse_logical(&parser);
 	if (!result)
 	{
