@@ -32,9 +32,8 @@ t_token	*tokenize_input(t_shell *shell)
 		process_single_char(shell, &i, &tokens);
 		if (!tokens)
 		{
+			perror("minishell: system error");
 			handle_exit(shell);
-			free_tokens(tokens);
-			return (NULL);
 		}
 	}
 	// printf("\n=== TOKENS ===\n");

@@ -9,9 +9,15 @@ t_ast_node	*build_ast(t_shell *shell)
 		return (NULL);
 	parser.tokens = shell->tokens;
 	parser.subshell_depth = 0;
+	parser.syserror = false;
 	result = ast_parse_logical(&parser);
 	if (!result)
 	{
+		if (parser.syserror)
+		{
+			perror("minishell: system error");
+			handle_exit(shell);
+		}
 		if (parser.tokens)
 			ft_fprintf(2,
 				"minishell: syntax error near unexpected token `%s'\n",
