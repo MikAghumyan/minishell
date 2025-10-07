@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 19:53:40 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/06 22:37:52 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:58:34 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	print_tokens(t_token *tokens)
 		current = current->next;
 		count++;
 	}
+	printf("Total tokens: %d\n", count);
 }
 
 void	free_tokens(t_token *tokens)
