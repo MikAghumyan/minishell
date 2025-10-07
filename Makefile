@@ -83,6 +83,7 @@ $(OBJDIR)/%.debug.o: %.c
 	@echo "$(MAGENTA)Compiling $< (debug)...$(RESET)"
 
 $(LIBFT):
+	@echo "$(CYAN)Compiling Libft...$(RESET)"
 	@make -C $(LIBFT_DIR) complete > /dev/null
 	@echo "$(GREEN)Libft compiled successfully.$(RESET)"
 

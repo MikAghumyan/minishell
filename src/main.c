@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/06 15:32:12 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/07 22:20:30 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	printf("Welcome to Minishell!\n");
 	while (true)
 	{
-		shell.input = readline("minishell> ");
+		shell.input = readline("\033[0;36mminishell>\033[0m ");
 		if (!shell.input)
 			break ;
 		if (shell.input[0] != '\0')
