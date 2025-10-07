@@ -1,6 +1,6 @@
 CC=cc
 CFLAGS=-Wall -Wextra -Werror $(EXTRA_FLAGS)
-DEBUG_FLAGS=-g -fsanitize=address,undefined
+DEBUG_FLAGS=-g3 -fsanitize=address,undefined,leak -D DEBUG
 NAME=minishell
 NAME_DEBUG=minishell_debug
 LIBFT=libft.a

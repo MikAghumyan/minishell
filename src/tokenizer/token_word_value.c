@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_word_value.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/07 21:56:56 by maghumya          #+#    #+#             */
+/*   Updated: 2025/10/07 22:08:00 by maghumya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 size_t	scan_word(const char *input, size_t start, const char end_char)
@@ -54,14 +66,14 @@ static char	*add_quote_slice(t_shell *shell, size_t *i, t_token_type *type)
 	if (!shell || !i || !type)
 		return (NULL);
 	start = ++(*i);
-	if (shell->input[start - 1] == '\'')
-		*i = scan_word(shell->input, *i, '\'');
-	if (shell->input[start - 1] == '\"')
-		*i = scan_word(shell->input, *i, '\"');
+	*i = scan_word(shell->input, *i, shell->input[start - 1]);
 	if (!shell->input[*i])
 		*type = TOKEN_INVALID;
 	word_slice = ft_substr(shell->input, start, *i - start);
-	(*i)++;
+	if (!word_slice)
+		return (NULL);
+	if (shell->input[*i] && shell->input[*i] == shell->input[start - 1])
+		(*i)++;
 	if (shell->input[start - 1] == '\"')
 	{
 		expanded = expand_token_value(shell, word_slice);
