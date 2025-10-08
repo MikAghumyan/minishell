@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/08 22:54:39 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/09 00:58:07 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void						initialize_shell(t_shell *shell, char **envp);
 void						exit_shell(t_shell *shell);
 void						cleanup_shell(t_shell *shell);
 void						exit_shell_with_error(t_shell *shell,
-								const char *message);
+								const char *message, int errnum);
 
 #endif

@@ -30,12 +30,13 @@ int	execute_command(t_ast_node *node, t_shell *shell)
 	if (pid == 0)
 	{
 		handle_cmd_child(node, command_path, shell);
-		exit(127);
+		exit_shell_with_error(shell, "minishell: subshell execution failed", 1);
 	}
 	else if (pid > 0)
 		return (handle_cmd_parent(pid, command_path, shell));
 	else
 		return (handle_command_exec_fork_error(command_path, shell));
+	return (1);
 }
 
 int	execute_pipe(t_ast_node *node, t_shell *shell)
@@ -77,10 +78,11 @@ int	execute_subshell(t_ast_node *node, t_shell *shell)
 	if (pid == 0)
 	{
 		execute_subshell_in_child(node, shell);
-		exit(shell->exit_status);
+		exit_shell_with_error(shell, "minishell: unexpected error", 1);
 	}
 	else if (pid > 0)
 		return (wait_for_child(pid, shell));
 	else
 		return (handle_subshell_fork_error(shell));
+	return (1);
 }

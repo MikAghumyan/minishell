@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handlers.c                                         :+:      :+:    :+:   */
+/*   shell_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:20 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/08 23:40:04 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/09 01:02:01 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	initialize_shell(t_shell *shell, char **envp)
 {
 	shell->env = env_init(envp);
 	if (!shell->env)
-		exit_shell_with_error(shell, "minishell: system error");
+		exit_shell_with_error(shell, "minishell: system error", 1);
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->ast = NULL;
@@ -53,10 +53,10 @@ void	exit_shell(t_shell *shell)
 	exit(shell->exit_status);
 }
 
-void	exit_shell_with_error(t_shell *shell, const char *message)
+void	exit_shell_with_error(t_shell *shell, const char *message, int errnum)
 {
 	if (message)
 		perror(message);
-	shell->exit_status = EXIT_FAILURE;
+	shell->exit_status = errnum;
 	exit_shell(shell);
 }

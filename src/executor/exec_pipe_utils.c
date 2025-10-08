@@ -8,7 +8,8 @@ pid_t	fork_left_child(t_ast_node *node, int *pipefds, t_shell *shell)
 	if (left_pid == 0)
 	{
 		handle_left_pid(pipefds);
-		exit(execute_ast(node->left, shell));
+		shell->exit_status = execute_ast(node->left, shell);
+		exit_shell(shell);
 	}
 	if (left_pid < 0)
 		return (-1);
@@ -23,7 +24,8 @@ pid_t	fork_right_pid(t_ast_node *node, int *pipefds, t_shell *shell)
 	if (right_pid == 0)
 	{
 		handle_right_pid(pipefds);
-		exit(execute_ast(node->right, shell));
+		shell->exit_status = execute_ast(node->right, shell);
+		exit_shell(shell);
 	}
 	if (right_pid < 0)
 		return (-1);
