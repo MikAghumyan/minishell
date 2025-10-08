@@ -19,8 +19,7 @@ RESET=\033[0m
 # Source files per folder
 SRCS_MAIN = \
     src/main.c \
-    src/initializer.c \
-    src/handlers.c
+    src/shell_utils.c
 
 SRCS_AST = \
 	src/ast/ast.c \
