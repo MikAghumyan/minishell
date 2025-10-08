@@ -21,8 +21,8 @@ int	execute_command(t_ast_node *node, t_shell *shell)
 	pid_t	pid;
 	char	*command_path;
 
-	if (!node || !node->args || !node->args[0])
-		return (1);
+	if (!node || !node->args || !node->args[0] || !node->args[0][0])
+		return (handle_command_not_found(node, shell));
 	command_path = find_command_path(node->args[0], shell->env->data);
 	if (!command_path)
 		return (handle_command_not_found(node, shell));

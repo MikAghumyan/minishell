@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:12:22 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/08 22:01:02 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 23:22:06 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ char	*expand_token_value(t_shell *shell, const char *value)
 			expanded = tmp;
 			if (!tmp)
 				return (NULL);
+			continue ;
 		}
 		i++;
 	}

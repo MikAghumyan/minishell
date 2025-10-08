@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/08 22:05:06 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 23:23:55 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,19 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.tokens)
 		{
 			shell.ast = build_ast(&shell);
+			free_tokens(shell.tokens);
+			shell.tokens = NULL;
 			if (shell.ast)
 			{
-				free_tokens(shell.tokens);
-				shell.tokens = NULL;
 				execute_ast(shell.ast, &shell);
 				free_ast(shell.ast);
 				shell.ast = NULL;
 			}
 			printf("Exit status: %d\n", shell.exit_status);
 		}
-		handle_clear_input(&shell);
+		free(shell.input);
+		shell.input = NULL;
 	}
-	handle_exit(&shell);
+	exit_shell(&shell);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:20 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/08 22:13:13 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 23:40:04 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,18 @@
 #include "../includes/minishell.h"
 #include "../includes/tokenizer.h"
 
-void	handle_clear_input(t_shell *shell)
+void	initialize_shell(t_shell *shell, char **envp)
+{
+	shell->env = env_init(envp);
+	if (!shell->env)
+		exit_shell_with_error(shell, "minishell: system error");
+	shell->input = NULL;
+	shell->tokens = NULL;
+	shell->ast = NULL;
+	shell->exit_status = 0;
+}
+
+void	cleanup_shell(t_shell *shell)
 {
 	if (shell->input)
 	{
@@ -32,11 +43,20 @@ void	handle_clear_input(t_shell *shell)
 		free_ast(shell->ast);
 		shell->ast = NULL;
 	}
+	if (shell->env)
+		env_free(&shell->env);
 }
 
-void	handle_exit(t_shell *shell)
+void	exit_shell(t_shell *shell)
 {
-	handle_clear_input(shell);
-	env_free(&shell->env);
+	cleanup_shell(shell);
 	exit(shell->exit_status);
+}
+
+void	exit_shell_with_error(t_shell *shell, const char *message)
+{
+	if (message)
+		perror(message);
+	shell->exit_status = EXIT_FAILURE;
+	exit_shell(shell);
 }

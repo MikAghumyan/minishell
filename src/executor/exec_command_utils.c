@@ -3,7 +3,8 @@
 int	handle_command_not_found(t_ast_node *node, t_shell *shell)
 {
 	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(node->args[0], 2);
+	if (node && node->args && node->args[0])
+		ft_putstr_fd(node->args[0], 2);
 	ft_putstr_fd(": command not found\n", 2);
 	shell->exit_status = 127;
 	return (shell->exit_status);
