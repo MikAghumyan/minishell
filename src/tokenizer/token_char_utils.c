@@ -6,11 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 19:53:21 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/07 01:15:09 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 21:55:37 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/tokenizer.h"
 
 bool	is_chrop(char c)
 {

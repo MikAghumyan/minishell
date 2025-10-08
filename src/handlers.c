@@ -6,11 +6,14 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:20 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/06 15:30:40 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:13:13 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/ast.h"
+#include "../includes/env.h"
 #include "../includes/minishell.h"
+#include "../includes/tokenizer.h"
 
 void	handle_clear_input(t_shell *shell)
 {

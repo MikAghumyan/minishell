@@ -6,11 +6,14 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/07 22:20:30 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:05:06 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/ast.h"
+#include "../includes/executor.h"
 #include "../includes/minishell.h"
+#include "../includes/tokenizer.h"
 
 int	main(int argc, char **argv, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/06 17:51:20 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:30:52 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include "handlers.h"
-# include "tokenizer.h"
+// # include "env.h"
+// # include "handlers.h"
+// # include "tokenizer.h"
 # include <errno.h>
-# include <fcntl.h>
+// # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <signal.h>
-# include <stdbool.h>
+// # include <signal.h>
+// # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <sys/wait.h>
+// # include <sys/wait.h>
 # include <unistd.h>
-# include "env.h"
-# include "handlers.h"
-# include "tokenizer.h"
 
 # define RESET "\033[0m"
 # define RED "\033[31m"
@@ -54,11 +52,8 @@ typedef struct s_shell
 	t_ast_node				*ast;
 }							t_shell;
 
-# include "ast.h"
-# include "env.h"
-# include "handlers.h"
-# include "tokenizer.h"
-
 void						initialize_shell(t_shell *shell, char **envp);
+void						handle_exit(t_shell *shell);
+void						handle_clear_input(t_shell *shell);
 
 #endif

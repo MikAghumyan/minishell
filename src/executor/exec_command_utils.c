@@ -1,4 +1,4 @@
-#include "../../includes/ast.h"
+#include "../../includes/executor.h"
 
 int	handle_command_not_found(t_ast_node *node, t_shell *shell)
 {
@@ -11,8 +11,7 @@ int	handle_command_not_found(t_ast_node *node, t_shell *shell)
 
 void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 {
-	if (node->redirect_files
-		&& handle_redirects(node->redirect_files) == -1)
+	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
 		exit(1);
 	execve(cmd_path, node->args, shell->env->data);
 	perror("execve failed");

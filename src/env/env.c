@@ -6,11 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:57:53 by maghumya          #+#    #+#             */
-/*   Updated: 2025/09/07 16:52:21 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:24:54 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/env.h"
 
 static bool	env_check_capacity(t_env *env)
 {

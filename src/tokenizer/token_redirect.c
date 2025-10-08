@@ -6,11 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 21:57:26 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/07 21:57:27 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 21:55:48 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/tokenizer.h"
 
 static t_token_type	get_redir_type(const char *input, size_t *i, size_t *len)
 {

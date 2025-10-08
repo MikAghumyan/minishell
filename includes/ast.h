@@ -1,8 +1,10 @@
 #ifndef AST_H
 # define AST_H
 
-# include "minishell.h"
-# include "tokenizer.h"
+# include "../libft/libft.h"
+# include "./minishell.h"
+# include "./tokenizer.h"
+# include <stdbool.h>
 
 typedef enum e_node_type
 {
@@ -16,6 +18,12 @@ typedef enum e_node_type
 	NODE_HEREDOC,
 	NODE_SUBSHELL,
 }						t_node_type;
+
+typedef enum e_dup_type
+{
+	DUP_IN,
+	DUP_OUT,
+}						t_dup_type;
 
 typedef struct s_redirect
 {
@@ -78,54 +86,4 @@ int						is_logical_ast_token(t_token *token);
 int						is_logicpipe_ast_token(t_token *token);
 int						is_sub_lr_ast_token(t_token *token);
 
-/* execute functions */
-int						execute_ast(t_ast_node *node, t_shell *shell);
-int						execute_command(t_ast_node *node, t_shell *shell);
-int						execute_pipe(t_ast_node *node, t_shell *shell);
-int						execute_logical(t_ast_node *node, t_shell *shell);
-int						execute_subshell(t_ast_node *node, t_shell *shell);
-
-/* path utils */
-char					*find_command_path(char *cmd, char **envp);
-
-/*command execute utils*/
-int						handle_command_not_found(t_ast_node *node,
-							t_shell *shell);
-void					handle_cmd_child(t_ast_node *node, char *cmd_path,
-							t_shell *shell);
-int						handle_cmd_parent(pid_t pid, char *command_path,
-							t_shell *shell);
-int						handle_command_exec_fork_error(char *command_path,
-							t_shell *shell);
-/* redirect handling */
-int						handle_redirects(t_list *redirect_list);
-
-/* pipe utils */
-void					close_fds(int *pipefds);
-int						close_fds_return_error(int *pipefds);
-void					handle_left_pid(int *pipefds);
-void					handle_right_pid(int *pipefds);
-int						wait_for_children(pid_t left_pid, pid_t right_pid,
-							t_shell *shell);
-int						type_pipe_error_and_return(void);
-pid_t					fork_left_child(t_ast_node *node, int *pipefds,
-							t_shell *shell);
-pid_t					fork_right_pid(t_ast_node *node, int *pipefds,
-							t_shell *shell);
-
-/* logical operator utils */
-int						execute_and(t_ast_node *node, t_shell *shell);
-int						execute_or(t_ast_node *node, t_shell *shell);
-
-/*subshell utils*/
-void					execute_subshell_in_child(t_ast_node *node,
-							t_shell *shell);
-int						wait_for_child(pid_t pid, t_shell *shell);
-int						handle_subshell_fork_error(t_shell *shell);
-
-/*redirect utils*/
-int						handle_heredoc(t_list *redirect);
-int						handle_redirect_in(t_redirect *current, int *fd);
-int						handle_redirect_out(t_redirect *current, int *fd);
-int						handle_append(t_redirect *current, int *fd);
 #endif

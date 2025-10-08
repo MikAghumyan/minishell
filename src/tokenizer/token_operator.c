@@ -6,11 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 19:53:29 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/06 20:45:36 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 21:55:49 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/tokenizer.h"
 
 static t_token_type	get_operator_type(const char *input, size_t i)
 {

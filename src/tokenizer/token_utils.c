@@ -6,11 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 19:53:40 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/07 19:58:34 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 21:55:46 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/tokenizer.h"
 
 t_token	*add_token_slice(t_token **tokens, t_token_type type)
 {

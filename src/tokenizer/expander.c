@@ -6,11 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:12:22 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/07 01:47:42 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:01:02 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/tokenizer.h"
 
 static size_t	get_varlen(const char *var)
 {
@@ -85,7 +85,6 @@ static char	*process_expansion(t_shell *shell, char *expanded, size_t *i)
 	else
 	{
 		varlen = get_varlen(expanded + *i);
-		printf("varlen: %zu\n", varlen);
 		if (varlen == 0)
 			tmp = ft_strdup(expanded);
 		else

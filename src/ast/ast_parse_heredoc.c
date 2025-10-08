@@ -6,12 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 01:33:46 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/07 01:38:15 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:24:14 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ast.h"
-#include "../../includes/minishell.h"
 
 static char	*expand_heredoc_line(t_parser *parser, char *line)
 {

@@ -37,14 +37,14 @@ SRCS_ENV = \
     src/env/env_utils.c
 
 SRCS_EXECUTOR = \
-    src/executor/ast_command_execute_utils.c \
-    src/executor/ast_executor.c \
-    src/executor/ast_find_command_path.c \
-    src/executor/ast_logical_utils.c \
-    src/executor/ast_pipe_utils1.c \
-    src/executor/ast_pipe_utils2.c \
-    src/executor/ast_redirect.c \
-    src/executor/ast_subshell_execute_utils.c
+    src/executor/executor.c \
+    src/executor/exec_find_command_path.c \
+    src/executor/exec_command_utils.c \
+    src/executor/exec_logical_utils.c \
+    src/executor/exec_pipe_utils.c \
+    src/executor/exec_pipe_fd_utils.c \
+    src/executor/exec_redirect_utils.c \
+    src/executor/exec_subshell_utils.c
 
 SRCS_TOKENIZER = \
 	src/tokenizer/expander.c \

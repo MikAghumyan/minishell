@@ -1,7 +1,4 @@
-#include "../../includes/ast.h"
-#include <fcntl.h>
-#include <string.h>
-#include <unistd.h>
+#include "../../includes/executor.h"
 
 // static int	handle_heredoc(t_redirect *redirect)
 // {

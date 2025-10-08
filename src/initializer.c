@@ -6,10 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:38:55 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/06 17:35:34 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:09:16 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/env.h"
 #include "../includes/minishell.h"
 
 void	initialize_shell(t_shell *shell, char **envp)

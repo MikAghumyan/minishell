@@ -1,9 +1,8 @@
-#include "../../includes/ast.h"
+#include "../../includes/executor.h"
 
 void	execute_subshell_in_child(t_ast_node *node, t_shell *shell)
 {
-	if (node->redirect_files
-		&& handle_redirects(node->redirect_files) == -1)
+	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
 		exit(1);
 	exit(execute_ast(node->left, shell));
 }

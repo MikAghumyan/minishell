@@ -6,11 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 19:53:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/06 22:33:52 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 21:55:43 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/tokenizer.h"
 
 t_token	*add_word_token(t_shell *shell, size_t *i, t_token **tokens)
 {

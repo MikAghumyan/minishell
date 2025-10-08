@@ -6,11 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 21:56:56 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/07 22:08:00 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 21:55:45 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/tokenizer.h"
 
 size_t	scan_word(const char *input, size_t start, const char end_char)
 {

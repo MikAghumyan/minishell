@@ -6,11 +6,11 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:02 by maghumya          #+#    #+#             */
-/*   Updated: 2025/09/07 16:51:51 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/08 22:26:05 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../includes/env.h"
 
 bool	env_keycmp(const char *key, const char *env_var)
 {
