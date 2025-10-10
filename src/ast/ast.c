@@ -15,7 +15,7 @@ t_ast_node	*build_ast(t_shell *shell)
 	if (!result)
 	{
 		if (parser.syserror)
-			exit_shell_with_error(shell, "minishell: system error");
+			exit_shell_with_error(shell, "minishell: system error", 1);
 		if (parser.tokens)
 			ft_fprintf(2,
 				"minishell: syntax error near unexpected token `%s'\n",

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:02 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/08 22:26:05 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/10 12:41:16 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,15 @@ void	env_free(t_env **env)
 {
 	size_t	i;
 
-	i = -1;
 	if (!env || !*env)
 		return ;
+	i = 0;
 	if ((*env)->data)
-		while (++i < (*env)->size)
+		while (i < (*env)->size)
 		{
 			free((*env)->data[i]);
 			(*env)->data[i] = NULL;
+			i++;
 		}
 	free((*env)->data);
 	(*env)->data = NULL;
