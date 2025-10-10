@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/09 01:22:10 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/10 16:30:46 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 			shell.tokens = NULL;
 			if (shell.ast)
 			{
-				execute_ast(shell.ast, &shell);
+				shell.exit_status = execute_ast(shell.ast, &shell);
 				free_ast(shell.ast);
 				shell.ast = NULL;
 			}

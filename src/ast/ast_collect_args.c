@@ -6,7 +6,7 @@ static bool	is_unexpected_token(t_token *token)
 			|| is_sub_lr_ast_token(token)));
 }
 
-static size_t	count_args(t_token *tokens)
+static size_t	count_token_args(t_token *tokens)
 {
 	size_t	count;
 
@@ -50,7 +50,7 @@ char	**collect_ast_arguments(t_token *tokens, t_parser *parser)
 	size_t	count;
 	char	**args;
 
-	count = count_args(tokens);
+	count = count_token_args(tokens);
 	if (count == 0)
 		return (NULL);
 	args = ft_calloc(sizeof(char *), (count + 1));

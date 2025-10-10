@@ -6,11 +6,12 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:02 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/10 12:41:16 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/10 23:16:52 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/env.h"
+#include <stdio.h>
 
 bool	env_keycmp(const char *key, const char *env_var)
 {
@@ -71,4 +72,18 @@ void	env_free(t_env **env)
 	(*env)->data = NULL;
 	free(*env);
 	*env = NULL;
+}
+
+void	print_env(t_env *env)
+{
+	size_t i;
+
+	if (!env)
+		return ;
+	i = 0;
+	while (i < env->size)
+	{
+		printf("%s\n", env->data[i]);
+		i++;
+	}
 }
