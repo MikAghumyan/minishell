@@ -34,6 +34,7 @@ SRCS_AST = \
 
 SRCS_ENV = \
     src/env/env.c \
+	src/env/env_set.c \
     src/env/env_utils.c
 
 SRC_BUILTINS = \

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:12:22 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/08 23:22:06 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/11 18:45:17 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static size_t	get_varlen(const char *var)
 		return (0);
 	var++;
 	while (var[i] && !is_space(var[i]) && !is_quote(var[i]) && var[i] != '$'
-		&& !is_special_char(var[i]))
+		&& var[i] != '=' && !is_special_char(var[i]))
 		i++;
 	return (i);
 }

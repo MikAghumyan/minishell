@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:02 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 16:35:50 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/11 19:16:55 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ bool	env_keycmp(const char *key, const char *env_var)
 {
 	size_t	keylen;
 
-	keylen = ft_strlen(key);
+	keylen = 0;
+	while (key[keylen] && key[keylen] != '=')
+		keylen++;
 	return (!ft_strncmp(env_var, key, keylen) && env_var[keylen] == '=');
 }
 
