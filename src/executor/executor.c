@@ -27,7 +27,7 @@ int	execute_command(t_ast_node *node, t_shell *shell)
 		return (handle_command_not_found(node, shell));
 	builtin_func = return_builtin_function((const char **)node->args);
 	if (builtin_func)
-		return (builtin_func((const char **)node->args, shell));
+		return (handle_cmd_builtin(node, builtin_func, shell));
 	command_path = find_command_path(node->args[0], shell->env->data);
 	if (!command_path)
 		return (handle_command_not_found(node, shell));
