@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 02:02:43 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 00:48:26 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/11 17:12:32 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,8 @@ int				builtin_echo(const char **args, t_shell *shell);
 int				builtin_exit(const char **args, t_shell *shell);
 int				builtin_pwd(const char **args, t_shell *shell);
 int				builtin_cd(const char **args, t_shell *shell);
+int				builtin_env(const char **args, t_shell *shell);
+int				builtin_export(const char **args, t_shell *shell);
+int				builtin_unset(const char **args, t_shell *shell);
 
 #endif

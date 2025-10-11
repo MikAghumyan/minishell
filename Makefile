@@ -42,6 +42,9 @@ SRC_BUILTINS = \
 	src/builtins/builtin_exit.c \
 	src/builtins/builtin_pwd.c \
 	src/builtins/builtin_cd.c \
+	src/builtins/builtin_env.c \
+	src/builtins/builtin_export.c \
+	src/builtins/builtin_unset.c
 
 SRCS_EXECUTOR = \
     src/executor/executor.c \

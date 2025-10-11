@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:02 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/10 23:16:52 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/11 16:35:50 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,20 @@ char	*env_generate_var(const char *key, const char *value)
 	size_t	valuelen;
 	char	*env_var;
 
+	if (!key)
+		return (NULL);
 	keylen = ft_strlen(key);
-	valuelen = ft_strlen(value);
+	if (value)
+		valuelen = ft_strlen(value);
+	else
+		valuelen = 0;
 	env_var = malloc(keylen + valuelen + 2);
 	if (!env_var)
 		return (NULL);
 	ft_memcpy(env_var, key, keylen);
 	env_var[keylen] = '=';
-	ft_memcpy(env_var + keylen + 1, value, valuelen);
+	if (valuelen)
+		ft_memcpy(env_var + keylen + 1, value, valuelen);
 	env_var[keylen + 1 + valuelen] = '\0';
 	return (env_var);
 }
@@ -76,7 +82,7 @@ void	env_free(t_env **env)
 
 void	print_env(t_env *env)
 {
-	size_t i;
+	size_t	i;
 
 	if (!env)
 		return ;

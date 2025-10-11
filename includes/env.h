@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:07 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/10 23:13:58 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/11 17:11:46 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_env
 t_env		*env_init(char **envp);
 void		env_free(t_env **env);
 bool		env_set(t_env *env, const char *key, const char *value);
+bool		env_unset(t_env *env, const char *key);
 bool		env_keycmp(const char *key, const char *env_var);
 char		*env_generate_var(const char *key, const char *value);
 char		*env_get_value(const char *key, t_env *env);

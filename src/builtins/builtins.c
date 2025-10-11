@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 12:36:45 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 01:21:08 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/11 17:13:09 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ int	count_args(const char **argv)
 	return (ac);
 }
 
-int	test_builtin_function(const char **argv, t_shell *shell)
-{
-	// Placeholder for a built-in command function
-	(void)shell; // To avoid unused parameter warning
-	printf("This is a test built-in function. %s\n", argv[0]);
-	return (0);
-}
-
 t_builtin_func	*return_builtin_function(const char **argv)
 {
 	if (!argv || !argv[0])
@@ -43,11 +35,11 @@ t_builtin_func	*return_builtin_function(const char **argv)
 	else if (ft_strcmp(argv[0], "pwd") == 0)
 		return (&builtin_pwd);
 	else if (ft_strcmp(argv[0], "export") == 0)
-		return (&test_builtin_function);
+		return (&builtin_export);
 	else if (ft_strcmp(argv[0], "unset") == 0)
-		return (&test_builtin_function);
+		return (&builtin_unset);
 	else if (ft_strcmp(argv[0], "env") == 0)
-		return (&test_builtin_function);
+		return (&builtin_env);
 	else if (ft_strcmp(argv[0], "exit") == 0)
 		return (&builtin_exit);
 	else

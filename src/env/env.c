@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:57:53 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/08 22:24:54 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/11 16:34:29 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ bool	env_set(t_env *env, const char *key, const char *value)
 {
 	size_t	i;
 
-	if (!key || !value)
+	if (!key)
 		return (false);
 	i = -1;
 	while (env->data[++i])
