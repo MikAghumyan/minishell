@@ -20,21 +20,22 @@ void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 
 int	handle_cmd_builtin(t_ast_node *node, t_builtin_func *func, t_shell *shell)
 {
-	int	_outfd;
-	int	_infd;
 	int	builtin_status;
 
-	_outfd = dup(STDOUT_FILENO);
-	_infd = dup(STDIN_FILENO);
-	if (_infd == -1 || _outfd == -1)
+	shell->saved_fds[1] = dup(STDOUT_FILENO);
+	shell->saved_fds[0] = dup(STDIN_FILENO);
+	if (shell->saved_fds[0] == -1 || shell->saved_fds[1] == -1)
 		exit_shell_with_error(shell, "minishell: dup error", 1);
 	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
 		exit_shell_with_error(shell, "minishell: redirection error", 1);
 	builtin_status = func((const char **)node->args, shell);
-	if (dup2(_outfd, STDOUT_FILENO) == -1 || dup2(_infd, STDIN_FILENO) == -1)
+	if (dup2(shell->saved_fds[1], STDOUT_FILENO) == -1
+		|| dup2(shell->saved_fds[0], STDIN_FILENO) == -1)
 		exit_shell_with_error(shell, "minishell: dup error", 1);
-	close(_outfd);
-	close(_infd);
+	close(shell->saved_fds[1]);
+	close(shell->saved_fds[0]);
+	shell->saved_fds[0] = -1;
+	shell->saved_fds[1] = -1;
 	return (builtin_status);
 }
 
