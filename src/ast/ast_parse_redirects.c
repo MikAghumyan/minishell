@@ -58,6 +58,8 @@ void	free_redirect(void *redirect_ptr)
 	if (!redirect_ptr)
 		return ;
 	redirect = (t_redirect *)redirect_ptr;
+	if (redirect->type == NODE_HEREDOC && redirect->filename)
+		unlink(redirect->filename);
 	if (redirect->filename)
 		free(redirect->filename);
 	free(redirect);
