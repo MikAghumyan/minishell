@@ -31,9 +31,21 @@ SRCS_AST = \
 	src/ast/ast_parse_heredoc.c \
 	src/ast/ast_build_utils.c \
 	src/ast/ast_print.c
+
 SRCS_ENV = \
     src/env/env.c \
+	src/env/env_set.c \
     src/env/env_utils.c
+
+SRC_BUILTINS = \
+	src/builtins/builtins.c \
+	src/builtins/builtin_echo.c \
+	src/builtins/builtin_exit.c \
+	src/builtins/builtin_pwd.c \
+	src/builtins/builtin_cd.c \
+	src/builtins/builtin_env.c \
+	src/builtins/builtin_export.c \
+	src/builtins/builtin_unset.c
 
 SRCS_EXECUTOR = \
     src/executor/executor.c \
@@ -56,7 +68,7 @@ SRCS_TOKENIZER = \
 	src/tokenizer/tokenizer.c 
 
 # Combine all sources
-SRCS = $(SRCS_MAIN) $(SRCS_AST) $(SRCS_ENV) $(SRCS_EXECUTOR) $(SRCS_TOKENIZER)
+SRCS = $(SRCS_MAIN) $(SRCS_AST) $(SRCS_ENV) $(SRCS_EXECUTOR) $(SRCS_TOKENIZER) $(SRC_BUILTINS)
 
 # Object files
 OBJDIR=obj

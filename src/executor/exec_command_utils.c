@@ -18,6 +18,27 @@ void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 	exit_shell_with_error(shell, "minishell: execve error", 127);
 }
 
+int	handle_cmd_builtin(t_ast_node *node, t_builtin_func *func, t_shell *shell)
+{
+	int	builtin_status;
+
+	shell->saved_fds[1] = dup(STDOUT_FILENO);
+	shell->saved_fds[0] = dup(STDIN_FILENO);
+	if (shell->saved_fds[0] == -1 || shell->saved_fds[1] == -1)
+		exit_shell_with_error(shell, "minishell: dup error", 1);
+	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
+		exit_shell_with_error(shell, "minishell: redirection error", 1);
+	builtin_status = func((const char **)node->args, shell);
+	if (dup2(shell->saved_fds[1], STDOUT_FILENO) == -1
+		|| dup2(shell->saved_fds[0], STDIN_FILENO) == -1)
+		exit_shell_with_error(shell, "minishell: dup error", 1);
+	close(shell->saved_fds[1]);
+	close(shell->saved_fds[0]);
+	shell->saved_fds[0] = -1;
+	shell->saved_fds[1] = -1;
+	return (builtin_status);
+}
+
 int	handle_cmd_parent(pid_t pid, char *command_path, t_shell *shell)
 {
 	int	status;

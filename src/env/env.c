@@ -6,13 +6,13 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:57:53 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/08 22:24:54 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/11 19:07:06 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/env.h"
 
-static bool	env_check_capacity(t_env *env)
+bool	env_check_capacity(t_env *env)
 {
 	char	**new_data;
 	size_t	i;
@@ -20,7 +20,7 @@ static bool	env_check_capacity(t_env *env)
 	if (env->size < env->capacity)
 		return (true);
 	env->capacity *= 2;
-	new_data = (char **)malloc(sizeof(char *) * (env->capacity + 1));
+	new_data = (char **)ft_calloc(sizeof(char *), (env->capacity + 1));
 	if (!new_data)
 		return (false);
 	i = -1;
@@ -57,56 +57,4 @@ t_env	*env_init(char **envp)
 	}
 	env->data[i] = NULL;
 	return (env);
-}
-
-bool	env_set(t_env *env, const char *key, const char *value)
-{
-	size_t	i;
-
-	if (!key || !value)
-		return (false);
-	i = -1;
-	while (env->data[++i])
-	{
-		if (env_keycmp(key, env->data[i]))
-		{
-			free(env->data[i]);
-			env->data[i] = env_generate_var(key, value);
-			if (!env->data[i])
-				return (env_free(&env), false);
-			return (true);
-		}
-	}
-	if (!env_check_capacity(env))
-		return (env_free(&env), false);
-	env->data[env->size] = env_generate_var(key, value);
-	if (!env->data[env->size])
-		return (env_free(&env), false);
-	env->size++;
-	env->data[env->size] = NULL;
-	return (true);
-}
-
-bool	env_unset(t_env *env, const char *key)
-{
-	size_t	i;
-	size_t	j;
-
-	if (!key)
-		return (false);
-	i = -1;
-	while (env->data[++i])
-	{
-		if (env_keycmp(key, env->data[i]))
-		{
-			free(env->data[i]);
-			j = i;
-			while (j < env->size - 1)
-				env->data[j] = env->data[j + 1], j++;
-			env->data[env->size - 1] = NULL;
-			env->size--;
-			return (true);
-		}
-	}
-	return (false);
 }

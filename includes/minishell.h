@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/09 00:58:07 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/11 22:04:45 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_shell
 	char					*input;
 	t_token					*tokens;
 	t_ast_node				*ast;
+	int						saved_fds[2];
 }							t_shell;
 
 void						initialize_shell(t_shell *shell, char **envp);

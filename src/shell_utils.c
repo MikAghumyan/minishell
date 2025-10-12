@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:20 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/09 01:02:01 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/11 22:07:35 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	initialize_shell(t_shell *shell, char **envp)
 	shell->tokens = NULL;
 	shell->ast = NULL;
 	shell->exit_status = 0;
+	shell->saved_fds[0] = -1;
+	shell->saved_fds[1] = -1;
 }
 
 void	cleanup_shell(t_shell *shell)
@@ -45,6 +47,12 @@ void	cleanup_shell(t_shell *shell)
 	}
 	if (shell->env)
 		env_free(&shell->env);
+	if (shell->saved_fds[0] != -1)
+		close(shell->saved_fds[0]);
+	if (shell->saved_fds[1] != -1)
+		close(shell->saved_fds[1]);
+	shell->saved_fds[0] = -1;
+	shell->saved_fds[1] = -1;
 }
 
 void	exit_shell(t_shell *shell)

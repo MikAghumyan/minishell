@@ -1,3 +1,4 @@
+#include "../../includes/builtins.h"
 #include "../../includes/executor.h"
 
 int	execute_ast(t_ast_node *node, t_shell *shell)
@@ -18,11 +19,15 @@ int	execute_ast(t_ast_node *node, t_shell *shell)
 
 int	execute_command(t_ast_node *node, t_shell *shell)
 {
-	pid_t	pid;
-	char	*command_path;
+	pid_t			pid;
+	char			*command_path;
+	t_builtin_func	*builtin_func;
 
 	if (!node || !node->args || !node->args[0] || !node->args[0][0])
 		return (handle_command_not_found(node, shell));
+	builtin_func = return_builtin_function((const char **)node->args);
+	if (builtin_func)
+		return (handle_cmd_builtin(node, builtin_func, shell));
 	command_path = find_command_path(node->args[0], shell->env->data);
 	if (!command_path)
 		return (handle_command_not_found(node, shell));
@@ -30,7 +35,7 @@ int	execute_command(t_ast_node *node, t_shell *shell)
 	if (pid == 0)
 	{
 		handle_cmd_child(node, command_path, shell);
-		exit_shell_with_error(shell, "minishell: subshell execution failed", 1);
+		exit_shell_with_error(shell, "minishell: unexpected error", 1);
 	}
 	else if (pid > 0)
 		return (handle_cmd_parent(pid, command_path, shell));
