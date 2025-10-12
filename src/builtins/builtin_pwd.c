@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/12 14:05:57 by maghumya          #+#    #+#             */
+/*   Updated: 2025/10/12 14:05:57 by maghumya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/builtins.h"
 
 int	builtin_pwd(const char **args, t_shell *shell)
 {
-	char *cwd;
+	char	*cwd;
 
 	(void)args;
 	cwd = getcwd(NULL, 0);

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 16:18:59 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 14:34:18 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/12 14:06:35 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	is_numeric(const char *str)
 	}
 	return (1);
 }
+
 int	builtin_exit(const char **args, t_shell *shell)
 {
 	int	argc;
