@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/12 19:26:44 by maghumya          #+#    #+#             */
+/*   Updated: 2025/10/12 19:26:45 by maghumya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
@@ -40,9 +52,6 @@ t_token					*add_redirect_token(t_token **tokens, t_shell *shell,
 							size_t *i);
 t_token					*add_operator_token(t_token **tokens, t_shell *shell,
 							size_t *i);
-
-/* EXPANDER*/
-char					*expand_token_value(t_shell *shell, const char *value);
 
 /* TOKEN UTILS*/
 void					add_tokens_back(t_token **tokens, t_token *new_token);

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 22:04:45 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/12 19:27:16 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,11 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-// # include "env.h"
-// # include "handlers.h"
-// # include "tokenizer.h"
 # include <errno.h>
-// # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-// # include <signal.h>
-// # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-// # include <sys/wait.h>
 # include <unistd.h>
 
 # define RESET "\033[0m"

@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/12 19:26:57 by maghumya          #+#    #+#             */
+/*   Updated: 2025/10/12 20:59:57 by maghumya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef AST_H
 # define AST_H
 
 # include "../libft/libft.h"
+# include "./expander.h"
 # include "./minishell.h"
 # include "./tokenizer.h"
 # include <stdbool.h>

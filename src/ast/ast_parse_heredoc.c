@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 01:33:46 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 12:46:42 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/12 21:41:11 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	*expand_heredoc_line(t_parser *parser, char *line)
 {
 	char	*expanded;
 
-	expanded = expand_token_value(parser->shell, line);
+	expanded = expand_token_value(parser->shell, line, true);
 	if (!expanded)
 	{
 		free(line);

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 12:36:58 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 12:36:58 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/12 21:35:31 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static bool	fill_args(char **args, t_token *tokens, t_parser *parser)
 	{
 		if (tokens->type == TOKEN_WORD)
 		{
-			args[i] = ft_strdup(tokens->value);
+			args[i] = expand_token_value(parser->shell, tokens->value, false);
 			if (!args[i])
 			{
 				ft_free_array((void ***)&args);
