@@ -57,8 +57,11 @@ SRCS_EXECUTOR = \
     src/executor/exec_redirect_utils.c \
     src/executor/exec_subshell_utils.c
 
+SRCS_EXPANDER = \
+	src/expander/expander.c \
+	src/expander/expand_utils.c
+
 SRCS_TOKENIZER = \
-	src/tokenizer/expander.c \
 	src/tokenizer/token_operator.c \
 	src/tokenizer/token_redirect.c \
 	src/tokenizer/token_word.c \
@@ -68,7 +71,7 @@ SRCS_TOKENIZER = \
 	src/tokenizer/tokenizer.c 
 
 # Combine all sources
-SRCS = $(SRCS_MAIN) $(SRCS_AST) $(SRCS_ENV) $(SRCS_EXECUTOR) $(SRCS_TOKENIZER) $(SRC_BUILTINS)
+SRCS = $(SRCS_MAIN) $(SRCS_AST) $(SRCS_ENV) $(SRCS_EXECUTOR) $(SRCS_TOKENIZER) $(SRC_BUILTINS) $(SRCS_EXPANDER)
 
 # Object files
 OBJDIR=obj

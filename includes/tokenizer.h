@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenizer.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/12 19:26:44 by maghumya          #+#    #+#             */
+/*   Updated: 2025/10/12 19:26:45 by maghumya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
@@ -41,9 +53,6 @@ t_token					*add_redirect_token(t_token **tokens, t_shell *shell,
 t_token					*add_operator_token(t_token **tokens, t_shell *shell,
 							size_t *i);
 
-/* EXPANDER*/
-char					*expand_token_value(t_shell *shell, const char *value);
-
 /* TOKEN UTILS*/
 void					add_tokens_back(t_token **tokens, t_token *new_token);
 void					print_tokens(t_token *tokens);
@@ -52,9 +61,9 @@ t_token					*add_token_slice(t_token **tokens, t_token_type type);
 
 /* WORD UTILS*/
 size_t					scan_word(const char *input, size_t start,
-							const char end_char);
+							t_token *token);
 char					*get_word_value(t_shell *shell, size_t *i,
-							t_token *new_token);
+							t_token *token);
 
 /* CHAR UTILS*/
 bool					is_chrop(char c);

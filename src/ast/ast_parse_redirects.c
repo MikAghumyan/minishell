@@ -42,7 +42,8 @@ t_list	*ast_init_redirect(t_token *token, t_parser *parser)
 	if (redirect->type == NODE_HEREDOC)
 		redirect->filename = collect_heredoc(token, parser);
 	else
-		redirect->filename = ft_strdup(token->value);
+		redirect->filename = expand_token_value(parser->shell, token->value,
+				false);
 	if (!redirect->filename)
 		return (free(redirect), parser->syserror = true, NULL);
 	redirect_node = ft_lstnew(redirect);
