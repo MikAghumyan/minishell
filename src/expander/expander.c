@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:28:39 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/12 21:34:56 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/13 20:04:41 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,13 @@ static void	expand_rest(t_expand_data *expanded, char *token, size_t *i)
 	*i += len - 1;
 }
 
-static void	expand_variable(t_shell *shell, t_expand_data *expanded,
+static void	expand_variable_with_key(t_shell *shell, t_expand_data *expanded,
 		char *token, size_t *i)
 {
-	size_t	keylen;
 	char	*key;
+	size_t	keylen;
 	char	*value;
 
-	if (token[*i + 1] && token[*i + 1] == '?')
-	{
-		value = ft_itoa(shell->exit_status);
-		if (!value)
-			return (free(expanded->result), expanded->result = NULL, (void)0);
-		expanded->result = expand_strjoin_free(expanded->result, value);
-		(*i)++;
-		return ;
-	}
 	keylen = get_varlen(&token[*i]);
 	if (!keylen)
 		expanded->result = expand_strjoin_free(expanded->result, "$");
@@ -58,6 +49,24 @@ static void	expand_variable(t_shell *shell, t_expand_data *expanded,
 			expanded->result = expand_strjoin_free(expanded->result, value);
 		*i += keylen;
 	}
+}
+
+static void	expand_variable(t_shell *shell, t_expand_data *expanded,
+		char *token, size_t *i)
+{
+	char	*value;
+
+	if (token[*i + 1] && token[*i + 1] == '?')
+	{
+		value = ft_itoa(shell->exit_status);
+		if (!value)
+			return (free(expanded->result), expanded->result = NULL, (void)0);
+		expanded->result = expand_strjoin_free(expanded->result, value);
+		(*i)++;
+		return ;
+	}
+	else
+		expand_variable_with_key(shell, expanded, token, i);
 }
 
 char	*expand_token_value(t_shell *shell, char *value, bool heredoc)
