@@ -1,13 +1,16 @@
 #include "../../includes/executor.h"
 
-int	handle_command_not_found(t_ast_node *node, t_shell *shell)
+int	handle_command_not_found(t_ast_node *node, char *cmd_path, t_shell *shell)
 {
-	ft_putstr_fd("minishell: ", 2);
-	if (node && node->args && node->args[0])
-		ft_putstr_fd(node->args[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
-	shell->exit_status = 127;
-	return (shell->exit_status);
+	if (!cmd_path || access(cmd_path, F_OK))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		if (node && node->args && node->args[0])
+			ft_putstr_fd(node->args[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		return (shell->exit_status = 127);
+	}
+	return (shell->exit_status = 0);
 }
 
 void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
@@ -15,7 +18,13 @@ void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
 		exit_shell_with_error(shell, "minishell: redirection error", 1);
 	execve(cmd_path, node->args, shell->env->data);
-	exit_shell_with_error(shell, "minishell: execve error", 127);
+	if (errno == EACCES)
+		shell->exit_status = 126;
+	else if (errno == ENOENT)
+		shell->exit_status = 127;
+	else
+		shell->exit_status = 126;
+	exit_shell_with_error(shell, "minishell: execve error", shell->exit_status);
 }
 
 int	handle_cmd_builtin(t_ast_node *node, t_builtin_func *func, t_shell *shell)

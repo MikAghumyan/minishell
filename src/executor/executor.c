@@ -24,19 +24,16 @@ int	execute_command(t_ast_node *node, t_shell *shell)
 	t_builtin_func	*builtin_func;
 
 	if (!node || !node->args || !node->args[0] || !node->args[0][0])
-		return (handle_command_not_found(node, shell));
+		return (handle_command_not_found(node, NULL, shell));
 	builtin_func = return_builtin_function((const char **)node->args);
 	if (builtin_func)
 		return (handle_cmd_builtin(node, builtin_func, shell));
 	command_path = find_command_path(node->args[0], shell->env->data);
-	if (!command_path)
-		return (handle_command_not_found(node, shell));
+	if (handle_command_not_found(node, command_path, shell))
+		return (shell->exit_status);
 	pid = fork();
 	if (pid == 0)
-	{
 		handle_cmd_child(node, command_path, shell);
-		exit_shell_with_error(shell, "minishell: unexpected error", 1);
-	}
 	else if (pid > 0)
 		return (handle_cmd_parent(pid, command_path, shell));
 	else
@@ -81,10 +78,7 @@ int	execute_subshell(t_ast_node *node, t_shell *shell)
 		return (1);
 	pid = fork();
 	if (pid == 0)
-	{
 		execute_subshell_in_child(node, shell);
-		exit_shell_with_error(shell, "minishell: unexpected error", 1);
-	}
 	else if (pid > 0)
 		return (wait_for_child(pid, shell));
 	else

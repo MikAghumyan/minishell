@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 21:35:08 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 14:21:57 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/13 21:18:48 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int		execute_subshell(t_ast_node *node, t_shell *shell);
 char	*find_command_path(char *cmd, char **envp);
 
 /*command execute utils*/
-int		handle_command_not_found(t_ast_node *node, t_shell *shell);
+int		handle_command_not_found(t_ast_node *node, char *cmd_path,
+			t_shell *shell);
 void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell);
 int		handle_cmd_builtin(t_ast_node *node, t_builtin_func *func,
 			t_shell *shell);
