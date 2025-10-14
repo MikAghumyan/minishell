@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/12 19:27:16 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/14 09:04:25 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 # define WHITE "\033[37m"
 # define BOLD "\033[1m"
 # define UNDERLINE "\033[4m"
+
+# ifndef PATH_HEREDOC
+#  define PATH_HEREDOC "/tmp/minishell_heredoc_tmp"
+# endif
 
 typedef struct s_env		t_env;
 typedef struct s_token		t_token;

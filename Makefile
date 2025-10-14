@@ -1,6 +1,7 @@
 CC=cc
 CFLAGS=-Wall -Wextra -Werror $(EXTRA_FLAGS)
 DEBUG_FLAGS=-g3 -fsanitize=address,undefined,leak -D DEBUG
+TERMUX_FLAGS=-D PATH_HEREDOC='"/data/data/com.termux/files/usr/tmp/minishell_heredoc_tmp"'
 NAME=minishell
 NAME_DEBUG=minishell_debug
 LIBFT=libft.a
@@ -78,7 +79,8 @@ OBJDIR=obj
 OBJS=$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 DEBUG_OBJS=$(addprefix $(OBJDIR)/, $(SRCS:.c=.debug.o))
 
-.PHONY: all clean fclean re debug
+.PHONY: all clean fclean re debug termux
+
 
 all: $(NAME)
 
@@ -105,6 +107,9 @@ debug: $(DEBUG_OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(DEBUG_FLAGS) -o $(NAME_DEBUG) $(DEBUG_OBJS) $(LIBFT_DIR)/$(LIBFT) $(LIBS)
 	@echo "$(GREEN)Minishell debug version compiled successfully.$(RESET)"
 	@echo "$(CYAN)Run with: ./$(NAME_DEBUG)$(RESET)"
+
+termux: EXTRA_FLAGS=$(TERMUX_FLAGS)
+termux: fclean all
 
 clean:
 	@rm -f $(OBJS) $(DEBUG_OBJS)
