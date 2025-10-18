@@ -11,3 +11,10 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_redisplay();
 }
+
+void	sigint_heredoc_handler(int sig)
+{
+	g_sig_status = sig;
+	write(1, "\n", 1);
+	close(STDIN_FILENO);
+}

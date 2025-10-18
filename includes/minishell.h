@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/18 16:29:15 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/18 22:34:59 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void							cleanup_shell(t_shell *shell);
 void							exit_shell_with_error(t_shell *shell,
 									const char *message, int errnum);
 void							sigint_handler(int sig);
+void							sigint_heredoc_handler(int sig);
 
 #endif

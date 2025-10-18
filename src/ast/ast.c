@@ -7,12 +7,9 @@ t_ast_node	*build_ast(t_shell *shell)
 
 	if (!shell->tokens)
 		return (NULL);
-	parser.tokens = shell->tokens;
-	parser.subshell_depth = 0;
-	parser.syserror = false;
-	parser.shell = shell;
+	initialize_parser(&parser, shell, shell->tokens);
 	result = ast_parse_logical(&parser);
-	if (!result)
+	if (!result && !parser.interrupted)
 	{
 		if (parser.syserror)
 			exit_shell_with_error(shell, "minishell: system error", 1);
@@ -24,10 +21,21 @@ t_ast_node	*build_ast(t_shell *shell)
 			ft_fprintf(2, "minishell: syntax error: unexpected end of line\n");
 		shell->exit_status = 2;
 	}
+	if (parser.interrupted)
+		shell->exit_status = 130;
 	// printf("\n=== AST TREE ===\n");
 	// print_ast(result, 0);
 	// printf("================\n\n");
 	return (result);
+}
+
+void	initialize_parser(t_parser *parser, t_shell *shell, t_token *tokens)
+{
+	parser->tokens = tokens;
+	parser->shell = shell;
+	parser->subshell_depth = 0;
+	parser->syserror = false;
+	parser->interrupted = false;
 }
 
 t_ast_node	*create_ast_node(t_node_type type)
@@ -47,7 +55,7 @@ t_ast_node	*create_ast_node(t_node_type type)
 
 void	free_ast(t_ast_node *node)
 {
-	int	i;
+	int i;
 
 	if (!node)
 		return ;
@@ -68,78 +76,3 @@ void	free_ast(t_ast_node *node)
 	free_ast(node->left);
 	free(node);
 }
-
-// void	print_ast(t_ast_node *node, int depth)
-// // no need here to fix norme errors, it's just a debug function
-// {
-// 	int i;
-// 	t_redirect *redirect;
-
-// 	if (!node)
-// 		return ;
-
-// 	for (i = 0; i < depth; i++)
-// 		printf("  ");
-
-// 	switch (node->type)
-// 	{
-// 	case NODE_COMMAND:
-// 		printf("COMMAND: ");
-// 		if (node->args)
-// 		{
-// 			i = 0;
-// 			while (node->args[i])
-// 			{
-// 				printf("%s ", node->args[i]);
-// 				i++;
-// 			}
-// 		}
-// 		if (node->redirect_files)
-// 		{
-// 			t_list *current_list;
-// 			printf("(redirects: ");
-// 			current_list = node->redirect_files;
-// 			while (current_list)
-// 			{
-// 				redirect = (t_redirect *)current_list->content;
-// 				printf("[%d:%s] ", redirect->type, redirect->filename);
-// 				current_list = current_list->next;
-// 			}
-// 			printf(")");
-// 		}
-// 		break ;
-// 	case NODE_PIPE:
-// 		printf("PIPE");
-// 		break ;
-// 	case NODE_AND:
-// 		printf("AND");
-// 		break ;
-// 	case NODE_OR:
-// 		printf("OR");
-// 		break ;
-// 	case NODE_SUBSHELL:
-// 		printf("SUBSHELL");
-// 		if (node->redirect_files)
-// 		{
-// 			t_list *current_list;
-// 			printf(" (redirects: ");
-// 			current_list = node->redirect_files;
-// 			while (current_list)
-// 			{
-// 				redirect = (t_redirect *)current_list->content;
-// 				printf("[%d:%s] ", redirect->type, redirect->filename);
-// 				current_list = current_list->next;
-// 			}
-// 			printf(")");
-// 		}
-// 		break ;
-// 	default:
-// 		printf("UNKNOWN");
-// 	}
-// 	printf("\n");
-
-// 	if (node->left)
-// 		print_ast(node->left, depth + 1);
-// 	if (node->right)
-// 		print_ast(node->right, depth + 1);
-// }

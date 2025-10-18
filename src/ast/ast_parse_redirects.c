@@ -45,7 +45,11 @@ t_list	*ast_init_redirect(t_token *token, t_parser *parser)
 		redirect->filename = expand_token_value(parser->shell, token->value,
 				false);
 	if (!redirect->filename)
-		return (free(redirect), parser->syserror = true, NULL);
+	{
+		if (!parser->interrupted)
+			parser->syserror = true;
+		return (free(redirect), NULL);
+	}
 	redirect_node = ft_lstnew(redirect);
 	if (!redirect_node)
 		return (free(redirect), parser->syserror = true, NULL);

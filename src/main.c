@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/18 16:32:21 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/18 22:25:11 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int argc, char **argv, char **envp)
 		shell.input = readline("\033[0;36mminishell>\033[0m ");
 		if (!shell.input)
 			break ;
-		/* Check if SIGINT happened during readline */
 		if (shell.input[0] != '\0')
 			add_history(shell.input);
 		// TODO HANDLE ADD_HISTORY'S CLEAN AT THE END
@@ -54,9 +53,12 @@ int	main(int argc, char **argv, char **envp)
 				shell.ast = NULL;
 				signal(SIGINT, sigint_handler);
 			}
-			// if (shell.exit_status != 0)
+			if (shell.exit_status != 0)
+				printf("%sExit status: %d%s\n", RED, shell.exit_status, RESET);
+			else
+				printf("%sExit status: %d%s\n", GREEN, shell.exit_status,
+					RESET);
 		}
-		printf("Exit status: %d\n", shell.exit_status);
 		free(shell.input);
 		shell.input = NULL;
 	}

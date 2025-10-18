@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:26:57 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/12 20:59:57 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 00:38:53 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,14 @@ typedef struct s_parser
 	t_shell				*shell;
 	int					subshell_depth;
 	bool				syserror;
+	bool				interrupted;
 }						t_parser;
 
 /* base ast functions */
 t_ast_node				*build_ast(t_shell *shell);
 t_ast_node				*create_ast_node(t_node_type type);
+void					initialize_parser(t_parser *parser, t_shell *shell,
+							t_token *tokens);
 void					free_ast(t_ast_node *node);
 void					print_ast(t_ast_node *node, int depth);
 
