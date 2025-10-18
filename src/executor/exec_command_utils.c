@@ -2,7 +2,7 @@
 
 int	handle_command_not_found(t_ast_node *node, char *cmd_path, t_shell *shell)
 {
-	if (!cmd_path || access(cmd_path, F_OK))
+	if (!cmd_path || access(cmd_path, F_OK) == -1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		if (node && node->args && node->args[0])
