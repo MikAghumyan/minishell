@@ -59,7 +59,10 @@ int	handle_cmd_parent(pid_t pid, char *command_path, t_shell *shell)
 	if (WIFEXITED(status))
 		shell->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
+	{
 		shell->exit_status = 128 + WTERMSIG(status);
+		print_signal_error(WTERMSIG(status));
+	}
 	return (shell->exit_status);
 }
 
