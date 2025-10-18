@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 01:33:46 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/14 10:09:20 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/18 16:29:31 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ static void	heredoc_write(t_token *token, t_parser *parser, int fd)
 
 	while (true)
 	{
-		line = readline("> ");
+		line = readline("\033[35m> \033[0m");
 		if (!line)
-			break ;
-		if (ft_strcmp(line, token->value) == 0)
+			printf("minishell: %s (wanted `%s')\n", WARNING_HEREDOC,
+				token->value);
+		if (!line || ft_strcmp(line, token->value) == 0)
 		{
 			free(line);
 			break ;

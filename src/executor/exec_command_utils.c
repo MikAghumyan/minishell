@@ -17,6 +17,8 @@ void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 {
 	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
 		exit_shell_with_error(shell, "minishell: redirection error", 1);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	execve(cmd_path, node->args, shell->env->data);
 	if (errno == EACCES)
 		shell->exit_status = 126;
@@ -56,6 +58,8 @@ int	handle_cmd_parent(pid_t pid, char *command_path, t_shell *shell)
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		shell->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		shell->exit_status = 128 + WTERMSIG(status);
 	return (shell->exit_status);
 }
 

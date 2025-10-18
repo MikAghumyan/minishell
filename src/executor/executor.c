@@ -56,7 +56,8 @@ int	execute_pipe(t_ast_node *node, t_shell *shell)
 	if (right_pid < 0)
 		return (close_fds_return_error(pipefds));
 	close_fds(pipefds);
-	return (wait_for_children(left_pid, right_pid, shell));
+	shell->exit_status = wait_for_children(left_pid, right_pid, shell);
+	return (shell->exit_status);
 }
 
 int	execute_logical(t_ast_node *node, t_shell *shell)

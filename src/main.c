@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:17 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/10 16:30:46 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/18 16:32:21 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,23 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	initialize_shell(&shell, envp);
 	printf("Welcome to Minishell!\n");
+	/* setup signal handlers */
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (true)
 	{
 		shell.input = readline("\033[0;36mminishell>\033[0m ");
 		if (!shell.input)
 			break ;
+		/* Check if SIGINT happened during readline */
 		if (shell.input[0] != '\0')
 			add_history(shell.input);
 		// TODO HANDLE ADD_HISTORY'S CLEAN AT THE END
+		if (g_sig_status)
+		{
+			shell.exit_status = 128 + g_sig_status;
+			g_sig_status = 0;
+		}
 		shell.tokens = tokenize_input(&shell);
 		if (shell.tokens)
 		{
@@ -39,12 +48,15 @@ int	main(int argc, char **argv, char **envp)
 			shell.tokens = NULL;
 			if (shell.ast)
 			{
+				signal(SIGINT, SIG_IGN);
 				shell.exit_status = execute_ast(shell.ast, &shell);
 				free_ast(shell.ast);
 				shell.ast = NULL;
+				signal(SIGINT, sigint_handler);
 			}
-			printf("Exit status: %d\n", shell.exit_status);
+			// if (shell.exit_status != 0)
 		}
+		printf("Exit status: %d\n", shell.exit_status);
 		free(shell.input);
 		shell.input = NULL;
 	}

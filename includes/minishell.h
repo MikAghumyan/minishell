@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/14 09:04:25 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/18 16:29:15 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -32,28 +33,33 @@
 # define BOLD "\033[1m"
 # define UNDERLINE "\033[4m"
 
+# define WARNING_HEREDOC "warning: here-document delimited by end-of-file"
+
 # ifndef PATH_HEREDOC
 #  define PATH_HEREDOC "/tmp/minishell_heredoc_tmp"
 # endif
 
-typedef struct s_env		t_env;
-typedef struct s_token		t_token;
-typedef struct s_ast_node	t_ast_node;
+typedef struct s_env			t_env;
+typedef struct s_token			t_token;
+typedef struct s_ast_node		t_ast_node;
 
 typedef struct s_shell
 {
-	t_env					*env;
-	int						exit_status;
-	char					*input;
-	t_token					*tokens;
-	t_ast_node				*ast;
-	int						saved_fds[2];
-}							t_shell;
+	t_env						*env;
+	int							exit_status;
+	char						*input;
+	t_token						*tokens;
+	t_ast_node					*ast;
+	int							saved_fds[2];
+}								t_shell;
 
-void						initialize_shell(t_shell *shell, char **envp);
-void						exit_shell(t_shell *shell);
-void						cleanup_shell(t_shell *shell);
-void						exit_shell_with_error(t_shell *shell,
-								const char *message, int errnum);
+extern volatile sig_atomic_t	g_sig_status;
+
+void							initialize_shell(t_shell *shell, char **envp);
+void							exit_shell(t_shell *shell);
+void							cleanup_shell(t_shell *shell);
+void							exit_shell_with_error(t_shell *shell,
+									const char *message, int errnum);
+void							sigint_handler(int sig);
 
 #endif
