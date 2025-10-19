@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:20 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 13:28:25 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 14:05:51 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	initialize_shell(t_shell *shell, char **envp)
 	shell->env = env_init(envp);
 	if (!shell->env)
 		exit_shell_with_error(shell, "system error", 1);
+	shell->is_interactive = isatty(STDIN_FILENO);
 	shell->input = NULL;
 	shell->tokens = NULL;
 	shell->ast = NULL;

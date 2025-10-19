@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 12:58:14 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 13:35:14 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:55:48 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,12 @@ void	shell_puterror(char *prefix, char *msg)
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
 	ft_putendl_fd((char *)msg, STDERR_FILENO);
+}
+
+void	print_exit_status(t_shell *shell)
+{
+	if (shell->exit_status != 0)
+		printf("%sExit status: %d%s\n", RED, shell->exit_status, RESET);
+	else
+		printf("%sExit status: %d%s\n", GREEN, shell->exit_status, RESET);
 }

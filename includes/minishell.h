@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 13:35:08 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 14:06:26 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -51,6 +52,7 @@ typedef struct s_shell
 	t_token						*tokens;
 	t_ast_node					*ast;
 	int							saved_fds[2];
+	bool						is_interactive;
 }								t_shell;
 
 extern volatile sig_atomic_t	g_sig_status;
@@ -70,5 +72,10 @@ void							print_signal_error(int sig);
 /* prints */
 void							shell_perror(const char *msg);
 void							shell_puterror(char *prefix, char *msg);
+void							print_exit_status(t_shell *shell);
+
+/* loop */
+void							shell_loop_interactive(t_shell *shell);
+void							shell_loop_non_interactive(t_shell *shell);
 
 #endif
