@@ -3,7 +3,7 @@
 void	execute_subshell_in_child(t_ast_node *node, t_shell *shell)
 {
 	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
-		exit_shell_with_error(shell, "minishell: redirection error", 1);
+		exit_shell_with_error(shell, NULL, 1);
 	shell->exit_status = execute_ast(node->left, shell);
 	exit_shell(shell);
 }

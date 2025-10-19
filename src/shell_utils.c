@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:20 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 22:07:35 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 12:06:15 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 #include "../includes/env.h"
 #include "../includes/minishell.h"
 #include "../includes/tokenizer.h"
+
+void	close_shell_fds(t_shell *shell)
+{
+	if (shell->saved_fds[0] != -1)
+		close(shell->saved_fds[0]);
+	if (shell->saved_fds[1] != -1)
+		close(shell->saved_fds[1]);
+	shell->saved_fds[0] = -1;
+	shell->saved_fds[1] = -1;
+}
 
 void	initialize_shell(t_shell *shell, char **envp)
 {
@@ -47,12 +57,7 @@ void	cleanup_shell(t_shell *shell)
 	}
 	if (shell->env)
 		env_free(&shell->env);
-	if (shell->saved_fds[0] != -1)
-		close(shell->saved_fds[0]);
-	if (shell->saved_fds[1] != -1)
-		close(shell->saved_fds[1]);
-	shell->saved_fds[0] = -1;
-	shell->saved_fds[1] = -1;
+	close_shell_fds(shell);
 }
 
 void	exit_shell(t_shell *shell)

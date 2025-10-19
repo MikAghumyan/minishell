@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 01:56:06 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 12:06:45 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ extern volatile sig_atomic_t	g_sig_status;
 void							initialize_shell(t_shell *shell, char **envp);
 void							exit_shell(t_shell *shell);
 void							cleanup_shell(t_shell *shell);
+void							close_shell_fds(t_shell *shell);
 void							exit_shell_with_error(t_shell *shell,
 									const char *message, int errnum);
 void							sigint_handler(int sig);

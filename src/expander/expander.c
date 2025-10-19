@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:28:39 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/13 20:04:41 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 11:23:23 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	expand_variable(t_shell *shell, t_expand_data *expanded,
 		if (!value)
 			return (free(expanded->result), expanded->result = NULL, (void)0);
 		expanded->result = expand_strjoin_free(expanded->result, value);
+		free(value);
 		(*i)++;
 		return ;
 	}

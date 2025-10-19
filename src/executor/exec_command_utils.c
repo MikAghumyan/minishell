@@ -8,6 +8,8 @@ int	handle_command_not_found(t_ast_node *node, char *cmd_path, t_shell *shell)
 		if (node && node->args && node->args[0])
 			ft_putstr_fd(node->args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
+		if (cmd_path)
+			free(cmd_path);
 		return (shell->exit_status = 127);
 	}
 	return (shell->exit_status = 0);
@@ -16,7 +18,7 @@ int	handle_command_not_found(t_ast_node *node, char *cmd_path, t_shell *shell)
 void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 {
 	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
-		exit_shell_with_error(shell, "minishell: redirection error", 1);
+		exit_shell_with_error(shell, NULL, 1);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	execve(cmd_path, node->args, shell->env->data);
@@ -36,17 +38,14 @@ int	handle_cmd_builtin(t_ast_node *node, t_builtin_func *func, t_shell *shell)
 	shell->saved_fds[1] = dup(STDOUT_FILENO);
 	shell->saved_fds[0] = dup(STDIN_FILENO);
 	if (shell->saved_fds[0] == -1 || shell->saved_fds[1] == -1)
-		exit_shell_with_error(shell, "minishell: dup error", 1);
+		return (perror("minishell: dup error"), 1);
 	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
-		exit_shell_with_error(shell, "minishell: redirection error", 1);
+		return (close_shell_fds(shell), shell->exit_status = 1);
 	builtin_status = func((const char **)node->args, shell);
 	if (dup2(shell->saved_fds[1], STDOUT_FILENO) == -1
 		|| dup2(shell->saved_fds[0], STDIN_FILENO) == -1)
-		exit_shell_with_error(shell, "minishell: dup error", 1);
-	close(shell->saved_fds[1]);
-	close(shell->saved_fds[0]);
-	shell->saved_fds[0] = -1;
-	shell->saved_fds[1] = -1;
+		return (close_shell_fds(shell), perror("minishell: dup error"), 1);
+	close_shell_fds(shell);
 	return (builtin_status);
 }
 

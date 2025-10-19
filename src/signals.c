@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 01:55:32 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 01:55:39 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 12:23:38 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,4 @@ void	print_signal_error(int sig)
 		write(STDERR_FILENO, "Illegal instruction (core dumped)\n", 34);
 	else if (sig == SIGSYS)
 		write(STDERR_FILENO, "Bad system call (core dumped)\n", 31);
-	else
-	{
-		write(STDERR_FILENO, "Terminated\n", 11);
-	}
 }
