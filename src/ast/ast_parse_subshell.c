@@ -31,7 +31,7 @@ t_ast_node	*ast_init_subshell(t_parser *parser)
 
 	if (!parser || !parser->tokens)
 		return (NULL);
-	parser->tokens = parser->tokens->next; // skip '('
+	parser->tokens = parser->tokens->next;
 	parser->subshell_depth++;
 	subshell_node = create_ast_node(NODE_SUBSHELL);
 	if (!subshell_node)
@@ -41,10 +41,10 @@ t_ast_node	*ast_init_subshell(t_parser *parser)
 		return (free_ast(subshell_node), NULL);
 	if (parser->tokens && parser->tokens->type == TOKEN_RPAREN)
 	{
-		parser->tokens = parser->tokens->next; // skip ')'
+		parser->tokens = parser->tokens->next;
 		parser->subshell_depth--;
 	}
-	else // No closing parenthesis
+	else
 		return (free_ast(subshell_node), NULL);
 	subshell_node->redirect_files = collect_ast_redirects(parser->tokens,
 			parser);

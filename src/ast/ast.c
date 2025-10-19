@@ -23,9 +23,6 @@ t_ast_node	*build_ast(t_shell *shell)
 	}
 	if (parser.interrupted)
 		shell->exit_status = 130;
-	// printf("\n=== AST TREE ===\n");
-	// print_ast(result, 0);
-	// printf("================\n\n");
 	return (result);
 }
 
@@ -55,7 +52,7 @@ t_ast_node	*create_ast_node(t_node_type type)
 
 void	free_ast(t_ast_node *node)
 {
-	int i;
+	int	i;
 
 	if (!node)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 19:53:53 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/10 12:54:18 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 14:57:20 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,5 @@ t_token	*tokenize_input(t_shell *shell)
 		if (!new_token)
 			exit_shell_with_error(shell, "minishell: system error", 1);
 	}
-	// printf("\n=== TOKENS ===\n");
-	// print_tokens(tokens);
-	// printf("==============\n");
 	return (tokens);
 }

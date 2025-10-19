@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 19:53:40 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/08 21:55:46 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 14:53:11 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,13 @@ void	print_tokens(t_token *tokens)
 	}
 	while (current)
 	{
-		printf("Token: '%s', Type: %d, Length: %zu, Quoted: %d\n",
-			current->value ? current->value : "(null)", current->type,
-			current->value ? ft_strlen(current->value) : 0, current->quoted);
+		printf("Token: ");
+		printf("Type: %d, Quoted:%d, ", current->type, current->quoted);
+		if (current->value)
+			printf("Value: '%s', Length: %zu\n", current->value,
+				ft_strlen(current->value));
+		else
+			printf("Value: '(null)'\n");
 		current = current->next;
 		count++;
 	}

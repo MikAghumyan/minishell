@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:57:53 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 19:07:06 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 15:03:49 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ bool	env_check_capacity(t_env *env)
 	env->data = new_data;
 	return (true);
 }
+
 t_env	*env_init(char **envp)
 {
 	t_env	*env;

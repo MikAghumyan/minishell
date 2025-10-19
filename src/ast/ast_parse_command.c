@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 12:36:49 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 12:36:51 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 15:01:31 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_ast_node	*ast_parse_command(t_parser *parser)
 		{
 			if (parser->subshell_depth > 0
 				&& parser->tokens->type == TOKEN_RPAREN)
-				break ; // Allow closing parenthesis in subshell
+				break ;
 			free_ast(result);
 			return (NULL);
 		}

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 19:00:23 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 19:15:29 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 15:08:50 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ bool	env_set(t_env *env, const char *key, const char *value)
 
 bool	env_unset(t_env *env, const char *key)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	if (!key)
 		return (false);
@@ -59,7 +59,10 @@ bool	env_unset(t_env *env, const char *key)
 			free(env->data[i]);
 			j = i;
 			while (j < env->size - 1)
-				env->data[j] = env->data[j + 1], j++;
+			{
+				env->data[j] = env->data[j + 1];
+				j++;
+			}
 			env->data[env->size - 1] = NULL;
 			env->size--;
 			return (true);

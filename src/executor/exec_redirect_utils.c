@@ -1,62 +1,11 @@
 #include "../../includes/executor.h"
 
-// static int	handle_heredoc(t_redirect *redirect)
-// {
-// 	int		pipefd[2];
-// 	char	*line;
-// 	char	*delimiter;
-
-// 	delimiter = redirect->filename; // The delimiter is stored in filename
-// 	if (pipe(pipefd) == -1)
-// 	{
-// 		perror("pipe");
-// 		return (-1);
-// 	}
-// 	while (1) // Read lines until delimiter is found
-// 	{
-// 		line = readline("> ");
-// 		if (!line) // EOF
-// 		{
-// 			ft_putstr_fd("minishell: warning: here-document delimited by end-of-file\n",
-// 				2);
-// 			close(pipefd[1]);
-// 			break ;
-// 		}
-// 		if (ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0
-// 			&& ft_strlen(line) == ft_strlen(delimiter))
-// 		{
-// 			free(line);
-// 			close(pipefd[1]);
-// 			break ;
-// 		}
-// 		if (write(pipefd[1], line, ft_strlen(line)) == -1 || write(pipefd[1],
-// 				"\n", 1) == -1)
-// 		{
-// 			perror("write");
-// 			free(line);
-// 			close(pipefd[1]);
-// 			close(pipefd[0]);
-// 			return (-1);
-// 		}
-// 		free(line);
-// 	}
-// 	close(pipefd[1]);                        // Close write end
-// 	if (dup2(pipefd[0], STDIN_FILENO) == -1) // Redirect stdin to read from pipe
-// 	{
-// 		close(pipefd[0]);
-// 		perror("dup2");
-// 		return (-1);
-// 	}
-// 	close(pipefd[0]);
-// 	return (0);
-// }
-
 int	handle_redirect_in(t_redirect *current, int *fd)
 {
 	*fd = open(current->filename, O_RDONLY);
 	if (*fd == -1)
 	{
-		shell_perror(current->filename); // open file for reading and dup STDIN fd
+		shell_perror(current->filename);
 		return (-1);
 	}
 	if (dup2(*fd, STDIN_FILENO) == -1)
@@ -78,7 +27,6 @@ int	handle_redirect_out(t_redirect *current, int *fd)
 		return (-1);
 	}
 	if (dup2(*fd, STDOUT_FILENO) == -1)
-	// open file for both reading and writing and dup STDOUT fd
 	{
 		close(*fd);
 		shell_perror("dup2");
@@ -96,7 +44,7 @@ int	handle_append(t_redirect *current, int *fd)
 		shell_perror(current->filename);
 		return (-1);
 	}
-	if (dup2(*fd, STDOUT_FILENO) == -1) // open or create file and dup STDOUT
+	if (dup2(*fd, STDOUT_FILENO) == -1)
 	{
 		close(*fd);
 		shell_perror("dup2");
@@ -106,16 +54,15 @@ int	handle_append(t_redirect *current, int *fd)
 	return (0);
 }
 
-int	handle_redirects(t_list *redirect_list) // MAIN REDIRECT FUNC
+int	handle_redirects(t_list *redirect_list)
 {
-	t_list *current;
-	t_redirect *redirect;
-	int fd;
-	int result;
+	t_list		*current;
+	t_redirect	*redirect;
+	int			fd;
+	int			result;
 
 	if (!redirect_list)
 		return (0);
-
 	current = redirect_list;
 	result = 0;
 	while (current && result == 0)

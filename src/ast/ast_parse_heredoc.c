@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 01:33:46 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 13:05:03 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 15:01:22 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static char	*expand_heredoc_line(t_parser *parser, char *line)
 	free(line);
 	return (expanded);
 }
+
 static void	heredoc_write(t_token *token, t_parser *parser, int fd)
 {
 	char	*line;
