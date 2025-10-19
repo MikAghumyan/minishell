@@ -56,13 +56,13 @@ int	handle_redirect_in(t_redirect *current, int *fd)
 	*fd = open(current->filename, O_RDONLY);
 	if (*fd == -1)
 	{
-		perror(current->filename); // open file for reading and dup STDIN fd
+		shell_perror(current->filename); // open file for reading and dup STDIN fd
 		return (-1);
 	}
 	if (dup2(*fd, STDIN_FILENO) == -1)
 	{
 		close(*fd);
-		perror("dup2");
+		shell_perror("dup2");
 		return (-1);
 	}
 	close(*fd);
@@ -74,14 +74,14 @@ int	handle_redirect_out(t_redirect *current, int *fd)
 	*fd = open(current->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (*fd == -1)
 	{
-		perror(current->filename);
+		shell_perror(current->filename);
 		return (-1);
 	}
 	if (dup2(*fd, STDOUT_FILENO) == -1)
 	// open file for both reading and writing and dup STDOUT fd
 	{
 		close(*fd);
-		perror("dup2");
+		shell_perror("dup2");
 		return (-1);
 	}
 	close(*fd);
@@ -93,13 +93,13 @@ int	handle_append(t_redirect *current, int *fd)
 	*fd = open(current->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (*fd == -1)
 	{
-		perror(current->filename);
+		shell_perror(current->filename);
 		return (-1);
 	}
 	if (dup2(*fd, STDOUT_FILENO) == -1) // open or create file and dup STDOUT
 	{
 		close(*fd);
-		perror("dup2");
+		shell_perror("dup2");
 		return (-1);
 	}
 	close(*fd);

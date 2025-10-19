@@ -22,7 +22,7 @@ int	wait_for_child(pid_t pid, t_shell *shell)
 
 int	handle_subshell_fork_error(t_shell *shell)
 {
-	perror("fork failed");
+	shell_perror("fork failed");
 	shell->exit_status = 1;
 	return (shell->exit_status);
 }

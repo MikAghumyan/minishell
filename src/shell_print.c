@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   shell_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/11 15:49:32 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 13:32:06 by maghumya         ###   ########.fr       */
+/*   Created: 2025/10/19 12:58:14 by maghumya          #+#    #+#             */
+/*   Updated: 2025/10/19 13:35:14 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/builtins.h"
+#include "../includes/minishell.h"
 
-int	builtin_env(const char **args, t_shell *shell)
+void	shell_perror(const char *msg)
 {
-	if (args[1])
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	perror(msg);
+}
+
+void	shell_puterror(char *prefix, char *msg)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	if (prefix)
 	{
-		shell_puterror("env", "too many arguments");
-		return (shell->exit_status = 1);
+		ft_putstr_fd(prefix, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	else
-	{
-		if (shell->env)
-			print_env(shell->env);
-	}
-	return (shell->exit_status = 0);
+	ft_putendl_fd((char *)msg, STDERR_FILENO);
 }

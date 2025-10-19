@@ -9,7 +9,7 @@ void	close_fds(int *pipefds)
 int	close_fds_return_error(int *pipefds)
 {
 	close_fds(pipefds);
-	perror("fork failed");
+	shell_perror("fork failed");
 	return (1);
 }
 

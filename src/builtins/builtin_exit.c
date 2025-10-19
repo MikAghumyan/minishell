@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 16:18:59 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/12 14:06:35 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:32:19 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	builtin_exit(const char **args, t_shell *shell)
 	{
 		if (!is_numeric(args[1]))
 		{
-			ft_putstr_fd("minishell: exit: numeric argument required\n", 2);
+			shell_puterror("exit", "numeric argument required");
 			shell->exit_status = 2;
 			exit_shell(shell);
 		}
@@ -44,7 +44,7 @@ int	builtin_exit(const char **args, t_shell *shell)
 	}
 	if (argc > 2)
 	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		shell_puterror("exit", "too many arguments");
 		shell->exit_status = 1;
 		return (1);
 	}

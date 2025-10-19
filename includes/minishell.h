@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 17:36:47 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 12:06:45 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:35:08 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,14 @@ void							cleanup_shell(t_shell *shell);
 void							close_shell_fds(t_shell *shell);
 void							exit_shell_with_error(t_shell *shell,
 									const char *message, int errnum);
+
+/* signals */
 void							sigint_handler(int sig);
 void							sigint_heredoc_handler(int sig);
 void							print_signal_error(int sig);
+
+/* prints */
+void							shell_perror(const char *msg);
+void							shell_puterror(char *prefix, char *msg);
 
 #endif

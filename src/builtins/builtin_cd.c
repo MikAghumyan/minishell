@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:06:10 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/12 14:06:11 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:31:38 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static const char	*set_newcwd(const char *arg, t_shell *shell)
 		newcwd = env_get_value("HOME", shell->env);
 		if (!newcwd)
 		{
-			ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
+			shell_puterror("cd", "HOME not set");
 			return (NULL);
 		}
 	}
@@ -41,7 +41,7 @@ static int	update_cwd_var(t_shell *shell)
 	newcwd = getcwd(NULL, 0);
 	if (!newcwd)
 	{
-		perror("minishell: pwd");
+		shell_perror("pwd");
 		return (shell->exit_status = 1, 1);
 	}
 	else
@@ -58,7 +58,7 @@ int	builtin_cd(const char **args, t_shell *shell)
 	argc = count_args(args);
 	if (argc > 2)
 	{
-		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
+		shell_puterror("cd", "too many arguments");
 		return (shell->exit_status = 1, 1);
 	}
 	newcwd = set_newcwd(args[1], shell);

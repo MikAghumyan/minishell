@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 01:33:46 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 00:37:51 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:05:03 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	heredoc_child(t_token *token, t_parser *parser, char *path)
 	if (fd == -1)
 	{
 		free(path);
-		perror("minishell: failed to create heredoc temp file");
+		shell_perror("failed to create heredoc temp file");
 		exit(1);
 	}
 	heredoc_write(token, parser, fd);
@@ -114,13 +114,13 @@ char	*collect_heredoc(t_token *token, t_parser *parser)
 	path = heredoc_get_path();
 	if (!path)
 	{
-		perror("minishell: failed to create heredoc temp file");
+		shell_perror("failed to generate heredoc temp file path");
 		return (NULL);
 	}
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("minishell: heredoc fork error");
+		shell_perror("failed to fork heredoc process");
 		return (free(path), NULL);
 	}
 	if (pid == 0)

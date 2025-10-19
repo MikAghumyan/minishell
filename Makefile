@@ -21,6 +21,7 @@ RESET=\033[0m
 SRCS_MAIN = \
     src/main.c \
     src/shell_utils.c \
+	src/shell_print.c \
 	src/signals.c
 
 SRCS_AST = \
