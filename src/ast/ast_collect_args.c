@@ -6,7 +6,7 @@
 /*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 12:36:58 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/20 22:04:57 by narek            ###   ########.fr       */
+/*   Updated: 2025/10/20 22:38:43 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_strvector	*collect_ast_arguments(t_token *tokens, t_parser *parser)
 	}
 	if (!fill_args(&args, tokens, parser))
 		return (NULL);
-	if (ft_sv_size(args) == 0)
+	if (args->size == 0)
 	{
 		ft_sv_free(args);
 		return (NULL);
