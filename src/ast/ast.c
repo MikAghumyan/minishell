@@ -52,20 +52,12 @@ t_ast_node	*create_ast_node(t_node_type type)
 
 void	free_ast(t_ast_node *node)
 {
-	int	i;
-
 	if (!node)
 		return ;
 	if (node->args)
 	{
-		i = 0;
-		while (node->args[i])
-		{
-			free(node->args[i]);
-			node->args[i] = NULL;
-			i++;
-		}
-		free(node->args);
+		ft_sv_free(node->args);
+		node->args = NULL;
 	}
 	if (node->redirect_files)
 		ft_lstclear(&node->redirect_files, free_redirect);

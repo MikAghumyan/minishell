@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 12:36:58 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/12 21:35:31 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/20 16:47:15 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,48 +33,44 @@ static size_t	count_token_args(t_token *tokens)
 	return (count);
 }
 
-static bool	fill_args(char **args, t_token *tokens, t_parser *parser)
+static bool	fill_args(t_strvector **args, t_token *tokens, t_parser *parser)
 {
-	size_t	i;
+	char	*expanded_arg;
 
-	i = 0;
 	while (tokens && !is_logicpipe_ast_token(tokens)
 		&& !is_unexpected_token(tokens))
 	{
 		if (tokens->type == TOKEN_WORD)
 		{
-			args[i] = expand_token_value(parser->shell, tokens->value, false);
-			if (!args[i])
+			expanded_arg = expand_token_value(parser->shell, tokens->value,
+					false);
+			if (!expanded_arg || ft_sv_push_back(*args, expanded_arg) == -1)
 			{
-				ft_free_array((void ***)&args);
+				ft_sv_free(*args);
 				parser->syserror = true;
 				return (false);
 			}
-			i++;
 		}
 		tokens = tokens->next;
 	}
 	return (true);
 }
 
-char	**collect_ast_arguments(t_token *tokens, t_parser *parser)
+t_strvector	*collect_ast_arguments(t_token *tokens, t_parser *parser)
 {
-	size_t	count;
-	char	**args;
+	size_t		count;
+	t_strvector	*args;
 
 	count = count_token_args(tokens);
 	if (count == 0)
 		return (NULL);
-	args = ft_calloc(sizeof(char *), (count + 1));
+	args = ft_sv_init(count);
 	if (!args)
 	{
 		parser->syserror = true;
 		return (NULL);
 	}
-	args[count] = NULL;
-	if (!args)
-		return (NULL);
-	if (!fill_args(args, tokens, parser))
+	if (!fill_args(&args, tokens, parser))
 		return (NULL);
 	return (args);
 }

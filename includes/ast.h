@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:26:57 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 00:38:53 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/20 11:23:58 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_redirect
 typedef struct s_ast_node
 {
 	t_node_type			type;
-	char				**args;
+	t_strvector			*args;
 	t_list				*redirect_files;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
@@ -85,7 +85,7 @@ t_ast_node				*ast_parse_subshell(t_parser *parser);
 t_ast_node				*ast_init_subshell(t_parser *parser);
 
 /* collect arguments*/
-char					**collect_ast_arguments(t_token *tokens,
+t_strvector				*collect_ast_arguments(t_token *tokens,
 							t_parser *parser);
 
 /* redirect functions*/

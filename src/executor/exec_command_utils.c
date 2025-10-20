@@ -4,8 +4,8 @@ int	handle_command_not_found(t_ast_node *node, char *cmd_path, t_shell *shell)
 {
 	if (!cmd_path || access(cmd_path, F_OK) == -1)
 	{
-		if (node->args && node->args[0])
-			shell_puterror(node->args[0], "command not found");
+		if (node->args->data && node->args->data[0])
+			shell_puterror(node->args->data[0], "command not found");
 		else
 			shell_puterror("", "command not found");
 		if (cmd_path)
@@ -21,7 +21,7 @@ void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 		exit_shell_with_error(shell, NULL, 1);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	execve(cmd_path, node->args, shell->env->data);
+	execve(cmd_path, node->args->data, shell->env->data);
 	if (errno == EACCES)
 		shell->exit_status = 126;
 	else if (errno == ENOENT)
@@ -41,7 +41,7 @@ int	handle_cmd_builtin(t_ast_node *node, t_builtin_func *func, t_shell *shell)
 		return (shell_perror("dup error"), 1);
 	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
 		return (close_shell_fds(shell), shell->exit_status = 1);
-	builtin_status = func((const char **)node->args, shell);
+	builtin_status = func((const char **)node->args->data, shell);
 	if (dup2(shell->saved_fds[1], STDOUT_FILENO) == -1
 		|| dup2(shell->saved_fds[0], STDIN_FILENO) == -1)
 		return (close_shell_fds(shell), shell_perror("dup error"), 1);

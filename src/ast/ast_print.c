@@ -36,9 +36,9 @@ static void	print_command(t_ast_node *node)
 
 	i = 0;
 	printf("COMMAND: ");
-	while (node->args && node->args[i])
+	while (node->args->data && node->args->data[i])
 	{
-		printf("%s ", node->args[i]);
+		printf("%s ", node->args->data[i]);
 		i++;
 	}
 	if (node->redirect_files)
