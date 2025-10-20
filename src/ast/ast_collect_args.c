@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_collect_args.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 12:36:58 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/20 16:47:15 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/20 20:38:24 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,16 @@ static bool	fill_args(t_strvector **args, t_token *tokens, t_parser *parser)
 		{
 			expanded_arg = expand_token_value(parser->shell, tokens->value,
 					false);
-			if (!expanded_arg || ft_sv_push_back(*args, expanded_arg) == -1)
+			if (!expanded_arg)
 			{
+				ft_sv_free(*args);
+				parser->syserror = true;
+				return (false);
+			}
+			// expand_wildcard()
+			if (ft_sv_push_back(*args, expanded_arg) == -1)
+			{
+				free(expanded_arg);
 				ft_sv_free(*args);
 				parser->syserror = true;
 				return (false);
@@ -58,13 +66,9 @@ static bool	fill_args(t_strvector **args, t_token *tokens, t_parser *parser)
 
 t_strvector	*collect_ast_arguments(t_token *tokens, t_parser *parser)
 {
-	size_t		count;
-	t_strvector	*args;
+	t_strvector	*args;  //no count anymore
 
-	count = count_token_args(tokens);
-	if (count == 0)
-		return (NULL);
-	args = ft_sv_init(count);
+	args = ft_sv_init(10);
 	if (!args)
 	{
 		parser->syserror = true;
@@ -72,5 +76,10 @@ t_strvector	*collect_ast_arguments(t_token *tokens, t_parser *parser)
 	}
 	if (!fill_args(&args, tokens, parser))
 		return (NULL);
+	if (ft_sv_size(args) == 0)
+	{
+		ft_sv_free(args);
+		return (NULL);
+	}
 	return (args);
 }
