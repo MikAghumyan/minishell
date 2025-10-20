@@ -6,7 +6,7 @@
 /*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 12:36:58 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/20 20:46:59 by narek            ###   ########.fr       */
+/*   Updated: 2025/10/20 22:04:57 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,13 @@ static bool	fill_args(t_strvector **args, t_token *tokens, t_parser *parser)
 				parser->syserror = true;
 				return (false);
 			}
-			// expand_wildcard()
+			if (!expand_wildcard(*args, expanded_arg))
+			{
+				free(expanded_arg);
+				ft_sv_free(*args);
+				parser->syserror = true;
+				return (false);
+			}
 			if (ft_sv_push_back(*args, expanded_arg) == -1)
 			{
 				free(expanded_arg);
