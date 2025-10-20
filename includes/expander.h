@@ -6,7 +6,7 @@
 /*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:26:37 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/20 20:51:17 by narek            ###   ########.fr       */
+/*   Updated: 2025/10/20 21:29:33 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ char		*expand_token_value(t_shell *shell, char *value, bool heredoc);
 size_t		get_varlen(const char *var);
 char		*expand_strjoin_free(char *s1, char *s2);
 char		*initialize_expand(t_expand_data *data);
+bool 		expand_wildcard(t_strvector *args, const char *pattern);
 
 #endif

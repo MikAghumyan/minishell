@@ -63,7 +63,8 @@ SRCS_EXECUTOR = \
 
 SRCS_EXPANDER = \
 	src/expander/expander.c \
-	src/expander/expand_utils.c
+	src/expander/expand_utils.c \
+	src/expander/expand_wildcard.c
 
 SRCS_TOKENIZER = \
 	src/tokenizer/token_operator.c \

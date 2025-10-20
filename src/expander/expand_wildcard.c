@@ -36,3 +36,11 @@ static bool match_pattern(const char *filename, const char *pattern)
         return (match_pattern(filename + 1, pattern + 1));
     return (false);
 }
+
+bool    expand_wildcard(t_strvector *args, const char *pattern)
+{
+    if (!has_wildcard(pattern))
+        return (ft_sv_push_back_dup(args, pattern));
+    // TODO: add_matching_files(args, pattern)
+    return (true);
+}
