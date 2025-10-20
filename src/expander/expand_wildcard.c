@@ -37,6 +37,31 @@ static bool match_pattern(const char *filename, const char *pattern)
     return (false);
 }
 
+static  bool add_matching_files(t_strvector *args, const char *pattern)
+{
+    DIR             *directory;
+    struct dirent   *file;
+
+    directory = opendir(".");
+    if (!directory)
+        return (false);
+    file = readdir(directory);
+    while (file)
+    {
+        if (file->d_name[0] != '.' && (file->d_name, pattern)) //if it's hidden file we dont need to add it 
+        {
+            if (!ft_sv_push_back_dup(args, file->d_name))
+            {
+                closedir(directory);
+                return (false);
+            }
+        }
+        file = readdir(directory);
+    }
+    closedir(directory);
+    return (true);
+}
+
 bool    expand_wildcard(t_strvector *args, const char *pattern)
 {
     if (!has_wildcard(pattern))
