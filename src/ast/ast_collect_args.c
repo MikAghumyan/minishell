@@ -6,7 +6,7 @@
 /*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 12:36:58 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/20 20:38:24 by narek            ###   ########.fr       */
+/*   Updated: 2025/10/20 20:46:59 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@ static bool	is_unexpected_token(t_token *token)
 {
 	return (token && (token->type == TOKEN_INVALID
 			|| is_sub_lr_ast_token(token)));
-}
-
-static size_t	count_token_args(t_token *tokens)
-{
-	size_t	count;
-
-	count = 0;
-	while (tokens && !is_logicpipe_ast_token(tokens)
-		&& !is_unexpected_token(tokens))
-	{
-		if (tokens->type == TOKEN_WORD)
-			count++;
-		tokens = tokens->next;
-	}
-	return (count);
 }
 
 static bool	fill_args(t_strvector **args, t_token *tokens, t_parser *parser)
