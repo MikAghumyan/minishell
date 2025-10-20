@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:26:37 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/12 21:35:43 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/20 20:51:17 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "./minishell.h"
 # include "./tokenizer.h"
 # include <stdbool.h>
+# include <dirent.h>
 
 typedef struct s_expand_data
 {
