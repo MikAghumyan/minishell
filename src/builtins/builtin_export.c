@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 16:08:38 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/11 22:18:07 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/21 21:17:10 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ int	builtin_export(const char **args, t_shell *shell)
 		key = ft_substr(args[i], 0, env_get_keylen(args[i]));
 		if (!key)
 			break ;
-		// printf("key: %s\tvalue: %s",key, ft_strchr(args[i], '=') + 1);
-		env_set(shell->env, key, ft_strchr(args[i], '=') + 1);
+		if (args[i][ft_strlen(key)] == '+')
+			env_append(shell->env, key, ft_strchr(args[i], '=') + 1);
+		else
+			env_set(shell->env, key, ft_strchr(args[i], '=') + 1);
 		free(key);
 	}
 	return (shell->exit_status);
