@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 19:00:23 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/21 21:15:18 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/21 21:36:42 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ bool	env_set(t_strvector *env, const char *key, const char *value)
 		return (false);
 	i = -1;
 	while (env->data[++i])
+	{
 		if (env_keycmp(key, env->data[i]))
 		{
 			free(env->data[i]);
@@ -38,6 +39,7 @@ bool	env_set(t_strvector *env, const char *key, const char *value)
 			if (!env->data[i])
 				return (false);
 		}
+	}
 	new_var = env_generate_var(key, value);
 	if (!new_var)
 		return (false);
@@ -70,7 +72,7 @@ bool	env_append(t_strvector *env, const char *key, const char *value)
 			free(new_value);
 			return (res);
 		}
-	}
+	}	
 	return (env_set(env, key, value));
 }
 
