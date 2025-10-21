@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:07 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/21 21:17:29 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/21 21:23:57 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdlib.h>
 
 t_strvector	*env_init(char **envp);
-void		env_free(t_strvector **env);
 bool		env_shlvl_increment(t_strvector *env);
 bool		env_set(t_strvector *env, const char *key, const char *value);
 bool		env_append(t_strvector *env, const char *key, const char *value);

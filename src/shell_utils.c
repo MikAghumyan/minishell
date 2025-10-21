@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:20 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 15:27:04 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/21 21:24:05 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ void	cleanup_shell(t_shell *shell)
 		shell->ast = NULL;
 	}
 	if (shell->env)
-		env_free(&shell->env);
+	{
+		ft_sv_free(shell->env);
+		shell->env = NULL;
+	}
 	close_shell_fds(shell);
 }
 
