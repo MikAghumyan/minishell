@@ -62,10 +62,5 @@ t_strvector	*collect_ast_arguments(t_token *tokens, t_parser *parser)
 	}
 	if (!fill_args(&args, tokens, parser))
 		return (NULL);
-	if (args->size == 0)
-	{
-		ft_sv_free(args);
-		return (NULL);
-	}
 	return (args);
 }

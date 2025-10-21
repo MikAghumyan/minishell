@@ -86,6 +86,7 @@ static void	heredoc_child(t_token *token, t_parser *parser, char *path)
 	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	if (fd == -1)
 	{
+		cleanup_shell(parser->shell);
 		free(path);
 		shell_perror("failed to create heredoc temp file");
 		exit(1);
