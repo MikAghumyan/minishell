@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 19:00:23 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 15:08:50 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/21 21:05:29 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,27 @@ size_t	env_get_keylen(const char *key)
 	return (len);
 }
 
-static bool	env_update_var(t_strvector *env, size_t i, const char *key,
-		const char *value)
-{
-	free(env->data[i]);
-	if (value)
-		env->data[i] = env_generate_var(key, value);
-	else
-		env->data[i] = ft_strdup(key);
-	if (!env->data[i])
-		return (env_free(&env), false);
-	return (true);
-}
-
 bool	env_set(t_strvector *env, const char *key, const char *value)
 {
 	size_t	i;
+	char	*new_var;
 
-	if (!key)
+	if (!key || !value)
 		return (false);
 	i = -1;
 	while (env->data[++i])
 		if (env_keycmp(key, env->data[i]))
-			return (env_update_var(env, i, key, value));
-	if (!ft_sv_reserve(env))
-		return (env_free(&env), false);
-	if (!env_update_var(env, env->size, key, value))
+		{
+			free(env->data[i]);
+			env->data[i] = env_generate_var(key, value);
+			if (!env->data[i])
+				return (env_free(&env), false);
+		}
+	new_var = env_generate_var(key, value);
+	if (!new_var)
 		return (false);
-	env->size++;
-	env->data[env->size] = NULL;
+	if (!ft_sv_push_back(env, new_var))
+		return (free(new_var), env_free(&env), false);
 	return (true);
 }
 
