@@ -38,6 +38,7 @@ int	builtin_export(const char **args, t_shell *shell)
 {
 	size_t	i;
 	int		is_invalid;
+	char	*key;
 
 	if (!args[1])
 		return (builtin_env(args, shell));
@@ -54,7 +55,12 @@ int	builtin_export(const char **args, t_shell *shell)
 		}
 		if (is_invalid || !ft_strchr(args[i], '='))
 			continue ;
-		env_set(shell->env, args[i], NULL);
+		key = ft_substr(args[i], 0, env_get_keylen(args[i]));
+		if (!key)
+			break ;
+		// printf("key: %s\tvalue: %s",key, ft_strchr(args[i], '=') + 1);
+		env_set(shell->env, key, ft_strchr(args[i], '=') + 1);
+		free(key);
 	}
 	return (shell->exit_status);
 }

@@ -43,6 +43,8 @@ void	initialize_shell(t_shell *shell, char **envp)
 
 void	cleanup_shell(t_shell *shell)
 {
+	if (!shell)
+		return ;
 	if (shell->input)
 	{
 		free(shell->input);

@@ -12,7 +12,17 @@
 
 #include "../../includes/env.h"
 
-static bool	env_update_var(t_env *env, size_t i, const char *key,
+size_t	env_get_keylen(const char *key)
+{
+	size_t	len;
+
+	len = 0;
+	while (key[len] && (ft_isalnum(key[len]) || key[len] == '_'))
+		len++;
+	return (len);
+}
+
+static bool	env_update_var(t_strvector *env, size_t i, const char *key,
 		const char *value)
 {
 	free(env->data[i]);
@@ -25,7 +35,7 @@ static bool	env_update_var(t_env *env, size_t i, const char *key,
 	return (true);
 }
 
-bool	env_set(t_env *env, const char *key, const char *value)
+bool	env_set(t_strvector *env, const char *key, const char *value)
 {
 	size_t	i;
 
@@ -35,7 +45,7 @@ bool	env_set(t_env *env, const char *key, const char *value)
 	while (env->data[++i])
 		if (env_keycmp(key, env->data[i]))
 			return (env_update_var(env, i, key, value));
-	if (!env_check_capacity(env))
+	if (!ft_sv_reserve(env))
 		return (env_free(&env), false);
 	if (!env_update_var(env, env->size, key, value))
 		return (false);
@@ -44,7 +54,7 @@ bool	env_set(t_env *env, const char *key, const char *value)
 	return (true);
 }
 
-bool	env_unset(t_env *env, const char *key)
+bool	env_unset(t_strvector *env, const char *key)
 {
 	size_t	i;
 	size_t	j;

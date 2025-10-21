@@ -46,7 +46,7 @@ typedef struct s_ast_node		t_ast_node;
 
 typedef struct s_shell
 {
-	t_env						*env;
+	t_strvector					*env;
 	int							exit_status;
 	char						*input;
 	t_token						*tokens;

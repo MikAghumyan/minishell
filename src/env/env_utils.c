@@ -47,7 +47,7 @@ char	*env_generate_var(const char *key, const char *value)
 	return (env_var);
 }
 
-char	*env_get_value(const char *key, t_env *env)
+char	*env_get_value(const char *key, t_strvector *env)
 {
 	size_t	i;
 
@@ -62,7 +62,7 @@ char	*env_get_value(const char *key, t_env *env)
 	return (NULL);
 }
 
-void	env_free(t_env **env)
+void	env_free(t_strvector **env)
 {
 	size_t	i;
 
@@ -82,18 +82,4 @@ void	env_free(t_env **env)
 	(*env)->data = NULL;
 	free(*env);
 	*env = NULL;
-}
-
-void	print_env(t_env *env)
-{
-	size_t	i;
-
-	if (!env)
-		return ;
-	i = 0;
-	while (i < env->size)
-	{
-		printf("%s\n", env->data[i]);
-		i++;
-	}
 }

@@ -20,8 +20,7 @@ size_t	get_varlen(const char *var)
 	if (!var || !*var)
 		return (0);
 	var++;
-	while (var[i] && !is_space(var[i]) && !is_quote(var[i]) && var[i] != '$'
-		&& var[i] != '=' && !is_special_char(var[i]))
+	while (var[i] && (ft_isalnum(var[i]) || var[i] == '_'))
 		i++;
 	return (i);
 }
