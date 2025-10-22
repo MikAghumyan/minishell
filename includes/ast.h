@@ -92,7 +92,7 @@ t_strvector				*collect_ast_arguments(t_token *tokens,
 t_list					*collect_ast_redirects(t_token *tokens,
 							t_parser *parser);
 t_list					*ast_init_redirect(t_token *token, t_parser *parser);
-char					*collect_heredoc(t_token *token, t_parser *parser);
+char					*collect_heredoc(void);
 void					free_redirect(void *redirect_ptr);
 
 /* utils */

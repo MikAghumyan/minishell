@@ -13,11 +13,12 @@
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
+# include "./ast.h"
 # include "./env.h"
 # include "./minishell.h"
 # include "./tokenizer.h"
-# include <stdbool.h>
 # include <dirent.h>
+# include <stdbool.h>
 
 typedef struct s_expand_data
 {
@@ -25,6 +26,13 @@ typedef struct s_expand_data
 	bool	in_dquote;
 	bool	in_squote;
 }			t_expand_data;
+
+typedef struct s_expander
+{
+	t_shell	*shell;
+	bool	syserror;
+	bool	interrupted;
+}			t_expander;
 
 char		*expand_token_value(t_shell *shell, char *value, bool heredoc);
 

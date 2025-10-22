@@ -52,7 +52,7 @@ t_list	*ast_init_redirect(t_token *token, t_parser *parser)
 	redirect->type = (t_node_type)(token->type - TOKEN_REDIRECT_IN
 			+ NODE_REDIRECT_IN);
 	if (redirect->type == NODE_HEREDOC)
-		redirect->filename = collect_heredoc(token, parser);
+		redirect->filename = collect_heredoc();
 	else
 		redirect->filename = expand_token_value(parser->shell, token->value,
 				false);
