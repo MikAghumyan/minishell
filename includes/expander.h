@@ -41,4 +41,12 @@ char		*expand_strjoin_free(char *s1, char *s2);
 char		*initialize_expand(t_expand_data *data);
 bool		expand_wildcard(t_strvector *args, const char *pattern);
 
+int			start_expander(t_shell *shell);
+int			process_expander(t_ast_node *node, t_expander *expander);
+int			expand_command(t_ast_node *node, t_expander *expander);
+int			expand_arguments(t_strvector *args, t_expander *expander);
+int			expand_redirections(t_list *redirects, t_expander *expander);
+int			expand_subshell(t_ast_node *node, t_expander *expander);
+int			expand_heredoc(t_redirect *redirect, t_expander *expander);
+
 #endif
