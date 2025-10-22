@@ -19,6 +19,8 @@
 # include <stdbool.h>
 # include <dirent.h>
 
+# define WILDCARD_SYMBOL -1
+
 typedef struct s_expand_data
 {
 	char	*result;
@@ -31,6 +33,6 @@ char		*expand_token_value(t_shell *shell, char *value, bool heredoc);
 size_t		get_varlen(const char *var);
 char		*expand_strjoin_free(char *s1, char *s2);
 char		*initialize_expand(t_expand_data *data);
-bool		expand_wildcard(t_strvector *args, const char *pattern);
+bool		expand_wildcard(t_strvector *args, char *pattern);
 
 #endif
