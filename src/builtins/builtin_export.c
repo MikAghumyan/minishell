@@ -58,7 +58,6 @@ int	builtin_export(const char **args, t_shell *shell)
 		key = ft_substr(args[i], 0, env_get_keylen(args[i]));
 		if (!key)
 			break ;
-		// printf("key: %s\tvalue: %s",key, ft_strchr(args[i], '=') + 1);
 		env_set(shell->env, key, ft_strchr(args[i], '=') + 1);
 		free(key);
 	}
