@@ -14,7 +14,6 @@
 # define AST_H
 
 # include "../libft/libft.h"
-# include "./expander.h"
 # include "./minishell.h"
 # include "./tokenizer.h"
 # include <stdbool.h>
@@ -42,6 +41,8 @@ typedef struct s_redirect
 {
 	t_node_type			type;
 	char				*filename;
+	char				*value;
+	bool				quoted;
 }						t_redirect;
 
 typedef struct s_ast_node
@@ -92,7 +93,7 @@ t_strvector				*collect_ast_arguments(t_token *tokens,
 t_list					*collect_ast_redirects(t_token *tokens,
 							t_parser *parser);
 t_list					*ast_init_redirect(t_token *token, t_parser *parser);
-char					*collect_heredoc(void);
+t_redirect				*create_redirect_node(t_token *token);
 void					free_redirect(void *redirect_ptr);
 
 /* utils */

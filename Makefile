@@ -32,7 +32,6 @@ SRCS_AST = \
 	src/ast/ast_parse_subshell.c \
 	src/ast/ast_collect_args.c \
 	src/ast/ast_parse_redirects.c \
-	src/ast/ast_parse_heredoc.c \
 	src/ast/ast_build_utils.c \
 	src/ast/ast_print.c
 
@@ -64,7 +63,10 @@ SRCS_EXECUTOR = \
 SRCS_EXPANDER = \
 	src/expander/expander.c \
 	src/expander/expand_utils.c \
-	src/expander/expand_wildcard.c
+	src/expander/expand_wildcard.c \
+	src/expander/expand_redirects.c \
+	src/expander/heredoc_expanser.c \
+	src/expander/expand_heredoc.c
 
 SRCS_TOKENIZER = \
 	src/tokenizer/token_operator.c \

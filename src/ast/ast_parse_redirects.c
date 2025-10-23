@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/ast.h"
+#include "../../includes/expander.h"
 
 static bool	is_unexpected_token(t_token *token)
 {
@@ -39,6 +40,21 @@ t_list	*collect_ast_redirects(t_token *tokens, t_parser *parser)
 	return (list);
 }
 
+t_redirect	*create_redirect_node(t_token *token)
+{
+	t_redirect	*redirect;
+
+	redirect = malloc(sizeof(t_redirect));
+	if (!redirect)
+		return (NULL);
+	redirect->quoted = token->quoted;
+	redirect->value = NULL;
+	redirect->filename = NULL;
+	redirect->type = (t_node_type)(token->type - TOKEN_REDIRECT_IN
+			+ NODE_REDIRECT_IN);
+	return (redirect);
+}
+
 t_list	*ast_init_redirect(t_token *token, t_parser *parser)
 {
 	t_redirect	*redirect;
@@ -46,22 +62,16 @@ t_list	*ast_init_redirect(t_token *token, t_parser *parser)
 
 	if (!token)
 		return (NULL);
-	redirect = malloc(sizeof(t_redirect));
+	redirect = create_redirect_node(token);
 	if (!redirect)
 		return (parser->syserror = true, NULL);
-	redirect->type = (t_node_type)(token->type - TOKEN_REDIRECT_IN
-			+ NODE_REDIRECT_IN);
 	if (redirect->type == NODE_HEREDOC)
-		redirect->filename = collect_heredoc();
+		redirect->value = expand_token_value(parser->shell, token->value, true);
 	else
 		redirect->filename = expand_token_value(parser->shell, token->value,
 				false);
-	if (!redirect->filename)
-	{
-		if (!parser->interrupted)
-			parser->syserror = true;
-		return (free(redirect), NULL);
-	}
+	if (!redirect->filename && !redirect->value)
+		return (parser->syserror = true, free(redirect), NULL);
 	redirect_node = ft_lstnew(redirect);
 	if (!redirect_node)
 		return (free(redirect), parser->syserror = true, NULL);
@@ -77,6 +87,8 @@ void	free_redirect(void *redirect_ptr)
 	redirect = (t_redirect *)redirect_ptr;
 	if (redirect->type == NODE_HEREDOC && redirect->filename)
 		unlink(redirect->filename);
+	if (redirect->value)
+		free(redirect->value);
 	if (redirect->filename)
 		free(redirect->filename);
 	free(redirect);

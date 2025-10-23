@@ -8,7 +8,10 @@ int	start_expander(t_shell *shell)
 	expander.shell = shell;
 	expander.syserror = false;
 	expander.interrupted = false;
-	return (process_expander(shell->ast, &expander));
+	shell->exit_status = process_expander(shell->ast, &expander);
+	if (expander.syserror)
+		exit_shell_with_error(shell, "system error", 1);
+	return (shell->exit_status);
 }
 
 int	process_expander(t_ast_node *node, t_expander *expander)
@@ -32,4 +35,12 @@ int	expand_command(t_ast_node *node, t_expander *expander)
 	if (!node)
 		return (0);
 	return (expand_redirections(node->redirect_files, expander));
+}
+
+int	expand_subshell(t_ast_node *node, t_expander *expander)
+{
+	if (!node || !node->left)
+		return (0);
+	return (process_expander(node->left, expander)
+		|| expand_redirections(node->redirect_files, expander));
 }

@@ -12,6 +12,7 @@
 
 #include "../includes/ast.h"
 #include "../includes/executor.h"
+#include "../includes/expander.h"
 #include "../includes/minishell.h"
 #include "../includes/tokenizer.h"
 
@@ -27,7 +28,9 @@ static void	process_input(t_shell *shell)
 		{
 			if (shell->is_interactive)
 				signal(SIGINT, SIG_IGN);
-			shell->exit_status = execute_ast(shell->ast, shell);
+			shell->exit_status = start_expander(shell);
+			if (!shell->exit_status)
+				shell->exit_status = execute_ast(shell->ast, shell);
 			free_ast(shell->ast);
 			shell->ast = NULL;
 			if (shell->is_interactive)

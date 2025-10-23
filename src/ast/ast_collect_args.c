@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/ast.h"
+#include "../../includes/expander.h"
 
 static bool	is_unexpected_token(t_token *token)
 {
