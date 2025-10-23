@@ -72,6 +72,10 @@ t_list	*ast_init_redirect(t_token *token, t_parser *parser)
 				false);
 	if (!redirect->filename && !redirect->value)
 		return (parser->syserror = true, free(redirect), NULL);
+	if (redirect->filename)
+		recover_pattern(redirect->filename);
+	if (redirect->value)
+		recover_pattern(redirect->value);
 	redirect_node = ft_lstnew(redirect);
 	if (!redirect_node)
 		return (free(redirect), parser->syserror = true, NULL);

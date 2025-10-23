@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 22:57:53 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 15:25:58 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/21 21:28:05 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ t_strvector	*env_init(char **envp)
 		return (NULL);
 	i = -1;
 	while (++i < size)
+	{
 		if (!ft_sv_push_back_dup(env, envp[i]))
 		{
 			ft_sv_free(env);
 			return (NULL);
 		}
+	}
 	return (env);
 }
 

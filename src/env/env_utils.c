@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:02 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 15:05:18 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/21 21:23:42 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,4 @@ char	*env_get_value(const char *key, t_strvector *env)
 			return (env->data[i] + ft_strlen(key) + 1);
 	}
 	return (NULL);
-}
-
-void	env_free(t_strvector **env)
-{
-	size_t	i;
-
-	if (!env || !*env)
-		return ;
-	i = 0;
-	if ((*env)->data)
-	{
-		while (i < (*env)->size)
-		{
-			free((*env)->data[i]);
-			(*env)->data[i] = NULL;
-			i++;
-		}
-	}
-	free((*env)->data);
-	(*env)->data = NULL;
-	free(*env);
-	*env = NULL;
 }

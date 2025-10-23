@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:07 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 15:26:40 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/21 21:23:57 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <stdlib.h>
 
 t_strvector	*env_init(char **envp);
-void		env_free(t_strvector **env);
 bool		env_shlvl_increment(t_strvector *env);
 bool		env_set(t_strvector *env, const char *key, const char *value);
+bool		env_append(t_strvector *env, const char *key, const char *value);
 bool		env_unset(t_strvector *env, const char *key);
 size_t		env_get_keylen(const char *var);
 bool		env_keycmp(const char *key, const char *env_var);
