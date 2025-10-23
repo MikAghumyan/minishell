@@ -23,13 +23,15 @@ size_t	scan_word(const char *input, size_t start, t_token *token)
 	end = start;
 	in_squote = false;
 	in_dquote = false;
-	while (input[end] && !is_special_char(input[end]))
+	while (input[end])
 	{
 		if (input[end] == '\"' && !in_squote)
 			in_dquote = !in_dquote;
-		if (input[end] == '\'' && !in_dquote)
+		else if (input[end] == '\'' && !in_dquote)
 			in_squote = !in_squote;
-		if (input[end] == ' ' && !in_squote && !in_dquote)
+		else if (input[end] == ' ' && !in_squote && !in_dquote)
+			break ;
+		else if (is_special_char(input[end]) && !in_squote && !in_dquote)
 			break ;
 		end++;
 	}
