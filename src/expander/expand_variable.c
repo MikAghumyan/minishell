@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   expand_variable.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:28:39 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 11:23:23 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 18:07:37 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,28 +70,32 @@ static void	expand_variable(t_shell *shell, t_expand_data *expanded,
 		expand_variable_with_key(shell, expanded, token, i);
 }
 
+static void	set_expanded_result(t_expand_data *expanded, char *value, size_t *i,
+		bool heredoc)
+{
+	if (value[*i] == '\'' && !expanded->in_dquote)
+		expanded->in_squote = !expanded->in_squote;
+	else if (value[*i] == '\"' && !expanded->in_squote)
+		expanded->in_dquote = !expanded->in_dquote;
+	else if (value[*i] == '*' && (!expanded->in_squote && !expanded->in_dquote))
+		expanded->result = expand_strjoin_free(expanded->result,
+				expanded->wildcard_str);
+	else if (value[*i] == '$' && (!expanded->in_squote || heredoc))
+		expand_variable(expanded->shell, expanded, value, i);
+	else
+		expand_rest(&expanded, value, &i);
+}
+
 char	*expand_token_value(t_shell *shell, char *value, bool heredoc)
 {
 	t_expand_data	expanded;
 	size_t			i;
-	char			special_str[2] = {WILDCARD_SYMBOL, '\0'};
 
-	if (!initialize_expand(&expanded))
+	if (!initialize_expand(&expanded, shell))
 		return (NULL);
 	i = 0;
 	while (value[i])
 	{
-		if (value[i] == '\'' && !expanded.in_dquote)
-			expanded.in_squote = !expanded.in_squote;
-		else if (value[i] == '\"' && !expanded.in_squote)
-			expanded.in_dquote = !expanded.in_dquote;
-		else if (value[i] == '*' && (!expanded.in_squote
-				&& !expanded.in_dquote))
-			expanded.result = expand_strjoin_free(expanded.result, special_str);
-		else if (value[i] == '$' && (!expanded.in_squote || heredoc))
-			expand_variable(shell, &expanded, value, &i);
-		else
-			expand_rest(&expanded, value, &i);
 		if (!expanded.result)
 			return (NULL);
 		i++;
