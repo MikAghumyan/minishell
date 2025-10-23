@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:02:03 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/10/23 13:16:18 by narek            ###   ########.fr       */
+/*   Updated: 2025/10/23 19:32:36 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/expander.h"
-
-static bool	has_wildcard(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == WILDCARD_SYMBOL)
-			return (true);
-		i++;
-	}
-	return (false);
-}
 
 static bool	match_pattern(const char *filename, const char *pattern)
 {
@@ -95,7 +81,7 @@ bool	expand_wildcard(t_strvector *args, char *pattern)
 	int	found_files_count;
 
 	found_files_count = 0;
-	if (!has_wildcard(pattern))
+	if (!ft_strchr(pattern, WILDCARD_SYMBOL))
 		return (recover_pattern(pattern), ft_sv_push_back_dup(args, pattern));
 	found_files_count = add_matching_files(args, pattern);
 	if (found_files_count < 0)
