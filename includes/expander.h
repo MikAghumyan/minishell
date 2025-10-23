@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:26:37 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 15:40:41 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:34:20 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_expander
 	bool	interrupted;
 }			t_expander;
 
+/* expand variable functions*/
 char		*expand_token_value(t_shell *shell, char *value, bool heredoc);
 
 size_t		get_varlen(const char *var);
