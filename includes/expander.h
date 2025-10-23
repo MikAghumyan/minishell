@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:26:37 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 19:34:20 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:36:24 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_expand_data
 	char	*result;
 	bool	in_dquote;
 	bool	in_squote;
+	char	wcstr[2];
 }			t_expand_data;
 
 typedef struct s_expander

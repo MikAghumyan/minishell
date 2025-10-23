@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:11:11 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/13 20:11:18 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:37:10 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ char	*initialize_expand(t_expand_data *data)
 		return (NULL);
 	data->in_dquote = false;
 	data->in_squote = false;
+	data->wcstr[0] = (char)WILDCARD_SYMBOL;
+	data->wcstr[1] = '\0';
 	return (data->result);
 }
