@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ast_parse_redirects.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsahakya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 12:58:53 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/10/21 12:58:55 by nsahakya         ###   ########.fr       */
+/*   Updated: 2025/10/23 15:41:43 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ast.h"
-#include "../../includes/expander.h"
 
 static bool	is_unexpected_token(t_token *token)
 {
@@ -66,16 +65,11 @@ t_list	*ast_init_redirect(t_token *token, t_parser *parser)
 	if (!redirect)
 		return (parser->syserror = true, NULL);
 	if (redirect->type == NODE_HEREDOC)
-		redirect->value = expand_token_value(parser->shell, token->value, true);
+		redirect->value = ft_strdup(token->value);
 	else
-		redirect->filename = expand_token_value(parser->shell, token->value,
-				false);
+		redirect->filename = ft_strdup(token->value);
 	if (!redirect->filename && !redirect->value)
 		return (parser->syserror = true, free(redirect), NULL);
-	if (redirect->filename)
-		recover_pattern(redirect->filename);
-	if (redirect->value)
-		recover_pattern(redirect->value);
 	redirect_node = ft_lstnew(redirect);
 	if (!redirect_node)
 		return (free(redirect), parser->syserror = true, NULL);

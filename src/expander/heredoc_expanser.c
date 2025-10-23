@@ -1,4 +1,3 @@
-#include "../../includes/ast.h"
 #include "../../includes/expander.h"
 
 int	start_expander(t_shell *shell)
