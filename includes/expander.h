@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:26:37 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 18:07:16 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:36:24 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@
 
 typedef struct s_expand_data
 {
-	t_shell	*shell;
 	char	*result;
 	bool	in_dquote;
 	bool	in_squote;
-	char	wildcard_str[2];
+	char	wcstr[2];
 }			t_expand_data;
 
 typedef struct s_expander
@@ -39,21 +38,23 @@ typedef struct s_expander
 	bool	interrupted;
 }			t_expander;
 
+/* expand variable functions*/
+char		*expand_token_value(t_shell *shell, char *value, bool heredoc);
+
+size_t		get_varlen(const char *var);
+char		*expand_strjoin_free(char *s1, char *s2);
+char		*initialize_expand(t_expand_data *data);
+bool		expand_wildcard(t_strvector *args, char *pattern);
+void		recover_pattern(char *pattern);
+
 /* main expander functions*/
+
 int			start_expander(t_shell *shell);
 int			process_expander(t_ast_node *node, t_expander *expander);
 int			expand_command(t_ast_node *node, t_expander *expander);
 int			expand_arguments(t_strvector *args, t_expander *expander);
 int			expand_redirections(t_list *redirects, t_expander *expander);
 int			expand_subshell(t_ast_node *node, t_expander *expander);
-
-/* expand variable functions */
-char		*expand_token_value(t_shell *shell, char *value, bool heredoc);
-size_t		get_varlen(const char *var);
-char		*expand_strjoin_free(char *s1, char *s2);
-char		*initialize_expand(t_expand_data *data, t_shell *shell);
-bool		expand_wildcard(t_strvector *args, char *pattern);
-void		recover_pattern(char *pattern);
 
 /* heredoc functions */
 int			expand_heredoc(t_redirect *redirect, t_expander *expander);

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:11:11 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 18:07:28 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:37:10 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,14 @@ char	*expand_strjoin_free(char *s1, char *s2)
 	return (result);
 }
 
-char	*initialize_expand(t_expand_data *data, t_shell *shell)
+char	*initialize_expand(t_expand_data *data)
 {
 	data->result = ft_strdup("");
 	if (!data->result)
 		return (NULL);
 	data->in_dquote = false;
 	data->in_squote = false;
-	data->shell = shell;
-	data->wildcard_str[0] = WILDCARD_SYMBOL;
-	data->wildcard_str[1] = '\0';
+	data->wcstr[0] = (char)WILDCARD_SYMBOL;
+	data->wcstr[1] = '\0';
 	return (data->result);
 }

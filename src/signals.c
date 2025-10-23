@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 01:55:32 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 17:46:30 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:28:33 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@ void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-}
-
-void	sigint_heredoc_handler(int sig)
-{
-	g_signo = sig;
-	write(1, "\n", 1);
-	close(STDIN_FILENO);
 }
 
 void	print_signal_error(int sig)

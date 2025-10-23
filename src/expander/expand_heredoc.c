@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 15:43:11 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 17:46:30 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:27:37 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	heredoc_write(t_redirect *redirect, t_expander *expander, int fd)
 	while (true)
 	{
 		line = readline("\033[35m> \033[0m");
-		if (!line && !g_signo)
+		if (!line)
 			printf("minishell: %s (wanted `%s')\n", WARNING_HEREDOC,
 				redirect->value);
 		if (!line || ft_strcmp(line, redirect->value) == 0)
