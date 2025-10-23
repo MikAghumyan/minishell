@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:02:03 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/10/23 19:32:36 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:42:37 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,23 @@ static int	add_matching_files(t_strvector *args, const char *pattern)
 	directory = opendir(".");
 	if (!directory)
 		return (-1);
-	while ((file = readdir(directory)))
+	file = readdir(directory);
+	while (file)
 	{
 		if (file->d_name[0] == '.' && pattern[0] != '.')
+		{
+			file = readdir(directory);
 			continue ;
+		}
 		if (match_pattern(file->d_name, pattern))
 		{
 			if (!ft_sv_push_back_dup(args, file->d_name))
-			{
-				closedir(directory);
-				return (-1);
-			}
+				return (closedir(directory), -1);
 			found_files_count++;
 		}
+		file = readdir(directory);
 	}
-	closedir(directory);
-	return (found_files_count);
+	return (closedir(directory), found_files_count);
 }
 
 void	recover_pattern(char *pattern)
