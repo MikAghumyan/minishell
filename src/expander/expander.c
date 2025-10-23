@@ -1,100 +1,45 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/12 19:28:39 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 11:23:23 by maghumya         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/expander.h"
 
-static void	expand_rest(t_expand_data *expanded, char *token, size_t *i)
+int	start_expander(t_shell *shell)
 {
-	size_t	len;
-	char	*rest;
+	t_expander	expander;
 
-	len = get_varlen(&token[*i]) + 1;
-	if (!len)
-		return ;
-	rest = ft_substr(token, *i, len);
-	if (!rest)
-		return (free(expanded->result), expanded->result = NULL, (void)0);
-	expanded->result = expand_strjoin_free(expanded->result, rest);
-	free(rest);
-	*i += len - 1;
+	expander.shell = shell;
+	expander.syserror = false;
+	expander.interrupted = false;
+	shell->exit_status = process_expander(shell->ast, &expander);
+	if (expander.syserror)
+		exit_shell_with_error(shell, "system error", 1);
+	return (shell->exit_status);
 }
 
-static void	expand_variable_with_key(t_shell *shell, t_expand_data *expanded,
-		char *token, size_t *i)
+int	process_expander(t_ast_node *node, t_expander *expander)
 {
-	char	*key;
-	size_t	keylen;
-	char	*value;
-
-	keylen = get_varlen(&token[*i]);
-	if (!keylen)
-		expanded->result = expand_strjoin_free(expanded->result, "$");
+	if (!node)
+		return (0);
+	if (node->type == NODE_COMMAND)
+		return (expand_command(node, expander));
+	else if (node->type == NODE_AND || node->type == NODE_OR
+		|| node->type == NODE_PIPE)
+		return (process_expander(node->left, expander),
+			process_expander(node->right, expander));
+	else if (node->type == NODE_SUBSHELL)
+		return (expand_subshell(node, expander));
 	else
-	{
-		key = ft_substr(token, *i + 1, keylen);
-		if (!key)
-			return (free(expanded->result), expanded->result = NULL, (void)0);
-		value = env_get_value(key, shell->env);
-		free(key);
-		if (value)
-			expanded->result = expand_strjoin_free(expanded->result, value);
-		*i += keylen;
-	}
+		return (1);
 }
 
-static void	expand_variable(t_shell *shell, t_expand_data *expanded,
-		char *token, size_t *i)
+int	expand_command(t_ast_node *node, t_expander *expander)
 {
-	char	*value;
-
-	if (token[*i + 1] && token[*i + 1] == '?')
-	{
-		value = ft_itoa(shell->exit_status);
-		if (!value)
-			return (free(expanded->result), expanded->result = NULL, (void)0);
-		expanded->result = expand_strjoin_free(expanded->result, value);
-		free(value);
-		(*i)++;
-		return ;
-	}
-	else
-		expand_variable_with_key(shell, expanded, token, i);
+	if (!node)
+		return (0);
+	return (expand_redirections(node->redirect_files, expander));
 }
 
-char	*expand_token_value(t_shell *shell, char *value, bool heredoc)
+int	expand_subshell(t_ast_node *node, t_expander *expander)
 {
-	t_expand_data	expanded;
-	size_t			i;
-	char			special_str[2] = {WILDCARD_SYMBOL, '\0'};
-
-	if (!initialize_expand(&expanded))
-		return (NULL);
-	i = 0;
-	while (value[i])
-	{
-		if (value[i] == '\'' && !expanded.in_dquote)
-			expanded.in_squote = !expanded.in_squote;
-		else if (value[i] == '\"' && !expanded.in_squote)
-			expanded.in_dquote = !expanded.in_dquote;
-		else if (value[i] == '*' && (!expanded.in_squote
-				&& !expanded.in_dquote))
-			expanded.result = expand_strjoin_free(expanded.result, special_str);
-		else if (value[i] == '$' && (!expanded.in_squote || heredoc))
-			expand_variable(shell, &expanded, value, &i);
-		else
-			expand_rest(&expanded, value, &i);
-		if (!expanded.result)
-			return (NULL);
-		i++;
-	}
-	return (expanded.result);
+	if (!node || !node->left)
+		return (0);
+	return (process_expander(node->left, expander)
+		|| expand_redirections(node->redirect_files, expander));
 }
