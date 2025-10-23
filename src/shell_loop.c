@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 13:50:11 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 14:35:02 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:26:47 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ void	shell_loop_interactive(t_shell *shell)
 			break ;
 		if (shell->input[0] != '\0')
 			add_history(shell->input);
-		if (g_sig_status)
+		if (g_signo)
 		{
-			shell->exit_status = 128 + g_sig_status;
-			g_sig_status = 0;
+			shell->exit_status = 128 + g_signo;
+			g_signo = 0;
 		}
 		process_input(shell);
 	}

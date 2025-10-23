@@ -6,28 +6,21 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 01:55:32 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 12:23:38 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/23 19:28:33 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-volatile sig_atomic_t	g_sig_status = 0;
+volatile sig_atomic_t	g_signo = 0;
 
 void	sigint_handler(int sig)
 {
-	g_sig_status = sig;
+	g_signo = sig;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-}
-
-void	sigint_heredoc_handler(int sig)
-{
-	g_sig_status = sig;
-	write(1, "\n", 1);
-	close(STDIN_FILENO);
 }
 
 void	print_signal_error(int sig)
