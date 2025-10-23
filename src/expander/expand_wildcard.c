@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_wildcard.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsahakya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:02:03 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/10/21 13:02:12 by nsahakya         ###   ########.fr       */
+/*   Updated: 2025/10/23 13:16:18 by narek            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ static int	add_matching_files(t_strvector *args, const char *pattern)
 	directory = opendir(".");
 	if (!directory)
 		return (-1);
-	file = readdir(directory);
-	while (file)
+	while ((file = readdir(directory)))
 	{
-		if (file->d_name[0] != '.' && match_pattern(file->d_name, pattern))
+		if (file->d_name[0] == '.' && pattern[0] != '.')
+			continue;
+		if (match_pattern(file->d_name, pattern))
 		{
 			if (!ft_sv_push_back_dup(args, file->d_name))
 			{
@@ -71,7 +72,6 @@ static int	add_matching_files(t_strvector *args, const char *pattern)
 			}
 			found_files_count++;
 		}
-		file = readdir(directory);
 	}
 	closedir(directory);
 	return (found_files_count);
