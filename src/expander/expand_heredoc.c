@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 15:43:11 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 19:27:37 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/24 15:55:09 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,13 @@ void	heredoc_child(t_redirect *redirect, t_expander *expander, char *path)
 	free(path);
 	path = NULL;
 	if (fd == -1)
-		exit_shell_with_error(expander->shell,
-			"failed to create heredoc temp file", 1);
+	{
+		shell_perror("failed to create heredoc file");
+		exit(1);
+	}
 	heredoc_write(redirect, expander, fd);
 	close(fd);
-	exit_shell(expander->shell);
+	exit(0);
 }
 
 int	expand_heredoc(t_redirect *redirect, t_expander *expander)
