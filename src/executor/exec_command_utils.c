@@ -18,6 +18,8 @@ int	handle_command_not_found(t_ast_node *node, char *cmd_path, t_shell *shell)
 	{
 		if (node->args->data && node->args->data[0])
 			shell_puterror(node->args->data[0], "command not found");
+		else if (node->redirect_files)
+			return (shell->exit_status = 0);
 		else
 			shell_puterror("", "command not found");
 		if (cmd_path)
@@ -33,6 +35,8 @@ void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 		exit_shell_with_error(shell, NULL, 1);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+	if (!cmd_path && node->redirect_files)
+		exit(0);
 	execve(cmd_path, node->args->data, shell->env->data);
 	if (errno == EACCES)
 		shell->exit_status = 126;
@@ -40,7 +44,7 @@ void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 		shell->exit_status = 127;
 	else
 		shell->exit_status = 126;
-	exit_shell_with_error(shell, "execve error", shell->exit_status);
+	exit_shell_with_error(shell, node->args->data[0], shell->exit_status);
 }
 
 int	handle_cmd_builtin(t_ast_node *node, t_builtin_func *func, t_shell *shell)

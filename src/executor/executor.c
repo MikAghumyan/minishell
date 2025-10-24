@@ -35,8 +35,8 @@ int	execute_command(t_ast_node *node, t_shell *shell)
 	char			*command_path;
 	t_builtin_func	*builtin_func;
 
-	if (!node || !node->args || !node->args->data || !node->args->data[0])
-		return (handle_command_not_found(node, NULL, shell));
+	if (!node)
+		handle_command_not_found(node, NULL, shell);
 	builtin_func = return_builtin_function((const char **)node->args->data);
 	if (builtin_func)
 		return (handle_cmd_builtin(node, builtin_func, shell));

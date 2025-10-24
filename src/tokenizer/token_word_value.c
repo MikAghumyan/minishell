@@ -29,7 +29,7 @@ size_t	scan_word(const char *input, size_t start, t_token *token)
 			in_dquote = !in_dquote;
 		else if (input[end] == '\'' && !in_dquote)
 			in_squote = !in_squote;
-		else if (input[end] == ' ' && !in_squote && !in_dquote)
+		else if (is_space(input[end]) && !in_squote && !in_dquote)
 			break ;
 		else if (is_special_char(input[end]) && !in_squote && !in_dquote)
 			break ;

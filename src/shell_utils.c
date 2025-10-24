@@ -77,7 +77,7 @@ void	exit_shell(t_shell *shell)
 void	exit_shell_with_error(t_shell *shell, const char *message, int errnum)
 {
 	if (message)
-		perror(message);
+		shell_perror(message);
 	shell->exit_status = errnum;
 	exit_shell(shell);
 }
