@@ -29,6 +29,9 @@ t_ast_node	*ast_parse_subshell(t_parser *parser)
 	{
 		if (is_unexpected_token(parser->tokens))
 		{
+			if (parser->subshell_depth > 0
+				&& parser->tokens->type == TOKEN_RPAREN)
+				break ;
 			free_ast(subshell_node);
 			return (NULL);
 		}
