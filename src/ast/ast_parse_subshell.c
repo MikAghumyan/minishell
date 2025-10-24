@@ -47,6 +47,8 @@ t_ast_node	*ast_init_subshell(t_parser *parser)
 	if (!parser || !parser->tokens)
 		return (NULL);
 	parser->tokens = parser->tokens->next;
+	if (!parser->tokens || is_unexpected_token(parser->tokens))
+		return (NULL);
 	parser->subshell_depth++;
 	subshell_node = create_ast_node(NODE_SUBSHELL);
 	if (!subshell_node)
