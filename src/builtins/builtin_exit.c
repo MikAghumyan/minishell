@@ -48,7 +48,8 @@ int	builtin_exit(const char **args, t_shell *shell)
 		shell->exit_status = 1;
 		return (1);
 	}
-	ft_putstr_fd("exit\n", 2);
+	if (shell->is_interactive)
+		ft_putstr_fd("exit\n", 2);
 	exit_shell(shell);
 	return (0);
 }
