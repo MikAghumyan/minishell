@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 15:23:00 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 15:43:03 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/25 19:15:55 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ static int	expand_redirect_filename(t_redirect *redirect, t_expander *expander)
 	char	*temp;
 
 	temp = expand_token_value(expander->shell, redirect->filename, false);
+	if (!temp && expander->syserror)
+		return (1);
+	free(redirect->filename);
+	redirect->filename = temp;
+	temp = expand_quotes(redirect->filename);
 	if (!temp && expander->syserror)
 		return (1);
 	free(redirect->filename);

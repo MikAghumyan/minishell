@@ -32,6 +32,7 @@ static bool	handle_fill_error(t_strvector **args, char *expanded_arg,
 static bool	fill_args(t_strvector **args, t_token *tokens, t_parser *parser)
 {
 	char	*expanded_arg;
+	char	*unquoted_arg;
 
 	while (tokens && !is_logicpipe_ast_token(tokens)
 		&& !is_unexpected_token(tokens))
@@ -42,9 +43,13 @@ static bool	fill_args(t_strvector **args, t_token *tokens, t_parser *parser)
 					false);
 			if (!expanded_arg)
 				return (handle_fill_error(args, NULL, parser));
-			if (!expand_wildcard(*args, expanded_arg))
-				return (handle_fill_error(args, expanded_arg, parser));
+			unquoted_arg = expand_quotes(expanded_arg);
 			free(expanded_arg);
+			if (!unquoted_arg)
+				return (handle_fill_error(args, unquoted_arg, parser));
+			if (!expand_wildcard(*args, unquoted_arg))
+				return (handle_fill_error(args, unquoted_arg, parser));
+			free(unquoted_arg);
 		}
 		tokens = tokens->next;
 	}

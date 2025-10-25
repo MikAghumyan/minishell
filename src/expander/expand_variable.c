@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:28:39 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 19:37:21 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/10/25 19:13:10 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,7 @@ char	*expand_token_value(t_shell *shell, char *value, bool heredoc)
 			expanded.in_squote = !expanded.in_squote;
 		else if (value[i] == '\"' && !expanded.in_squote)
 			expanded.in_dquote = !expanded.in_dquote;
-		else if (value[i] == '*' && (!expanded.in_squote
-				&& !expanded.in_dquote))
+		if (value[i] == '*' && (!expanded.in_squote && !expanded.in_dquote))
 			expanded.result = expand_strjoin_free(expanded.result,
 					expanded.wcstr);
 		else if (value[i] == '$' && (!expanded.in_squote || heredoc))

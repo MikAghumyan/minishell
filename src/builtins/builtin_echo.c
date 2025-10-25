@@ -20,13 +20,12 @@ int	builtin_echo(const char **args, t_shell *shell)
 
 	argc = count_args(args);
 	i = 1;
-	if ((size_t)argc > i && ft_strcmp(args[i], "-n") == 0)
+	n_flag = false;
+	while ((size_t)argc > i && ft_strcmp(args[i], "-n") == 0)
 	{
 		n_flag = true;
 		i++;
 	}
-	else
-		n_flag = false;
 	while (args[i])
 	{
 		ft_putstr_fd((char *)args[i], STDOUT_FILENO);
