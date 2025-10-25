@@ -14,16 +14,23 @@
 
 int	handle_command_not_found(t_ast_node *node, char *cmd_path, t_shell *shell)
 {
-	if (!cmd_path || access(cmd_path, F_OK) == -1)
+	if (!node->args->data)
+		return (shell->exit_status = 0);
+	if (!node->args->data[0] || !node->args->data[0][0])
 	{
-		if (node->args->data && node->args->data[0])
-			shell_puterror(node->args->data[0], "command not found");
-		else if (node->redirect_files)
+		if (!node->args->data[0] && node->redirect_files)
 			return (shell->exit_status = 0);
 		else
+		{
 			shell_puterror("", "command not found");
-		if (cmd_path)
 			free(cmd_path);
+			return (shell->exit_status = 127);
+		}
+	}
+	if (!cmd_path || access(cmd_path, F_OK) == -1)
+	{
+		shell_puterror(node->args->data[0], "command not found");
+		free(cmd_path);
 		return (shell->exit_status = 127);
 	}
 	return (shell->exit_status = 0);
