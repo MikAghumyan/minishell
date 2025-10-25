@@ -70,6 +70,29 @@ static void	expand_variable(t_shell *shell, t_expand_data *expanded,
 		expand_variable_with_key(shell, expanded, token, i);
 }
 
+char	*expand_quotes(char *value)
+{
+	t_expand_data	expanded;
+	size_t			i;
+
+	if (!initialize_expand(&expanded))
+		return (NULL);
+	i = 0;
+	while (value[i])
+	{
+		if (value[i] == '\'' && !expanded.in_dquote)
+			expanded.in_squote = !expanded.in_squote;
+		else if (value[i] == '\"' && !expanded.in_squote)
+			expanded.in_dquote = !expanded.in_dquote;
+		else
+			expand_rest(&expanded, value, &i);
+		if (!expanded.result)
+			return (NULL);
+		i++;
+	}
+	return (expanded.result);
+}
+
 char	*expand_token_value(t_shell *shell, char *value, bool heredoc)
 {
 	t_expand_data	expanded;

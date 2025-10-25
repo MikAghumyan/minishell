@@ -40,7 +40,7 @@ typedef struct s_expander
 
 /* expand variable functions*/
 char		*expand_token_value(t_shell *shell, char *value, bool heredoc);
-
+char		*expand_quotes(char *value);
 size_t		get_varlen(const char *var);
 char		*expand_strjoin_free(char *s1, char *s2);
 char		*initialize_expand(t_expand_data *data);

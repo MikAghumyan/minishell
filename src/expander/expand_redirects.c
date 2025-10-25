@@ -29,12 +29,11 @@ static int	expand_heredoc_delimiter(t_redirect *redirect, t_expander *expander)
 {
 	char	*temp;
 
-	temp = expand_token_value(expander->shell, redirect->value, false);
+	temp = expand_quotes(redirect->value);
 	if (!temp && expander->syserror)
 		return (1);
 	free(redirect->value);
 	redirect->value = temp;
-	recover_pattern(redirect->value);
 	return (0);
 }
 
