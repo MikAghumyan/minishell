@@ -62,7 +62,7 @@ t_ast_node	*create_ast_node(t_node_type type)
 	return (node);
 }
 
-void	free_ast(t_ast_node *node)
+void	free_ast(t_ast_node *node, t_shell *shell)
 {
 	if (!node)
 		return ;
@@ -72,8 +72,13 @@ void	free_ast(t_ast_node *node)
 		node->args = NULL;
 	}
 	if (node->redirect_files)
-		ft_lstclear(&node->redirect_files, free_redirect);
-	free_ast(node->right);
-	free_ast(node->left);
+	{
+		if (shell && shell->process_depth == 0)
+			ft_lstclear(&node->redirect_files, free_redirect_unlink);
+		else
+			ft_lstclear(&node->redirect_files, free_redirect);
+	}
+	free_ast(node->right, shell);
+	free_ast(node->left, shell);
 	free(node);
 }

@@ -68,7 +68,7 @@ t_ast_node				*build_ast(t_shell *shell);
 t_ast_node				*create_ast_node(t_node_type type);
 void					initialize_parser(t_parser *parser, t_shell *shell,
 							t_token *tokens);
-void					free_ast(t_ast_node *node);
+void					free_ast(t_ast_node *node, t_shell *shell);
 void					print_ast(t_ast_node *node, int depth);
 
 /* parsing functions */
@@ -95,6 +95,7 @@ t_list					*collect_ast_redirects(t_token *tokens,
 t_list					*ast_init_redirect(t_token *token, t_parser *parser);
 t_redirect				*create_redirect_node(t_token *token);
 void					free_redirect(void *redirect_ptr);
+void					free_redirect_unlink(void *redirect_ptr);
 
 /* utils */
 int						is_subshell_ast_token(t_token *token);

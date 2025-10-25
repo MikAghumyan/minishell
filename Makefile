@@ -32,6 +32,7 @@ SRCS_AST = \
 	src/ast/ast_parse_subshell.c \
 	src/ast/ast_collect_args.c \
 	src/ast/ast_parse_redirects.c \
+	src/ast/ast_parse_redirects_utils.c \
 	src/ast/ast_build_utils.c \
 	src/ast/ast_print.c
 

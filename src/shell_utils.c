@@ -39,6 +39,7 @@ void	initialize_shell(t_shell *shell, char **envp)
 	shell->exit_status = 0;
 	shell->saved_fds[0] = -1;
 	shell->saved_fds[1] = -1;
+	shell->process_depth = 0;
 }
 
 void	cleanup_shell(t_shell *shell)
@@ -57,7 +58,7 @@ void	cleanup_shell(t_shell *shell)
 	}
 	if (shell->ast)
 	{
-		free_ast(shell->ast);
+		free_ast(shell->ast, shell);
 		shell->ast = NULL;
 	}
 	if (shell->env)

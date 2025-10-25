@@ -32,7 +32,7 @@ t_ast_node	*ast_parse_subshell(t_parser *parser)
 			if (parser->subshell_depth > 0
 				&& parser->tokens->type == TOKEN_RPAREN)
 				break ;
-			free_ast(subshell_node);
+			free_ast(subshell_node, parser->shell);
 			return (NULL);
 		}
 		parser->tokens = parser->tokens->next;
@@ -55,14 +55,14 @@ t_ast_node	*ast_init_subshell(t_parser *parser)
 		return (parser->syserror = true, NULL);
 	subshell_node->left = ast_parse_logical(parser);
 	if (!subshell_node->left)
-		return (free_ast(subshell_node), NULL);
+		return (free_ast(subshell_node, parser->shell), NULL);
 	if (parser->tokens && parser->tokens->type == TOKEN_RPAREN)
 	{
 		parser->tokens = parser->tokens->next;
 		parser->subshell_depth--;
 	}
 	else
-		return (free_ast(subshell_node), NULL);
+		return (free_ast(subshell_node, parser->shell), NULL);
 	subshell_node->redirect_files = collect_ast_redirects(parser->tokens,
 			parser);
 	return (subshell_node);

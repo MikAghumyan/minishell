@@ -20,6 +20,7 @@ pid_t	fork_left_child(t_ast_node *node, int *pipefds, t_shell *shell)
 	if (left_pid == 0)
 	{
 		shell->is_interactive = false;
+		shell->process_depth++;
 		handle_left_pid(pipefds);
 		shell->exit_status = execute_ast(node->left, shell);
 		exit_shell(shell);
@@ -37,6 +38,7 @@ pid_t	fork_right_pid(t_ast_node *node, int *pipefds, t_shell *shell)
 	if (right_pid == 0)
 	{
 		shell->is_interactive = false;
+		shell->process_depth++;
 		handle_right_pid(pipefds);
 		shell->exit_status = execute_ast(node->right, shell);
 		exit_shell(shell);

@@ -31,7 +31,7 @@ static void	process_input(t_shell *shell)
 			shell->exit_status = start_expander(shell);
 			if (!shell->exit_status)
 				shell->exit_status = execute_ast(shell->ast, shell);
-			free_ast(shell->ast);
+			free_ast(shell->ast, shell);
 			shell->ast = NULL;
 			if (shell->is_interactive)
 				signal(SIGINT, sigint_handler);

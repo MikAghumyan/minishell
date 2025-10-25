@@ -38,6 +38,7 @@ int	handle_command_not_found(t_ast_node *node, char *cmd_path, t_shell *shell)
 
 void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 {
+	shell->process_depth++;
 	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
 		exit_shell_with_error(shell, NULL, 1);
 	signal(SIGINT, SIG_DFL);
