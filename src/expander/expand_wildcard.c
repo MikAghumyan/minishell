@@ -45,21 +45,20 @@ static int	add_matching_files(t_strvector *args, const char *pattern)
 	directory = opendir(".");
 	if (!directory)
 		return (-1);
-	file = readdir(directory);
-	while (file)
+	while (true)
 	{
-		if (file->d_name[0] == '.' && pattern[0] != '.')
-		{
-			file = readdir(directory);
+		file = readdir(directory);
+		if (!file)
+			break ;
+		if ((file->d_name[0] == '.' && pattern[0] != '.')
+			|| !ft_strcmp(file->d_name, ".") || !ft_strcmp(file->d_name, ".."))
 			continue ;
-		}
 		if (match_pattern(file->d_name, pattern))
 		{
 			if (!ft_sv_push_back_dup(args, file->d_name))
 				return (closedir(directory), -1);
 			found_files_count++;
 		}
-		file = readdir(directory);
 	}
 	return (closedir(directory), found_files_count);
 }
