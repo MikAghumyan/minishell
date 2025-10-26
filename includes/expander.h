@@ -21,7 +21,7 @@
 # include <stdbool.h>
 # include <sys/wait.h>
 
-# define WILDCARD_SYMBOL -1
+# define WILDCARD_SYMBOL '\x01'
 
 typedef struct s_expand_data
 {

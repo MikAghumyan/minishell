@@ -95,9 +95,10 @@ Minishell is a minimal recreation of a UNIX command-line interpreter, developed 
 ```
 	
 ## 🧰 Prerequisites
+
 ### 🧱 System Requirements
-+ Operating System: Linux (tested on Ubuntu 22.04 – 25.10)
-+ Architecture: tested on x86_64
++ Operating System: Linux (tested on Ubuntu 22.04 – 25.10, Android 15 (Termux))
++ Architecture: tested on x86_64 and arm64-v8a
 + Shell Environment: bash or compatible terminal (for running the binary)
 + Compiler: gcc (recommended: GCC 11+)
 + Make utility: make

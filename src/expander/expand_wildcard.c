@@ -16,9 +16,9 @@ static bool	match_pattern(const char *filename, const char *pattern)
 {
 	if (*pattern == '\0')
 		return (*filename == '\0');
-	if (*pattern == WILDCARD_SYMBOL)
+	if (*pattern == (char)WILDCARD_SYMBOL)
 	{
-		while (*pattern == WILDCARD_SYMBOL)
+		while (*pattern == (char)WILDCARD_SYMBOL)
 			pattern++;
 		if (*pattern == '\0')
 			return (true);
@@ -70,7 +70,7 @@ void	recover_pattern(char *pattern)
 	i = 0;
 	while (pattern[i])
 	{
-		if (pattern[i] == WILDCARD_SYMBOL)
+		if (pattern[i] == (char)WILDCARD_SYMBOL)
 			pattern[i] = '*';
 		i++;
 	}
@@ -81,7 +81,7 @@ bool	expand_wildcard(t_strvector *args, char *pattern)
 	int	found_files_count;
 
 	found_files_count = 0;
-	if (!ft_strchr(pattern, WILDCARD_SYMBOL))
+	if (!ft_strchr(pattern, (char)WILDCARD_SYMBOL))
 		return (recover_pattern(pattern), ft_sv_push_back_dup(args, pattern));
 	found_files_count = add_matching_files(args, pattern);
 	if (found_files_count < 0)
