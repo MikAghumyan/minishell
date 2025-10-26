@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/env.h"
 #include "../includes/minishell.h"
 
 int	main(int argc, char **argv, char **envp)
@@ -21,7 +22,8 @@ int	main(int argc, char **argv, char **envp)
 	initialize_shell(&shell, envp);
 	if (shell.is_interactive)
 	{
-		printf("Welcome to Minishell!\n");
+		printf("\e[1;32mWelcome back, %s! 🐚 Minishell ready.\e[0m\n",
+			env_get_value("USER", shell.env));
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_IGN);
 		shell_loop_interactive(&shell);
