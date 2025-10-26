@@ -122,6 +122,6 @@ make # or make debug
 
 ## 💡Acknowledgments
 
-- **[42 School][42school]**: For providing the project framework and resources.
+- **[42 school](https://github.com/42school)**: For providing the project framework and resources.
 - **Community**: Thanks to peers for providing assistance and sharing knowledge.
 - [@42school](https://github.com/42school) [@42paris](https://github.com/42paris) [@RubBarkhudaryan](https://github.com/RubBarkhudaryan) [@Davhak2](https://github.com/Davhak2) [@gnersisyann](https://github.com/gnersisyann) [@Kragline](https://github.com/Kragline) [@armannikoyan](https://github.com/armannikoyan) [@Patvakanyan](https://github.com/Patvakanyan)
