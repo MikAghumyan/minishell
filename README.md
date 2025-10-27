@@ -117,7 +117,9 @@ sudo apt install build-essential libreadline-dev
 git clone https://github.com/MikAghumyan/minishell.git
 cd minishell
 git submodule update --init libft
-make # or make debug
+make
+#make debug
+#make termux
 ```
 
 ## 💡Acknowledgments
