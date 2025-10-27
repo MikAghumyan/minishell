@@ -80,18 +80,17 @@ void	heredoc_child(t_redirect *redirect, t_expander *expander, char *path)
 {
 	int	fd;
 
+	expander->shell->process_depth++;
 	signal(SIGINT, SIG_DFL);
 	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	free(path);
 	path = NULL;
 	if (fd == -1)
-	{
-		shell_perror("failed to create heredoc file");
-		exit(1);
-	}
+		exit_shell_with_error(expander->shell, "failed to create heredoc file",
+			1);
 	heredoc_write(redirect, expander, fd);
 	close(fd);
-	exit(0);
+	exit_shell(expander->shell);
 }
 
 int	expand_heredoc(t_redirect *redirect, t_expander *expander)
