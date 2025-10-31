@@ -12,6 +12,23 @@
 
 #include "../../includes/builtins.h"
 
+static bool	echo_check_option(bool *n_flag, const char *arg)
+{
+	size_t	i;
+
+	i = 1;
+	if (arg[0] != '-')
+		return (false);
+	while (arg[i] && arg[i] == 'n')
+		i++;
+	if (arg[i] == '\0')
+	{
+		*n_flag = true;
+		return (true);
+	}
+	return (false);
+}
+
 int	builtin_echo(const char **args, t_shell *shell)
 {
 	size_t	i;
@@ -21,11 +38,8 @@ int	builtin_echo(const char **args, t_shell *shell)
 	argc = count_args(args);
 	i = 1;
 	n_flag = false;
-	while ((size_t)argc > i && ft_strcmp(args[i], "-n") == 0)
-	{
-		n_flag = true;
+	while ((size_t)argc > i && echo_check_option(&n_flag, args[i]))
 		i++;
-	}
 	while (args[i])
 	{
 		ft_putstr_fd((char *)args[i], STDOUT_FILENO);
