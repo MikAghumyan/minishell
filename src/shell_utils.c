@@ -40,6 +40,8 @@ void	initialize_shell(t_shell *shell, char **envp)
 	shell->saved_fds[0] = -1;
 	shell->saved_fds[1] = -1;
 	shell->process_depth = 0;
+	shell->syserror = false;
+	shell->interrupted = false;
 }
 
 void	cleanup_shell(t_shell *shell)

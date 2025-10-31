@@ -59,8 +59,6 @@ typedef struct s_parser
 	t_token				*tokens;
 	t_shell				*shell;
 	int					subshell_depth;
-	bool				syserror;
-	bool				interrupted;
 }						t_parser;
 
 /* base ast functions */

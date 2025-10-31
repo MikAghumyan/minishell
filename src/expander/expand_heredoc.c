@@ -12,22 +12,22 @@
 
 #include "./../../includes/expander.h"
 
-static char	*expand_heredoc_line(t_expander *expander, char *line)
+static char	*expand_heredoc_line(t_shell *shell, char *line)
 {
 	char	*expanded;
 
-	expanded = expand_token_value(expander->shell, line, true);
+	expanded = expand_token_value(shell, line, true);
 	if (!expanded)
 	{
 		free(line);
-		expander->syserror = true;
+		shell->syserror = true;
 		return (NULL);
 	}
 	free(line);
 	return (expanded);
 }
 
-static void	heredoc_write(t_redirect *redirect, t_expander *expander, int fd)
+static void	heredoc_write(t_redirect *redirect, t_shell *shell, int fd)
 {
 	char	*line;
 
@@ -44,7 +44,7 @@ static void	heredoc_write(t_redirect *redirect, t_expander *expander, int fd)
 		}
 		if (!redirect->quoted)
 		{
-			line = expand_heredoc_line(expander, line);
+			line = expand_heredoc_line(shell, line);
 			if (!line)
 				break ;
 		}
@@ -76,24 +76,23 @@ char	*heredoc_get_path(void)
 	return (path);
 }
 
-void	heredoc_child(t_redirect *redirect, t_expander *expander, char *path)
+void	heredoc_child(t_redirect *redirect, t_shell *shell, char *path)
 {
 	int	fd;
 
-	expander->shell->process_depth++;
+	shell->process_depth++;
 	signal(SIGINT, SIG_DFL);
 	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	free(path);
 	path = NULL;
 	if (fd == -1)
-		exit_shell_with_error(expander->shell, "failed to create heredoc file",
-			1);
-	heredoc_write(redirect, expander, fd);
+		exit_shell_with_error(shell, "failed to create heredoc file", 1);
+	heredoc_write(redirect, shell, fd);
 	close(fd);
-	exit_shell(expander->shell);
+	exit_shell(shell);
 }
 
-int	expand_heredoc(t_redirect *redirect, t_expander *expander)
+int	expand_heredoc(t_redirect *redirect, t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
@@ -101,18 +100,18 @@ int	expand_heredoc(t_redirect *redirect, t_expander *expander)
 
 	path = heredoc_get_path();
 	if (!path)
-		return (expander->syserror = true, -1);
+		return (shell->syserror = true, -1);
 	pid = fork();
 	if (pid == -1)
-		return (free(path), expander->syserror = true, -1);
+		return (free(path), shell->syserror = true, -1);
 	if (pid == 0)
-		heredoc_child(redirect, expander, path);
+		heredoc_child(redirect, shell, path);
 	else
 	{
 		waitpid(pid, &status, 0);
 		redirect->filename = path;
 		if (WIFSIGNALED(status))
-			return (expander->interrupted = true, 128 + WTERMSIG(status));
+			return (shell->interrupted = true, 128 + WTERMSIG(status));
 	}
 	return (0);
 }

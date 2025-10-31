@@ -21,9 +21,9 @@ t_ast_node	*build_ast(t_shell *shell)
 		return (NULL);
 	initialize_parser(&parser, shell, shell->tokens);
 	result = ast_parse_logical(&parser);
-	if (!result && !parser.interrupted)
+	if (!result)
 	{
-		if (parser.syserror)
+		if (shell->syserror)
 			exit_shell_with_error(shell, "system error", 1);
 		if (parser.tokens)
 			ft_fprintf(2,
@@ -33,8 +33,6 @@ t_ast_node	*build_ast(t_shell *shell)
 			ft_fprintf(2, "minishell: syntax error: unexpected end of line\n");
 		shell->exit_status = 2;
 	}
-	if (parser.interrupted)
-		shell->exit_status = 130;
 	return (result);
 }
 
@@ -43,8 +41,6 @@ void	initialize_parser(t_parser *parser, t_shell *shell, t_token *tokens)
 	parser->tokens = tokens;
 	parser->shell = shell;
 	parser->subshell_depth = 0;
-	parser->syserror = false;
-	parser->interrupted = false;
 }
 
 t_ast_node	*create_ast_node(t_node_type type)

@@ -18,6 +18,8 @@
 
 static void	process_input(t_shell *shell)
 {
+	shell->interrupted = false;
+	shell->syserror = false;
 	shell->tokens = tokenize_input(shell);
 	if (shell->tokens)
 	{

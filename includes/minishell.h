@@ -53,6 +53,8 @@ typedef struct s_shell
 	t_ast_node					*ast;
 	int							saved_fds[2];
 	bool						is_interactive;
+	bool						syserror;
+	bool						interrupted;
 	int							process_depth;
 }								t_shell;
 

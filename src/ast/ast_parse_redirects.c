@@ -63,15 +63,15 @@ t_list	*ast_init_redirect(t_token *token, t_parser *parser)
 		return (NULL);
 	redirect = create_redirect_node(token);
 	if (!redirect)
-		return (parser->syserror = true, NULL);
+		return (parser->shell->syserror = true, NULL);
 	if (redirect->type == NODE_HEREDOC)
 		redirect->value = ft_strdup(token->value);
 	else
 		redirect->filename = ft_strdup(token->value);
 	if (!redirect->filename && !redirect->value)
-		return (parser->syserror = true, free(redirect), NULL);
+		return (parser->shell->syserror = true, free(redirect), NULL);
 	redirect_node = ft_lstnew(redirect);
 	if (!redirect_node)
-		return (free(redirect), parser->syserror = true, NULL);
+		return (free(redirect), parser->shell->syserror = true, NULL);
 	return (redirect_node);
 }

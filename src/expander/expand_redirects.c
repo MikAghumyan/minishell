@@ -12,17 +12,17 @@
 
 #include "../../includes/expander.h"
 
-static int	expand_redirect_filename(t_redirect *redirect, t_expander *expander)
+static int	expand_redirect_filename(t_redirect *redirect, t_shell *shell)
 {
 	char	*temp;
 
-	temp = expand_token_value(expander->shell, redirect->filename, false);
-	if (!temp && expander->syserror)
+	temp = expand_token_value(shell, redirect->filename, false);
+	if (!temp && shell->syserror)
 		return (1);
 	free(redirect->filename);
 	redirect->filename = temp;
 	temp = expand_quotes(redirect->filename);
-	if (!temp && expander->syserror)
+	if (!temp && shell->syserror)
 		return (1);
 	free(redirect->filename);
 	redirect->filename = temp;
@@ -30,19 +30,19 @@ static int	expand_redirect_filename(t_redirect *redirect, t_expander *expander)
 	return (0);
 }
 
-static int	expand_heredoc_delimiter(t_redirect *redirect, t_expander *expander)
+static int	expand_heredoc_delimiter(t_redirect *redirect, t_shell *shell)
 {
 	char	*temp;
 
 	temp = expand_quotes(redirect->value);
-	if (!temp && expander->syserror)
+	if (!temp && shell->syserror)
 		return (1);
 	free(redirect->value);
 	redirect->value = temp;
 	return (0);
 }
 
-int	expand_redirections(t_list *redirects, t_expander *expander)
+int	expand_redirections(t_list *redirects, t_shell *shell)
 {
 	t_list		*current;
 	int			status;
@@ -55,13 +55,13 @@ int	expand_redirections(t_list *redirects, t_expander *expander)
 		redirect = (t_redirect *)current->content;
 		if (redirect->type == NODE_HEREDOC)
 		{
-			if (expand_heredoc_delimiter(redirect, expander))
+			if (expand_heredoc_delimiter(redirect, shell))
 				return (1);
-			status = expand_heredoc(redirect, expander);
+			status = expand_heredoc(redirect, shell);
 			if (status)
 				return (status);
 		}
-		else if (expand_redirect_filename(redirect, expander))
+		else if (expand_redirect_filename(redirect, shell))
 			return (1);
 		current = current->next;
 	}

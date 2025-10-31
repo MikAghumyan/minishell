@@ -25,7 +25,7 @@ static bool	handle_fill_error(t_strvector **args, char *expanded_arg,
 	if (expanded_arg)
 		free(expanded_arg);
 	ft_sv_free(*args);
-	parser->syserror = true;
+	parser->shell->syserror = true;
 	return (false);
 }
 
@@ -63,7 +63,7 @@ t_strvector	*collect_ast_arguments(t_token *tokens, t_parser *parser)
 	args = ft_sv_init(10);
 	if (!args)
 	{
-		parser->syserror = true;
+		parser->shell->syserror = true;
 		return (NULL);
 	}
 	if (!fill_args(&args, tokens, parser))

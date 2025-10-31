@@ -52,7 +52,7 @@ t_ast_node	*ast_init_subshell(t_parser *parser)
 	parser->subshell_depth++;
 	subshell_node = create_ast_node(NODE_SUBSHELL);
 	if (!subshell_node)
-		return (parser->syserror = true, NULL);
+		return (parser->shell->syserror = true, NULL);
 	subshell_node->left = ast_parse_logical(parser);
 	if (!subshell_node->left)
 		return (free_ast(subshell_node, parser->shell), NULL);
