@@ -66,6 +66,7 @@ SRCS_EXPANDER = \
 	src/expander/expand_utils.c \
 	src/expander/expand_wildcard.c \
 	src/expander/expand_redirects.c \
+	src/expander/expand_arguments.c \
 	src/expander/expand_variable.c \
 	src/expander/expand_heredoc.c
 

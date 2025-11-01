@@ -45,7 +45,7 @@ void		recover_pattern(char *pattern);
 int			start_expander(t_shell *shell);
 int			process_expander(t_ast_node *node, t_shell *shell);
 int			expand_command(t_ast_node *node, t_shell *shell);
-int			expand_arguments(t_strvector *args, t_shell *shell);
+int			expand_arguments(t_strvector **args, t_shell *shell);
 int			expand_redirections(t_list *redirects, t_shell *shell);
 int			expand_subshell(t_ast_node *node, t_shell *shell);
 

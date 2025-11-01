@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 19:44:34 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 19:44:35 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/01 14:18:26 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ int	expand_command(t_ast_node *node, t_shell *shell)
 {
 	if (!node)
 		return (0);
+	/* First expand command arguments, then redirections */
+	if (expand_arguments(&node->args, shell))
+		return (1);
 	return (expand_redirections(node->redirect_files, shell));
 }
 

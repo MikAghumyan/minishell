@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../includes/ast.h"
-#include "../../includes/expander.h"
 
 static bool	is_unexpected_token(t_token *token)
 {
@@ -19,11 +18,11 @@ static bool	is_unexpected_token(t_token *token)
 			|| is_sub_lr_ast_token(token)));
 }
 
-static bool	handle_fill_error(t_strvector **args, char *expanded_arg,
+static bool	handle_fill_error(t_strvector **args, char *to_free,
 		t_parser *parser)
 {
-	if (expanded_arg)
-		free(expanded_arg);
+	if (to_free)
+		free(to_free);
 	ft_sv_free(*args);
 	parser->shell->syserror = true;
 	return (false);
@@ -31,25 +30,14 @@ static bool	handle_fill_error(t_strvector **args, char *expanded_arg,
 
 static bool	fill_args(t_strvector **args, t_token *tokens, t_parser *parser)
 {
-	char	*expanded_arg;
-	char	*unquoted_arg;
-
 	while (tokens && !is_logicpipe_ast_token(tokens)
 		&& !is_unexpected_token(tokens))
 	{
 		if (tokens->type == TOKEN_WORD)
 		{
-			expanded_arg = expand_token_value(parser->shell, tokens->value,
-					false);
-			if (!expanded_arg)
+			/* Store raw token value; expansion happens later in expander */
+			if (!ft_sv_push_back_dup(*args, tokens->value))
 				return (handle_fill_error(args, NULL, parser));
-			unquoted_arg = expand_quotes(expanded_arg);
-			free(expanded_arg);
-			if (!unquoted_arg)
-				return (handle_fill_error(args, unquoted_arg, parser));
-			if (!expand_wildcard(*args, unquoted_arg))
-				return (handle_fill_error(args, unquoted_arg, parser));
-			free(unquoted_arg);
 		}
 		tokens = tokens->next;
 	}
