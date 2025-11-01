@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:05:57 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 13:06:09 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/02 00:22:04 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ int	builtin_pwd(const char **args, t_shell *shell)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		shell_perror("pwd");
+		shell_perror("pwd: getcwd failed");
 		shell->exit_status = 1;
+		return (shell->exit_status);
 	}
 	ft_putstr_fd(cwd, STDOUT_FILENO);
 	ft_putchar_fd('\n', STDOUT_FILENO);

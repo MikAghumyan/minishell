@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 14:06:10 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 13:31:38 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/02 00:23:16 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,10 @@ static int	update_cwd_var(t_shell *shell)
 	newcwd = getcwd(NULL, 0);
 	if (!newcwd)
 	{
-		shell_perror("pwd");
+		shell_perror("cd: getcwd failed");
 		return (shell->exit_status = 1, 1);
 	}
-	else
-		env_set(shell->env, "PWD", newcwd);
+	env_set(shell->env, "PWD", newcwd);
 	free(newcwd);
 	return (shell->exit_status = 0, 0);
 }
