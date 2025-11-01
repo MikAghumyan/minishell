@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 12:36:49 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/20 16:35:43 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/02 00:36:27 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ t_ast_node	*ast_init_command(t_parser *parser)
 	result->type = NODE_COMMAND;
 	result->args = collect_ast_arguments(parser->tokens, parser);
 	result->redirect_files = collect_ast_redirects(parser->tokens, parser);
-	if (parser->shell->syserror || (!result->args->data[0] && !result->redirect_files))
+	if (parser->shell->syserror || (!result->args->data[0]
+			&& !result->redirect_files))
 	{
 		free_ast(result, parser->shell);
 		return (NULL);

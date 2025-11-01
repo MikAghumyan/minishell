@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 13:50:11 by maghumya          #+#    #+#             */
-/*   Updated: 2025/11/01 19:28:27 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/02 00:37:34 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ static void	process_input(t_shell *shell)
 	shell->syserror = false;
 	shell->tokens = tokenize_input(shell);
 	if (shell->tokens)
-	{
 		process_ast(shell);
-	}
-	/* Centralize system error reporting after processing this input */
 	if (shell->syserror)
 	{
 		shell_puterror(NULL, "system error");

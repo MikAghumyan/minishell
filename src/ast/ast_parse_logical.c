@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_parse_logical.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsahakya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 12:58:43 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/10/21 12:58:45 by nsahakya         ###   ########.fr       */
+/*   Updated: 2025/11/02 00:36:08 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static t_ast_node	*handle_logical_node(t_parser *parser, t_ast_node *left)
 	else
 		operator_node = create_ast_node(NODE_OR);
 	if (!operator_node)
-		return (free_ast(left, parser->shell), parser->shell->syserror = true, NULL);
+		return (free_ast(left, parser->shell), parser->shell->syserror = true,
+			NULL);
 	current_token = parser->tokens;
 	parser->tokens = parser->tokens->next;
 	operator_node->left = left;
@@ -63,7 +64,8 @@ static t_ast_node	*handle_pipe_node(t_parser *parser, t_ast_node *left)
 
 	pipe_node = create_ast_node(NODE_PIPE);
 	if (!pipe_node)
-		return (free_ast(left, parser->shell), parser->shell->syserror = true, NULL);
+		return (free_ast(left, parser->shell), parser->shell->syserror = true,
+			NULL);
 	current_token = parser->tokens;
 	parser->tokens = parser->tokens->next;
 	pipe_node->left = left;

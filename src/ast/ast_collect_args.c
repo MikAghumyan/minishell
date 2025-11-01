@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_collect_args.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: narek <narek@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 12:36:58 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/20 22:57:27 by narek            ###   ########.fr       */
+/*   Updated: 2025/11/02 00:36:21 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static bool	fill_args(t_strvector **args, t_token *tokens, t_parser *parser)
 	{
 		if (tokens->type == TOKEN_WORD)
 		{
-			/* Store raw token value; expansion happens later in expander */
 			if (!ft_sv_push_back_dup(*args, tokens->value))
 				return (handle_fill_error(args, NULL, parser));
 		}
