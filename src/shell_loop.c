@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 13:50:11 by maghumya          #+#    #+#             */
-/*   Updated: 2025/11/01 19:00:06 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:28:27 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,15 @@ static void	process_input(t_shell *shell)
 	if (shell->tokens)
 	{
 		process_ast(shell);
-		if (shell->is_interactive)
-			print_exit_status(shell);
 	}
+	/* Centralize system error reporting after processing this input */
+	if (shell->syserror)
+	{
+		shell_puterror(NULL, "system error");
+		shell->exit_status = 1;
+	}
+	if (shell->is_interactive)
+		print_exit_status(shell);
 	free(shell->input);
 	shell->input = NULL;
 }

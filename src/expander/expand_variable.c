@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:28:39 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/25 19:13:10 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:34:40 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*expand_token_value(t_shell *shell, char *value, bool heredoc)
 	size_t			i;
 
 	if (!initialize_expand(&expanded))
-		return (NULL);
+		return (shell->syserror = true, NULL);
 	i = 0;
 	while (value[i])
 	{
@@ -115,7 +115,7 @@ char	*expand_token_value(t_shell *shell, char *value, bool heredoc)
 		else
 			expand_rest(&expanded, value, &i);
 		if (!expanded.result)
-			return (NULL);
+			return (shell->syserror = true, NULL);
 		i++;
 	}
 	return (expanded.result);

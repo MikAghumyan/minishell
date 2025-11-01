@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 15:23:00 by maghumya          #+#    #+#             */
-/*   Updated: 2025/11/01 18:15:40 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:34:22 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static int	expand_redirect_filename(t_redirect *redirect, t_shell *shell)
 	char	*temp;
 
 	temp = expand_token_value(shell, redirect->filename, false);
-	if (!temp && shell->syserror)
-		return (1);
+	if (!temp)
+		return (shell->syserror = true, 1);
 	free(redirect->filename);
 	redirect->filename = temp;
 	temp = expand_quotes(redirect->filename);
-	if (!temp && shell->syserror)
-		return (1);
+	if (!temp)
+		return (shell->syserror = true, 1);
 	free(redirect->filename);
 	redirect->filename = temp;
 	recover_pattern(redirect->filename);
@@ -35,8 +35,8 @@ static int	expand_heredoc_delimiter(t_redirect *redirect, t_shell *shell)
 	char	*temp;
 
 	temp = expand_quotes(redirect->value);
-	if (!temp && shell->syserror)
-		return (1);
+	if (!temp)
+		return (shell->syserror = true, 1);
 	free(redirect->value);
 	redirect->value = temp;
 	return (0);

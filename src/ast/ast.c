@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 12:57:52 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/10/24 00:04:21 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:31:51 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ t_ast_node	*build_ast(t_shell *shell)
 	if (!result)
 	{
 		if (shell->syserror)
-			exit_shell_with_error(shell, "system error", 1);
+		{
+			shell->exit_status = 1;
+			return (NULL);
+		}
 		if (parser.tokens)
 			ft_fprintf(2,
 				"minishell: syntax error near unexpected token `%s'\n",
