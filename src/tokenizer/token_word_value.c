@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 21:56:56 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/19 14:57:33 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/01 21:16:22 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*get_word_value(t_shell *shell, size_t *i, t_token *token)
 	value = ft_substr(shell->input, *i, end - *i);
 	if (!value)
 		return (NULL);
+	token->quoted = ft_strchr(value, '\'') || ft_strchr(value, '\"');
 	*i = end;
 	return (value);
 }
