@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_command_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsahakya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:00:17 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/10/21 13:00:19 by nsahakya         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:40:47 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	handle_cmd_parent(pid_t pid, char *command_path, t_shell *shell)
 	else if (WIFSIGNALED(status))
 	{
 		shell->exit_status = 128 + WTERMSIG(status);
+		shell->interrupted = true;
 		print_signal_error(WTERMSIG(status));
 	}
 	return (shell->exit_status);

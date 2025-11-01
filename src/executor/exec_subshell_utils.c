@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:01:18 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/11/01 19:07:04 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:41:26 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int	wait_for_child(pid_t pid, t_shell *shell)
 	if (WIFEXITED(status))
 		shell->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
+	{
 		shell->exit_status = 128 + WTERMSIG(status);
+		shell->interrupted = true;
+	}
 	return (shell->exit_status);
 }
 

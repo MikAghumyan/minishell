@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsahakya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:01:02 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/10/21 13:01:03 by nsahakya         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:41:08 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ int	wait_for_children(pid_t left_pid, pid_t right_pid, t_shell *shell)
 	if (WIFEXITED(status))
 		shell->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
+	{
 		shell->exit_status = 128 + WTERMSIG(status);
+		shell->interrupted = true;
+	}
 	return (shell->exit_status);
 }
