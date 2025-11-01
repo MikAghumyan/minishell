@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 19:26:37 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 19:36:24 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/01 18:37:22 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,13 @@ void		recover_pattern(char *pattern);
 
 /* main expander functions*/
 
-int			start_expander(t_shell *shell);
-int			process_expander(t_ast_node *node, t_shell *shell);
 int			expand_command(t_ast_node *node, t_shell *shell);
 int			expand_arguments(t_strvector **args, t_shell *shell);
 int			expand_redirections(t_list *redirects, t_shell *shell);
 int			expand_subshell(t_ast_node *node, t_shell *shell);
 
 /* heredoc functions */
+int			process_ast_heredocs(t_ast_node *node, t_shell *shell);
 int			expand_heredoc(t_redirect *redirect, t_shell *shell);
 void		heredoc_child(t_redirect *redirect, t_shell *shell, char *path);
 char		*heredoc_get_path(void);

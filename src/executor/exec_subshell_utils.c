@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec_subshell_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsahakya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:01:18 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/10/21 13:01:20 by nsahakya         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:07:04 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/executor.h"
+#include "../../includes/expander.h"
 
 void	execute_subshell_in_child(t_ast_node *node, t_shell *shell)
 {
 	shell->is_interactive = false;
 	shell->process_depth++;
+	if (expand_subshell(node, shell))
+		exit_shell_with_error(shell, NULL, 1);
 	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
 		exit_shell_with_error(shell, NULL, 1);
 	shell->exit_status = execute_ast(node->left, shell);

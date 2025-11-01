@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsahakya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:01:29 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/10/21 13:01:33 by nsahakya         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:06:19 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 #include "../../includes/executor.h"
+#include "../../includes/expander.h"
 
 int	execute_ast(t_ast_node *node, t_shell *shell)
 {
@@ -37,6 +38,8 @@ int	execute_command(t_ast_node *node, t_shell *shell)
 
 	if (!node)
 		return (1);
+	if (expand_command(node, shell))
+		return (shell->exit_status);
 	builtin_func = return_builtin_function((const char **)node->args->data);
 	if (builtin_func)
 		return (handle_cmd_builtin(node, builtin_func, shell));

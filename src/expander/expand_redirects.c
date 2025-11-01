@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 15:23:00 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/25 19:15:55 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/01 18:15:40 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,39 @@ int	expand_redirections(t_list *redirects, t_shell *shell)
 	while (current)
 	{
 		redirect = (t_redirect *)current->content;
-		if (redirect->type == NODE_HEREDOC)
-		{
-			if (expand_heredoc_delimiter(redirect, shell))
+		if (redirect->type != NODE_HEREDOC)
+			if (expand_redirect_filename(redirect, shell))
 				return (1);
-			status = expand_heredoc(redirect, shell);
-			if (status)
-				return (status);
-		}
-		else if (expand_redirect_filename(redirect, shell))
-			return (1);
 		current = current->next;
 	}
 	return (status);
+}
+
+int	process_ast_heredocs(t_ast_node *node, t_shell *shell)
+{
+	t_list		*current_redirect;
+	t_redirect	*redirect;
+	int			status;
+
+	if (!node)
+		return (0);
+	if (node->type == NODE_COMMAND || node->type == NODE_SUBSHELL)
+	{
+		current_redirect = node->redirect_files;
+		while (current_redirect)
+		{
+			redirect = (t_redirect *)current_redirect->content;
+			if (redirect->type == NODE_HEREDOC)
+			{
+				if (expand_heredoc_delimiter(redirect, shell))
+					return (1);
+				status = expand_heredoc(redirect, shell);
+				if (status)
+					return (status);
+			}
+			current_redirect = current_redirect->next;
+		}
+	}
+	return (process_ast_heredocs(node->left, shell)
+		|| process_ast_heredocs(node->right, shell));
 }

@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 13:50:11 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/23 19:26:47 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/01 19:00:06 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,29 @@
 #include "../includes/minishell.h"
 #include "../includes/tokenizer.h"
 
+static void	process_ast(t_shell *shell)
+{
+	int	heredoc_exit;
+
+	shell->ast = build_ast(shell);
+	free_tokens(shell->tokens);
+	shell->tokens = NULL;
+	if (shell->ast)
+	{
+		if (shell->is_interactive)
+			signal(SIGINT, SIG_IGN);
+		heredoc_exit = process_ast_heredocs(shell->ast, shell);
+		if (!heredoc_exit)
+			shell->exit_status = execute_ast(shell->ast, shell);
+		else
+			shell->exit_status = heredoc_exit;
+		free_ast(shell->ast, shell);
+		shell->ast = NULL;
+		if (shell->is_interactive)
+			signal(SIGINT, sigint_handler);
+	}
+}
+
 static void	process_input(t_shell *shell)
 {
 	shell->interrupted = false;
@@ -23,21 +46,7 @@ static void	process_input(t_shell *shell)
 	shell->tokens = tokenize_input(shell);
 	if (shell->tokens)
 	{
-		shell->ast = build_ast(shell);
-		free_tokens(shell->tokens);
-		shell->tokens = NULL;
-		if (shell->ast)
-		{
-			if (shell->is_interactive)
-				signal(SIGINT, SIG_IGN);
-			shell->exit_status = start_expander(shell);
-			if (!shell->exit_status)
-				shell->exit_status = execute_ast(shell->ast, shell);
-			free_ast(shell->ast, shell);
-			shell->ast = NULL;
-			if (shell->is_interactive)
-				signal(SIGINT, sigint_handler);
-		}
+		process_ast(shell);
 		if (shell->is_interactive)
 			print_exit_status(shell);
 	}
