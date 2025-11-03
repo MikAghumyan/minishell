@@ -64,7 +64,11 @@ int	handle_cmd_builtin(t_ast_node *node, t_builtin_func *func, t_shell *shell)
 	if (shell->saved_fds[0] == -1 || shell->saved_fds[1] == -1)
 		return (shell_perror("dup error"), 1);
 	if (node->redirect_files && handle_redirects(node->redirect_files) == -1)
+	{
+		dup2(shell->saved_fds[1], STDOUT_FILENO);
+		dup2(shell->saved_fds[0], STDIN_FILENO);
 		return (close_shell_fds(shell), shell->exit_status = 1);
+	}
 	builtin_status = func((const char **)node->args->data, shell);
 	if (dup2(shell->saved_fds[1], STDOUT_FILENO) == -1
 		|| dup2(shell->saved_fds[0], STDIN_FILENO) == -1)
