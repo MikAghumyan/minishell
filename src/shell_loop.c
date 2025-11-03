@@ -61,7 +61,7 @@ void	shell_loop_interactive(t_shell *shell)
 {
 	while (true)
 	{
-		shell->input = readline("\033[0;36mminishell\033[1m֏\033[0m ");
+		shell->input = readline("\033[0;36mminishell\033[1m$\033[0m ");
 		if (!shell->input)
 			break ;
 		if (shell->input[0] != '\0')
