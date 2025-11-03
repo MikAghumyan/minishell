@@ -49,6 +49,7 @@ int			expand_subshell(t_ast_node *node, t_shell *shell);
 
 /* heredoc functions */
 int			process_ast_heredocs(t_ast_node *node, t_shell *shell);
+int			process_node_heredocs(t_ast_node *node, t_shell *shell);
 int			expand_heredoc(t_redirect *redirect, t_shell *shell);
 void		heredoc_child(t_redirect *redirect, t_shell *shell, char *path);
 char		*heredoc_get_path(void);

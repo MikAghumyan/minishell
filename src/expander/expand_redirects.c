@@ -61,7 +61,7 @@ int	expand_redirections(t_list *redirects, t_shell *shell)
 	return (status);
 }
 
-int	process_ast_heredocs(t_ast_node *node, t_shell *shell)
+int	process_node_heredocs(t_ast_node *node, t_shell *shell)
 {
 	t_list		*current_redirect;
 	t_redirect	*redirect;
@@ -86,6 +86,20 @@ int	process_ast_heredocs(t_ast_node *node, t_shell *shell)
 			current_redirect = current_redirect->next;
 		}
 	}
-	return (process_ast_heredocs(node->left, shell)
-		|| process_ast_heredocs(node->right, shell));
+	return (0);
+}
+
+int	process_ast_heredocs(t_ast_node *node, t_shell *shell)
+{
+	int	status;
+
+	if (!node)
+		return (0);
+	status = process_ast_heredocs(node->left, shell);
+	if (status)
+		return (status);
+	status = process_node_heredocs(node, shell);
+	if (status)
+		return (status);
+	return (process_ast_heredocs(node->right, shell));
 }
