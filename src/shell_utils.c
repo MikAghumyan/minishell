@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:20 by maghumya          #+#    #+#             */
-/*   Updated: 2025/11/04 20:33:22 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/04 21:21:13 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,22 @@ void	cleanup_shell(t_shell *shell)
 	if (!shell)
 		return ;
 	if (shell->input)
-	{
 		free(shell->input);
-		shell->input = NULL;
-	}
+	shell->input = NULL;
 	if (shell->tokens)
-	{
 		free_tokens(shell->tokens);
-		shell->tokens = NULL;
-	}
+	shell->tokens = NULL;
 	if (shell->ast)
-	{
 		free_ast(shell->ast, shell);
-		shell->ast = NULL;
-	}
+	shell->ast = NULL;
 	if (shell->env)
-	{
 		ft_sv_free(shell->env);
-		shell->env = NULL;
-	}
+	shell->env = NULL;
 	close_shell_fds(shell);
 	if (shell->is_interactive)
 		rl_clear_history();
+	if (shell->input)
+		free(shell->input);
 }
 
 void	exit_shell(t_shell *shell)

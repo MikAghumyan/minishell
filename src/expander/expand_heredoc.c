@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 15:43:11 by maghumya          #+#    #+#             */
-/*   Updated: 2025/11/01 19:41:37 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/04 21:25:08 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static void	heredoc_write(t_redirect *redirect, t_shell *shell, int fd)
 
 	while (true)
 	{
-		line = readline("\033[35m> \033[0m");
+		if (shell->is_interactive)
+			line = readline("\033[35m> \033[0m");
+		else
+			line = get_next_line(STDIN_FILENO);
 		if (!line)
 			printf("minishell: %s (wanted `%s')\n", WARNING_HEREDOC,
 				redirect->value);
