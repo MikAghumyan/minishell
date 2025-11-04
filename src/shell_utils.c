@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 15:39:20 by maghumya          #+#    #+#             */
-/*   Updated: 2025/10/21 21:24:05 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/04 20:33:22 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	cleanup_shell(t_shell *shell)
 		shell->env = NULL;
 	}
 	close_shell_fds(shell);
+	if (shell->is_interactive)
+		rl_clear_history();
 }
 
 void	exit_shell(t_shell *shell)

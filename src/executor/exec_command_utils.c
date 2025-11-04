@@ -6,7 +6,7 @@
 /*   By: maghumya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 13:00:17 by nsahakya          #+#    #+#             */
-/*   Updated: 2025/11/01 19:40:47 by maghumya         ###   ########.fr       */
+/*   Updated: 2025/11/04 20:31:17 by maghumya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	handle_cmd_child(t_ast_node *node, char *cmd_path, t_shell *shell)
 	if (!cmd_path && node->redirect_files)
 		exit(0);
 	execve(cmd_path, node->args->data, shell->env->data);
+	free(cmd_path);
 	if (errno == EACCES)
 		shell->exit_status = 126;
 	else if (errno == ENOENT)
